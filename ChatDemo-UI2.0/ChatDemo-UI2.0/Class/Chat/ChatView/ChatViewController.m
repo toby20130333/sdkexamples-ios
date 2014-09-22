@@ -48,7 +48,7 @@
 }
 
 @property (nonatomic) BOOL isChatGroup;
-@property (strong, nonatomic) EMGroup *chatGroup;
+@property (strong, nonatomic) NSString *chatter;
 
 @property (strong, nonatomic) NSMutableArray *dataSource;//tableView数据源
 @property (strong, nonatomic) SRRefreshView *slimeView;
@@ -68,30 +68,18 @@
 
 @implementation ChatViewController
 
-- (instancetype)initWithChatter:(NSString *)chatter
+- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        // Custom initialization
         _isPlayingAudio = NO;
+        _chatter = chatter;
+        _isChatGroup = isGroup;
         
         //根据接收者的username获取当前会话的管理者
         _conversation = [[EaseMob sharedInstance].chatManager conversationForChatter:chatter isGroup:_isChatGroup];
     }
-    return self;
-}
-
-- (instancetype)initWithGroup:(EMGroup *)chatGroup
-{
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        // Custom initialization
-        _isChatGroup = YES;
-        _chatGroup = chatGroup;
-        
-        //根据接收者的username获取当前会话的管理者
-        _conversation = [[EaseMob sharedInstance].chatManager conversationForChatter:chatGroup.groupId isGroup:_isChatGroup];
-    }
+    
     return self;
 }
 
@@ -116,10 +104,6 @@
     
     _messageQueue = dispatch_queue_create("easemob.com", NULL);
     _isScrollToBottom = YES;
-//    //通过会话管理者获取已收发消息
-//    
-//    NSArray *chats = [_conversation loadNumbersOfMessages:KPageCount before:[_conversation latestMessage].timestamp + 1];
-//    [self.dataSource addObjectsFromArray:[self sortChatSource:chats]];
     
     [self setupBarButtonItem];
     [self.view addSubview:self.tableView];
@@ -702,7 +686,7 @@
 
 - (void)group:(EMGroup *)group didLeave:(EMGroupLeaveReason)reason error:(EMError *)error
 {
-    if (_isChatGroup && [group.groupId isEqualToString:_chatGroup.groupId]) {
+    if (_isChatGroup && [group.groupId isEqualToString:_chatter]) {
         [self.navigationController popToViewController:self animated:NO];
         [self.navigationController popViewControllerAnimated:NO];
     }
@@ -1092,9 +1076,8 @@
 - (void)showRoomContact:(id)sender
 {
     [self.view endEditing:YES];
-    if (_isChatGroup && _chatGroup) {
-        ChatGroupDetailViewController *detailController = [[ChatGroupDetailViewController alloc] initWithGroup:_chatGroup];
-        detailController.title = _chatGroup.groupSubject;
+    if (_isChatGroup) {
+        ChatGroupDetailViewController *detailController = [[ChatGroupDetailViewController alloc] initWithGroupId:_chatter];
         [self.navigationController pushViewController:detailController animated:YES];
     }
 }

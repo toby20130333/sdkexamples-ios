@@ -14,8 +14,6 @@
 
 @interface ChatViewController : UIViewController
 
-- (instancetype)initWithChatter:(NSString *)chatter;
-
-- (instancetype)initWithGroup:(EMGroup *)chatGroup;
+- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup;
 
 @end

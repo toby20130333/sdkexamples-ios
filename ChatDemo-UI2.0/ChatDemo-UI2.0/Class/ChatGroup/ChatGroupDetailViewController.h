@@ -37,4 +37,6 @@ typedef enum{
 
 - (instancetype)initWithGroup:(EMGroup *)chatGroup;
 
+- (instancetype)initWithGroupId:(NSString *)chatGroupId;
+
 @end

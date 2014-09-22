@@ -177,7 +177,7 @@
             [weakSelf.searchController.searchBar endEditing:YES];
             
             EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:conversation.chatter];
+            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:conversation.chatter isGroup:conversation.isGroup];
             chatVC.title = conversation.chatter;
             [weakSelf.navigationController pushViewController:chatVC animated:YES];
         }];
@@ -336,23 +336,7 @@
     
     ChatViewController *chatController;
     NSString *title = conversation.chatter;
-    if (conversation.isGroup) {
-        NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-        for (EMGroup *group in groupArray) {
-            if ([group.groupId isEqualToString:conversation.chatter]) {
-                chatController = [[ChatViewController alloc] initWithGroup:group];
-                title = group.groupSubject;
-                break;
-            }
-        }
-        
-        if (chatController == nil) {
-            chatController = [[ChatViewController alloc] initWithChatter:conversation.chatter];
-        }
-    }
-    else{
-        chatController = [[ChatViewController alloc] initWithChatter:conversation.chatter];
-    }
+    chatController = [[ChatViewController alloc] initWithChatter:title isGroup:conversation.isGroup];
     chatController.title = title;
     [conversation markMessagesAsRead:YES];
     [self.navigationController pushViewController:chatController animated:YES];

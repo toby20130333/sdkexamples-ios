@@ -109,6 +109,29 @@
     return self;
 }
 
+- (instancetype)initWithGroupId:(NSString *)chatGroupId
+{
+    EMGroup *chatGroup = nil;
+    NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
+    for (EMGroup *group in groupArray) {
+        if ([group.groupId isEqualToString:chatGroupId]) {
+            chatGroup = group;
+            break;
+        }
+    }
+    
+    if (chatGroup == nil) {
+        chatGroup = [[EMGroup alloc] initWithGroupId:chatGroupId];
+    }
+    
+    self = [self initWithGroup:chatGroup];
+    if (self) {
+        //
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
