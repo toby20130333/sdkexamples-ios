@@ -164,7 +164,7 @@
             [weakSelf.searchController.searchBar endEditing:YES];
             
             EMGroup *group = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            ChatViewController *chatVC = [[ChatViewController alloc] initWithGroup:group];
+            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES];
             [weakSelf.navigationController pushViewController:chatVC animated:YES];
         }];
     }
@@ -226,7 +226,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     EMGroup *group = [self.dataSource objectAtIndex:indexPath.row];
-    ChatViewController *chatController = [[ChatViewController alloc] initWithGroup:group];
+    ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES];
     chatController.title = group.groupSubject;
     [self.navigationController pushViewController:chatController animated:YES];
 }
