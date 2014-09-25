@@ -17,17 +17,17 @@
 
 @implementation DXChatBarMoreView
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame typw:(ChatMoreType)type
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self setupSubviews];
+        [self setupSubviewsForType:type];
     }
     return self;
 }
 
-- (void)setupSubviews
+- (void)setupSubviewsForType:(ChatMoreType)type
 {
     self.backgroundColor = [UIColor clearColor];
     CGFloat insets = (self.frame.size.width - 4 * CHAT_BUTTON_SIZE) / 5;
@@ -60,6 +60,23 @@
     [_videoButton setImage:[UIImage imageNamed:@"chatBar_colorMore_videoSelected"] forState:UIControlStateHighlighted];
     [_videoButton addTarget:self action:@selector(takeVideoAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_videoButton];
+    
+    CGRect frame = self.frame;
+    if (type == ChatMoreTypeChat) {
+        frame.size.height = 150;
+        
+        _audioCallButton =[UIButton buttonWithType:UIButtonTypeCustom];
+        [_audioCallButton setFrame:CGRectMake(insets, 10 * 2 + CHAT_BUTTON_SIZE, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE)];
+        [_audioCallButton setImage:[UIImage imageNamed:@"chatBar_colorMore_video"] forState:UIControlStateNormal];
+        [_audioCallButton setImage:[UIImage imageNamed:@"chatBar_colorMore_videoSelected"] forState:UIControlStateHighlighted];
+        [_audioCallButton addTarget:self action:@selector(takeAudioCallAction) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_audioCallButton];
+    }
+    else if (type == ChatMoreTypeGroupChat)
+    {
+        frame.size.height = 80;
+    }
+    self.frame = frame;
 }
 
 #pragma mark - action
@@ -87,6 +104,13 @@
 - (void)takeVideoAction{
     if (_delegate && [_delegate respondsToSelector:@selector(moreViewLocationAction:)]) {
         [_delegate moreViewVideoAction:self];
+    }
+}
+
+- (void)takeAudioCallAction
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(moreViewAudioCallAction:)]) {
+        [_delegate moreViewAudioCallAction:self];
     }
 }
 

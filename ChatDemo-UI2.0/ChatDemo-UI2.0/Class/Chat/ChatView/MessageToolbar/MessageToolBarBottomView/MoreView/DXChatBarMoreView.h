@@ -12,6 +12,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum{
+    ChatMoreTypeChat,
+    ChatMoreTypeGroupChat,
+}ChatMoreType;
+
 @protocol DXChatBarMoreViewDelegate;
 @interface DXChatBarMoreView : UIView
 
@@ -21,8 +26,11 @@
 @property (nonatomic, strong) UIButton *takePicButton;
 @property (nonatomic, strong) UIButton *locationButton;
 @property (nonatomic, strong) UIButton *videoButton;
+@property (nonatomic, strong) UIButton *audioCallButton;
 
-- (void)setupSubviews;
+- (instancetype)initWithFrame:(CGRect)frame typw:(ChatMoreType)type;
+
+- (void)setupSubviewsForType:(ChatMoreType)type;
 
 @end
 
@@ -33,5 +41,6 @@
 - (void)moreViewPhotoAction:(DXChatBarMoreView *)moreView;
 - (void)moreViewLocationAction:(DXChatBarMoreView *)moreView;
 - (void)moreViewVideoAction:(DXChatBarMoreView *)moreView;
+- (void)moreViewAudioCallAction:(DXChatBarMoreView *)moreView;
 
 @end

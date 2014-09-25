@@ -30,6 +30,8 @@
 #import "WCAlertView.h"
 #import "NSDate+Category.h"
 #import "DXMessageToolBar.h"
+#import "DXChatBarMoreView.h"
+#import "CallViewController.h"
 
 #define KPageCount 20
 
@@ -301,6 +303,11 @@
         _chatToolBar = [[DXMessageToolBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - [DXMessageToolBar defaultHeight], self.view.frame.size.width, [DXMessageToolBar defaultHeight])];
         _chatToolBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
         _chatToolBar.delegate = self;
+        
+        ChatMoreType type = _isChatGroup == YES ? ChatMoreTypeGroupChat : ChatMoreTypeChat;
+        _chatToolBar.moreView = [[DXChatBarMoreView alloc] initWithFrame:CGRectMake(0, (kVerticalPadding * 2 + kInputTextViewMinHeight), _chatToolBar.frame.size.width, 80) typw:type];
+        _chatToolBar.moreView.backgroundColor = [UIColor lightGrayColor];
+        _chatToolBar.moreView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     }
     
     return _chatToolBar;
@@ -750,6 +757,14 @@
 #endif
 }
 
+- (void)moreViewAudioCallAction:(DXChatBarMoreView *)moreView
+{
+    CallViewController *callController = [CallViewController shareController];
+    [callController setupCallOutWithChatter:_chatter];
+//    [callController setupCallInWithChatter:_chatter];
+    [self presentViewController:callController animated:YES completion:nil];
+}
+
 #pragma mark - LocationViewDelegate
 
 -(void)sendLocationLatitude:(double)latitude longitude:(double)longitude andAddress:(NSString *)address
@@ -983,16 +998,6 @@
                 
                 [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[weakSelf.dataSource count] - currentCount - 1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
             });
-            
-            
-//            [weakSelf.dataSource removeAllObjects];
-//            [weakSelf.dataSource addObjectsFromArray:[weakSelf sortChatSource:chats]];
-//            
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [weakSelf.tableView reloadData];
-//                
-//                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[weakSelf.dataSource count] - currentCount - 1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-//            });
         }
     });
 }
