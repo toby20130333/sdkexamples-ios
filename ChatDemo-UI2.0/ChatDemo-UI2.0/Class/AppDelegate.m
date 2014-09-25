@@ -43,13 +43,8 @@
 //        [MobClick setLogEnabled:YES];
 //    }
    
-#if !TARGET_IPHONE_SIMULATOR
-    UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
-    UIRemoteNotificationTypeSound |
-    UIRemoteNotificationTypeAlert;
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
-#endif
-
+    [self registerRemoteNotification];
+    
 #warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
     NSString *apnsCertName = nil;
 #if DEBUG
@@ -77,6 +72,27 @@
     [self loginStateChange:nil];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)registerRemoteNotification{
+#if !TARGET_IPHONE_SIMULATOR
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    //iOS8 注册APNS
+    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
+        [application registerForRemoteNotifications];
+        UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }else{
+        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
+        UIRemoteNotificationTypeSound |
+        UIRemoteNotificationTypeAlert;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
+    }
+    
+#endif
+
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
