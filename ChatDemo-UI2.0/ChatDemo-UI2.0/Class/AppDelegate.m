@@ -152,7 +152,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
 #warning SDK方法调用
     [[EaseMob sharedInstance] applicationDidBecomeActive:application];
