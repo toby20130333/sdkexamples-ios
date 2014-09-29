@@ -336,6 +336,16 @@
     
     ChatViewController *chatController;
     NSString *title = conversation.chatter;
+    if (conversation.isGroup) {
+        NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
+        for (EMGroup *group in groupArray) {
+            if ([group.groupId isEqualToString:conversation.chatter]) {
+                title = group.groupSubject;
+                break;
+            }
+        }
+    }
+    
     chatController = [[ChatViewController alloc] initWithChatter:title isGroup:conversation.isGroup];
     chatController.title = title;
     [conversation markMessagesAsRead:YES];
