@@ -346,9 +346,9 @@
         }
     }
     
-    chatController = [[ChatViewController alloc] initWithChatter:title isGroup:conversation.isGroup];
+    chatController = [[ChatViewController alloc] initWithChatter:conversation.chatter isGroup:conversation.isGroup];
     chatController.title = title;
-    [conversation markMessagesAsRead:YES];
+    [conversation markAllMessagesAsRead:YES];
     [self.navigationController pushViewController:chatController animated:YES];
 }
 

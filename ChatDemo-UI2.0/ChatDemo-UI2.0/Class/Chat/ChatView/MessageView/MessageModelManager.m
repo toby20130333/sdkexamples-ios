@@ -91,7 +91,7 @@
             }else {
                 NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:@NO,@"isPlayed", nil];
                 message.ext = dict;
-                [[EaseMob sharedInstance].chatManager saveMessage:message];
+                [message updateMessageExtToDB];
             }
             // 本地音频路径
             model.localPath = ((EMVoiceMessageBody *)messageBody).localPath;

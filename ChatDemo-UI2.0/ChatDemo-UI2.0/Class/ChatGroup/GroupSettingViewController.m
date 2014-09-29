@@ -64,9 +64,9 @@
     [_pushSwitch addTarget:self action:@selector(pushSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     [_pushSwitch setOn:_group.isPushNotificationEnabled animated:YES];
     
-    _blockSwitch = [[UISwitch alloc] init];
-    [_blockSwitch addTarget:self action:@selector(blockSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-    [_blockSwitch setOn:_group.isBlocked animated:YES];
+//    _blockSwitch = [[UISwitch alloc] init];
+//    [_blockSwitch addTarget:self action:@selector(blockSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+//    [_blockSwitch setOn:_group.isBlocked animated:YES];
     
     self.tableView.tableFooterView = [[UIView alloc] init];
     [self.tableView reloadData];
@@ -187,22 +187,22 @@
 
 - (void)saveAction:(id)sender
 {
-    if (_blockSwitch.isOn != _group.isBlocked) {
-        __weak typeof(self) weakSelf = self;
-        [self showHudInView:self.view hint:@"设置属性"];
-        if (_blockSwitch.isOn) {
-            [[EaseMob sharedInstance].chatManager asyncBlockGroup:_group.groupId completion:^(EMGroup *group, EMError *error) {
-                [weakSelf hideHud];
-                [weakSelf showHint:@"设置成功"];
-            } onQueue:nil];
-        }
-        else{
-            [[EaseMob sharedInstance].chatManager asyncUnblockGroup:_group.groupId completion:^(EMGroup *group, EMError *error) {
-                [weakSelf hideHud];
-                [weakSelf showHint:@"设置成功"];
-            } onQueue:nil];
-        }
-    }
+//    if (_blockSwitch.isOn != _group.isBlocked) {
+//        __weak typeof(self) weakSelf = self;
+//        [self showHudInView:self.view hint:@"设置属性"];
+//        if (_blockSwitch.isOn) {
+//            [[EaseMob sharedInstance].chatManager asyncBlockGroup:_group.groupId completion:^(EMGroup *group, EMError *error) {
+//                [weakSelf hideHud];
+//                [weakSelf showHint:@"设置成功"];
+//            } onQueue:nil];
+//        }
+//        else{
+//            [[EaseMob sharedInstance].chatManager asyncUnblockGroup:_group.groupId completion:^(EMGroup *group, EMError *error) {
+//                [weakSelf hideHud];
+//                [weakSelf showHint:@"设置成功"];
+//            } onQueue:nil];
+//        }
+//    }
     
     if (_pushSwitch.isOn != _group.isPushNotificationEnabled) {
         [self isIgnoreGroup:!_pushSwitch.isOn];

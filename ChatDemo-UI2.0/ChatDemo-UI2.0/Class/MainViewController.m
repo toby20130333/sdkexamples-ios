@@ -68,6 +68,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
+    
+//    [self testReciveMessages];
 }
 
 - (void)didReceiveMemoryWarning
@@ -273,7 +275,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 // 收到消息回调
 -(void)didReceiveMessage:(EMMessage *)message
 {
-    BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversation.chatter] : YES;
+    BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversationChatter] : YES;
     if (needShowNotification) {
 #if !TARGET_IPHONE_SIMULATOR
         [self playSoundAndVibration];
@@ -347,7 +349,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         if (message.isGroup) {
             NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
             for (EMGroup *group in groupArray) {
-                if ([group.groupId isEqualToString:message.conversation.chatter]) {
+                if ([group.groupId isEqualToString:message.conversationChatter]) {
                     title = [NSString stringWithFormat:@"%@(%@)", message.groupSenderName, group.groupSubject];
                     break;
                 }
@@ -566,6 +568,55 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [self.navigationController popToViewController:self animated:NO];
         [self setSelectedViewController:_chatListVC];
     }
+}
+
+#pragma test methods
+
+- (void)testReciveMessages
+{
+    id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
+    NSDictionary *loginInfo = [chatManager loginInfo];
+    NSString *account = [loginInfo objectForKey:kSDKUsername];
+    
+    for (int i = 0; i < 400; i++) {
+        NSString *from = [NSString stringWithFormat:@"test_db_%i", i];
+        EMChatText *chatText = [[EMChatText alloc] initWithText:@"你被邀请加入群"];
+        EMTextMessageBody *textBody = [[EMTextMessageBody alloc] initWithChatObject:chatText];
+        EMMessage *message = [[EMMessage alloc] initWithReceiver:from bodies:@[textBody]];
+        [message setConversationChatter:from];
+        [message setFrom:account];
+        [message setIsGroup:NO];
+        [message setIsRead:NO];
+        [message setTo:from];
+        [chatManager insertMessageToDB:message];
+    }
+
+}
+
+- (void)insertFakeMessageWithGroupID:(NSString *)groupID inviter:(NSString *)inviter
+{
+//    id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
+//    EMConversation *conversation = [chatManager conversationForChatter:groupID isGroup:YES];
+//    NSDictionary *loginInfo = [chatManager loginInfo];
+//    NSString *account = [loginInfo objectForKey:kSDKUsername];
+//    EMChatText *chatText = [[EMChatText alloc] initWithText:@"你被邀请加入群"];
+//    EMTextMessageBody *textBody = [[EMTextMessageBody alloc] initWithChatObject:chatText];
+//    EMMessage *message = [[EMMessage alloc] initWithReceiver:groupID bodies:@[textBody]];
+//    [message setFrom:groupID];
+//    [message setIsGroup:YES];
+//    [message setIsAcked:NO];
+//    [message setGroupSenderName:inviter];
+//    [message setTo:account];
+//
+//    NSTimeInterval interval = [[NSDate date] timeIntervalSince1970];
+//    NSString *messageID = [NSString stringWithFormat:@"%.0f", interval];
+//    [message setMessageId:messageID];
+//    
+//    [chatManager saveConversation:conversation];
+//    [chatManager importMessage:message
+//                   append2Chat:YES];
+//    
+//    [self didUnreadMessagesCountChanged];
 }
 
 @end

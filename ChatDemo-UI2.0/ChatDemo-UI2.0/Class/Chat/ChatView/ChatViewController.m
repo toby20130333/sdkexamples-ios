@@ -47,6 +47,7 @@
     dispatch_queue_t _messageQueue;
     
     BOOL _isScrollToBottom;
+    NSUInteger _messagesCount;
 }
 
 @property (nonatomic) BOOL isChatGroup;
@@ -62,6 +63,7 @@
 @property (strong, nonatomic) MessageReadManager *messageReadManager;//message阅读的管理者
 @property (strong, nonatomic) EMConversation *conversation;//会话管理者
 @property (strong, nonatomic) NSDate *chatTagDate;
+@property (nonatomic) NSUInteger messagesCount;
 
 @property (nonatomic) BOOL isScrollToBottom;
 @property (nonatomic) BOOL isPlayingAudio;
@@ -77,6 +79,7 @@
         _isPlayingAudio = NO;
         _chatter = chatter;
         _isChatGroup = isGroup;
+        _messagesCount = 0;
         
         //根据接收者的username获取当前会话的管理者
         _conversation = [[EaseMob sharedInstance].chatManager conversationForChatter:chatter isGroup:_isChatGroup];
@@ -169,7 +172,7 @@
     [super viewWillDisappear:animated];
     
     // 设置当前conversation的所有message为已读
-    [_conversation markMessagesAsRead:YES];
+    [_conversation markAllMessagesAsRead:YES];
     
 }
 
@@ -629,7 +632,7 @@
 - (void)reloadTableViewDataWithMessage:(EMMessage *)message{
     __weak ChatViewController *weakSelf = self;
     dispatch_async(_messageQueue, ^{
-        if ([weakSelf.conversation.chatter isEqualToString:message.conversation.chatter])
+        if ([weakSelf.conversation.chatter isEqualToString:message.conversationChatter])
         {
             for (int i = 0; i < weakSelf.dataSource.count; i ++) {
                 id object = [weakSelf.dataSource objectAtIndex:i];
@@ -686,7 +689,7 @@
 
 -(void)didReceiveMessage:(EMMessage *)message
 {
-    if ([_conversation.chatter isEqualToString:message.conversation.chatter]) {
+    if ([_conversation.chatter isEqualToString:message.conversationChatter]) {
         [self addChatDataToMessage:message];
     }
 }
@@ -704,7 +707,7 @@
     [_chatToolBar cancelTouchRecord];
     
     // 设置当前conversation的所有message为已读
-    [_conversation markMessagesAsRead:YES];
+    [_conversation markAllMessagesAsRead:YES];
     
     [self stopAudioPlaying];
 }
@@ -980,19 +983,17 @@
 {
     __weak typeof(self) weakSelf = self;
     dispatch_async(_messageQueue, ^{
-        NSInteger currentCount = [weakSelf.dataSource count];
-        EMMessage *latestMessage = [weakSelf.conversation latestMessage];
-        NSTimeInterval beforeTime = 0;
-        if (latestMessage) {
-            beforeTime = latestMessage.timestamp + 1;
-        }else{
-            beforeTime = [[NSDate date] timeIntervalSince1970] * 1000 + 1;
-        }
+        NSUInteger fromIndex = weakSelf.messagesCount == 0 ? weakSelf.messagesCount : (weakSelf.messagesCount + 1);
+        NSArray *messages = [weakSelf.conversation loadMessagesFromIndex:fromIndex limit:KPageCount];
+        weakSelf.messagesCount += [messages count];
         
-        NSArray *chats = [weakSelf.conversation loadNumbersOfMessages:(currentCount + KPageCount) before:beforeTime];
-        
-        if ([chats count] > currentCount) {
-            weakSelf.dataSource.array = [weakSelf sortChatSource:chats];
+        if ([messages count] > 0) {
+            NSArray *array = [weakSelf.dataSource copy];
+            NSInteger currentCount = [array count];
+            
+            [weakSelf.dataSource removeAllObjects];
+            [weakSelf.dataSource addObjectsFromArray:[weakSelf sortChatSource:messages]];
+            [weakSelf.dataSource addObjectsFromArray:array];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView reloadData];
                 
@@ -1089,10 +1090,10 @@
 
 - (void)removeAllMessages:(id)sender
 {
-    if (_conversation.messages.count == 0) {
-        [self showHint:@"消息已经清空"];
-        return;
-    }
+//    if (_conversation.messages.count == 0) {
+//        [self showHint:@"消息已经清空"];
+//        return;
+//    }
     
     if ([sender isKindOfClass:[NSNotification class]]) {
         NSString *groupId = (NSString *)[(NSNotification *)sender object];
@@ -1154,7 +1155,7 @@
     [_chatToolBar cancelTouchRecord];
     
     // 设置当前conversation的所有message为已读
-    [_conversation markMessagesAsRead:YES];
+    [_conversation markAllMessagesAsRead:YES];
 }
 
 #pragma mark - send message
