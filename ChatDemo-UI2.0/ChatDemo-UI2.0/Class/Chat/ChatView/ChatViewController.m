@@ -914,7 +914,7 @@
     if (_longPressIndexPath && _longPressIndexPath.row > 0) {
         MessageModel *model = [self.dataSource objectAtIndex:_longPressIndexPath.row];
         NSMutableArray *messages = [NSMutableArray arrayWithObjects:model, nil];
-        [_conversation removeMessage:model.messageId];
+        [_conversation removeMessage:model.message];
         NSMutableArray *indexPaths = [NSMutableArray arrayWithObjects:_longPressIndexPath, nil];;
         if (_longPressIndexPath.row - 1 >= 0) {
             id nextMessage = nil;
@@ -1090,18 +1090,20 @@
 
 - (void)removeAllMessages:(id)sender
 {
-//    if (_conversation.messages.count == 0) {
-//        [self showHint:@"消息已经清空"];
-//        return;
-//    }
+    if (self.dataSource.count == 0) {
+        [self showHint:@"消息已经清空"];
+        return;
+    }
     
     if ([sender isKindOfClass:[NSNotification class]]) {
         NSString *groupId = (NSString *)[(NSNotification *)sender object];
         if (_isChatGroup && [groupId isEqualToString:_conversation.chatter]) {
-            [_conversation removeAllMessages];
-            [_dataSource removeAllObjects];
-            [_tableView reloadData];
-            [self showHint:@"消息已经清空"];
+            BOOL isRemoved = [_conversation removeAllMessages];
+            if (isRemoved) {
+                [_dataSource removeAllObjects];
+                [_tableView reloadData];
+                [self showHint:@"消息已经清空"];
+            }
         }
     }
     else{
@@ -1113,9 +1115,11 @@
                      } completionBlock:
          ^(NSUInteger buttonIndex, WCAlertView *alertView) {
              if (buttonIndex == 1) {
-                 [weakSelf.conversation removeAllMessages];
-                 [weakSelf.dataSource removeAllObjects];
-                 [weakSelf.tableView reloadData];
+                 BOOL isRemoved = [weakSelf.conversation removeAllMessages];
+                 if (isRemoved) {
+                     [weakSelf.dataSource removeAllObjects];
+                     [weakSelf.tableView reloadData];
+                 }
              }
          } cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     }

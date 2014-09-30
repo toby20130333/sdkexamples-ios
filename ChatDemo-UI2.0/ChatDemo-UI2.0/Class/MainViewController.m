@@ -69,7 +69,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
     
-//    [self testReciveMessages];
+    [self testReciveMessages];
 }
 
 - (void)didReceiveMemoryWarning
@@ -574,11 +574,13 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)testReciveMessages
 {
+    NSLog(@"xieyajie ======== begin");
+    
     id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
     NSDictionary *loginInfo = [chatManager loginInfo];
     NSString *account = [loginInfo objectForKey:kSDKUsername];
     
-    for (int i = 0; i < 400; i++) {
+    for (int i = 0; i < 1000; i++) {
         NSString *from = [NSString stringWithFormat:@"test_db_%i", i];
         EMChatText *chatText = [[EMChatText alloc] initWithText:@"你被邀请加入群"];
         EMTextMessageBody *textBody = [[EMTextMessageBody alloc] initWithChatObject:chatText];
@@ -588,35 +590,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [message setIsGroup:NO];
         [message setIsRead:NO];
         [message setTo:from];
-        [chatManager insertMessageToDB:message];
+        [chatManager insertMessageToDB:message append2Chat:YES];
     }
-
-}
-
-- (void)insertFakeMessageWithGroupID:(NSString *)groupID inviter:(NSString *)inviter
-{
-//    id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
-//    EMConversation *conversation = [chatManager conversationForChatter:groupID isGroup:YES];
-//    NSDictionary *loginInfo = [chatManager loginInfo];
-//    NSString *account = [loginInfo objectForKey:kSDKUsername];
-//    EMChatText *chatText = [[EMChatText alloc] initWithText:@"你被邀请加入群"];
-//    EMTextMessageBody *textBody = [[EMTextMessageBody alloc] initWithChatObject:chatText];
-//    EMMessage *message = [[EMMessage alloc] initWithReceiver:groupID bodies:@[textBody]];
-//    [message setFrom:groupID];
-//    [message setIsGroup:YES];
-//    [message setIsAcked:NO];
-//    [message setGroupSenderName:inviter];
-//    [message setTo:account];
-//
-//    NSTimeInterval interval = [[NSDate date] timeIntervalSince1970];
-//    NSString *messageID = [NSString stringWithFormat:@"%.0f", interval];
-//    [message setMessageId:messageID];
-//    
-//    [chatManager saveConversation:conversation];
-//    [chatManager importMessage:message
-//                   append2Chat:YES];
-//    
-//    [self didUnreadMessagesCountChanged];
+    
+    NSLog(@"xieyajie ======== end");
 }
 
 @end
