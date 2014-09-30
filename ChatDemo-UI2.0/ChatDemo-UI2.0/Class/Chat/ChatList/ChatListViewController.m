@@ -346,7 +346,8 @@
         }
     }
     
-    chatController = [[ChatViewController alloc] initWithChatter:title isGroup:conversation.isGroup];
+    NSString *chatter = conversation.chatter;
+    chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
     chatController.title = title;
     [conversation markMessagesAsRead:YES];
     [self.navigationController pushViewController:chatController animated:YES];

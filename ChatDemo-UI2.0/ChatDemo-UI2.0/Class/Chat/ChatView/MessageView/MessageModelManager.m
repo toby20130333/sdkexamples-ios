@@ -67,7 +67,7 @@
             model.thumbnailImage = [UIImage imageWithContentsOfFile:imgMessageBody.thumbnailLocalPath];
             if (isSender)
             {
-                model.image = [UIImage imageWithContentsOfFile:imgMessageBody.localPath];
+                model.image = [UIImage imageWithContentsOfFile:imgMessageBody.thumbnailLocalPath];
             }else {
                 model.imageRemoteURL = [NSURL URLWithString:imgMessageBody.remotePath];
             }
