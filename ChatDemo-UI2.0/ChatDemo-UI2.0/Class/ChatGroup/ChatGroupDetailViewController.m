@@ -103,7 +103,7 @@
         // Custom initialization
         _chatGroup = chatGroup;
         _dataSource = [NSMutableArray array];
-        _occupantType = GroupOccupantTypeVisitor;
+        _occupantType = GroupOccupantTypeMember;
         [self registerNotifications];
     }
     return self;
@@ -341,6 +341,13 @@
             if (!error) {
                 weakSelf.chatGroup = group;
                 [weakSelf reloadDataSource];
+//                NSString *tmp = [group.members objectAtIndex:0];
+//                [[EaseMob sharedInstance].chatManager asyncBlockOccupants:@[tmp] fromGroup:group.groupId completion:^(EMGroup *group, EMError *error){
+//                    if (!error) {
+//                        //
+//                    }
+//                    
+//                } onQueue:nil];
             }
             else{
                 [weakSelf hideHud];
@@ -355,26 +362,14 @@
 {
     [self.dataSource removeAllObjects];
     
-    self.occupantType = GroupOccupantTypeVisitor;
+    self.occupantType = GroupOccupantTypeMember;
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-    for (NSString *str in self.chatGroup.owners) {
-        if ([str isEqualToString:loginUsername]) {
-            self.occupantType = GroupOccupantTypeOwner;
-            break;
-        }
+    if ([self.chatGroup.owner isEqualToString:loginUsername]) {
+        self.occupantType = GroupOccupantTypeOwner;
     }
     
-    if (self.occupantType == GroupOccupantTypeVisitor) {
-        for (NSString *str in self.chatGroup.admins) {
-            if ([str isEqualToString:loginUsername]) {
-                self.occupantType = GroupOccupantTypeAdmin;
-                break;
-            }
-        }
-    }
-    
-    if (self.occupantType == GroupOccupantTypeVisitor) {
+    if (self.occupantType != GroupOccupantTypeOwner) {
         for (NSString *str in self.chatGroup.members) {
             if ([str isEqualToString:loginUsername]) {
                 self.occupantType = GroupOccupantTypeMember;
@@ -383,14 +378,7 @@
         }
     }
     
-    [self.dataSource addObjectsFromArray:self.chatGroup.owners];
-    [self.dataSource addObjectsFromArray:self.chatGroup.admins];
-    [self.dataSource addObjectsFromArray:self.chatGroup.members];
-//    for (NSString *str in self.chatGroup.occupants) {
-//        if (![self.chatGroup.owners containsObject:str]) {
-//            [self.dataSource addObject:str];
-//        }
-//    }
+    [self.dataSource addObjectsFromArray:self.chatGroup.occupants];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self refreshScrollView];
@@ -483,7 +471,7 @@
 
 - (void)refreshFooterView
 {
-    if (self.occupantType == GroupOccupantTypeOwner || self.occupantType == GroupOccupantTypeAdmin) {
+    if (self.occupantType == GroupOccupantTypeOwner) {
         [_exitButton removeFromSuperview];
         [_footerView addSubview:self.dissolveButton];
     }

@@ -143,7 +143,7 @@
     
     if (indexPath.row == 0) {
         cell.textLabel.text = @"群主";
-        cell.detailTextLabel.text = [_group.owners objectAtIndex:0];
+        cell.detailTextLabel.text = _group.owner;
     }
     else{
         cell.textLabel.text = @"群组简介";

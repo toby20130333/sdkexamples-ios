@@ -37,7 +37,7 @@
         
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
         NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-        _isOwner = [_group.owners containsObject:loginUsername];
+        _isOwner = [_group.owner isEqualToString:loginUsername];
     }
     
     return self;

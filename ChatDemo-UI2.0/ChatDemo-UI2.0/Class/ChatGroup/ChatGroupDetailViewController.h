@@ -27,10 +27,8 @@
  *  群组成员类型
  */
 typedef enum{
-    GroupOccupantTypeOwner,//所有者
-    GroupOccupantTypeAdmin,//管理员
+    GroupOccupantTypeOwner,//创建者
     GroupOccupantTypeMember,//成员
-    GroupOccupantTypeVisitor,//游客
 }GroupOccupantType;
 
 @interface ChatGroupDetailViewController : UITableViewController<IChatManagerDelegate>
