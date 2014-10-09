@@ -101,6 +101,7 @@
      ^(NSDictionary *loginInfo, EMError *error) {
          [self hideHud];
          if (loginInfo && !error) {
+             [[EaseMob sharedInstance] importDatabaseToSqlite];
              [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
          }else {
              switch (error.errorCode) {

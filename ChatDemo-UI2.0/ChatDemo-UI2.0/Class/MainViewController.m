@@ -69,7 +69,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
     
-    [self testReciveMessages];
+//    [self testReciveMessages];
 }
 
 - (void)didReceiveMemoryWarning
