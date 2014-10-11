@@ -235,7 +235,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (BOOL)needShowNotification:(NSString *)fromChatter
 {
     BOOL ret = YES;
-    NSArray *igGroupIds = [[EaseMob sharedInstance].chatManager ignoredGroupList];
+    NSArray *igGroupIds = [[EaseMob sharedInstance].chatManager ignoredGroupIds];
     for (NSString *str in igGroupIds) {
         if ([str isEqualToString:fromChatter]) {
             ret = NO;

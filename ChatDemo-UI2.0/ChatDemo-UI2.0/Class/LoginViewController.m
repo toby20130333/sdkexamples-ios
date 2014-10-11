@@ -101,8 +101,12 @@
      ^(NSDictionary *loginInfo, EMError *error) {
          [self hideHud];
          if (loginInfo && !error) {
-             [[EaseMob sharedInstance] importDatabaseToSqlite];
              [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+             
+             EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
+             if (!error) {
+                 [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
+             }
          }else {
              switch (error.errorCode) {
                  case EMErrorServerNotReachable:
@@ -127,7 +131,7 @@
         UITextField *nameTextField = [alertView textFieldAtIndex:0];
         if(nameTextField.text.length > 0)
         {
-            [[EaseMob sharedInstance].chatManager setNickname:nameTextField.text];
+            [[EaseMob sharedInstance].chatManager setApnsNickname:nameTextField.text];
         }
     }
     
