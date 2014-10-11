@@ -545,7 +545,7 @@
 {
     __weak typeof(self) weakSelf = self;
     [self showHudInView:self.view hint:@"解散群组"];
-    [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+    [[EaseMob sharedInstance].chatManager asyncDestroyGroup:_chatGroup.groupId completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
         [weakSelf hideHud];
         if (error) {
             [weakSelf showHint:@"解散群组失败"];
