@@ -57,6 +57,8 @@
 #if DEBUG
     [[EaseMob sharedInstance] enableUncaughtExceptionHandler];
 #endif
+    [[[EaseMob sharedInstance] chatManager] setAutoFetchBuddyList:YES];
+    
     //以下一行代码的方法里实现了自动登录，异步登录，需要监听[didLoginWithInfo: error:]
     //demo中此监听方法在MainViewController中
     [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];

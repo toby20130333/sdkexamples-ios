@@ -459,8 +459,13 @@
 //刷新列表
 - (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
 {
-    [self reloadDataSource];
-    [_slimeView endRefresh];
+    __weak ContactsViewController *weakSelf = self;
+    [[[EaseMob sharedInstance] chatManager] asyncFetchBuddyListWithCompletion:^(NSArray *buddyList, EMError *error) {
+        if (!error) {
+            [weakSelf reloadDataSource];
+        }
+        [weakSelf.slimeView endRefresh];
+    } onQueue:nil];
 }
 
 #pragma mark - BaseTableCellDelegate
