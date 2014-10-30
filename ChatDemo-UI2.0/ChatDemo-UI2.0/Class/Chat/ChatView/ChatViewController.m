@@ -760,7 +760,7 @@
 
 - (void)moreViewAudioCallAction:(DXChatBarMoreView *)moreView
 {
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:_chatter];
 }
 
 #pragma mark - LocationViewDelegate
