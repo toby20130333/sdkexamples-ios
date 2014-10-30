@@ -15,15 +15,17 @@
 #import "ContactsViewController.h"
 #import "SettingsViewController.h"
 #import "ApplyViewController.h"
+#import "CallSessionViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
-@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate>
+@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate, ICallManagerDelegate>
 {
     ChatListViewController *_chatListVC;
     ContactsViewController *_contactsVC;
     SettingsViewController *_settingsVC;
+    CallSessionViewController *_callController;
     
     UIBarButtonItem *_addFriendItem;
 }
@@ -57,6 +59,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 #warning 把self注册为SDK的delegate
     [self registerNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callOutWithChatter:) name:@"callOutWithChatter" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callControllerClose:) name:@"callControllerClose" object:nil];
     
     [self setupSubviews];
     self.selectedIndex = 0;
@@ -121,12 +125,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 -(void)registerNotifications
 {
     [self unregisterNotifications];
+    
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
 }
 
 -(void)unregisterNotifications
 {
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
+    [[EMSDKFull sharedInstance].callManager removeDelegate:self];
 }
 
 - (void)setupSubviews
@@ -211,6 +218,30 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
             _contactsVC.tabBarItem.badgeValue = nil;
         }
     }
+}
+
+- (void)callOutWithChatter:(NSNotification *)notification
+{
+    id object = notification.object;
+    if ([object isKindOfClass:[NSString class]]) {
+        NSString *chatter = (NSString *)object;
+        
+        if (_callController == nil) {
+            [[EMSDKFull sharedInstance].callManager removeDelegate:self];
+            
+            _callController = [[CallSessionViewController alloc] initCallOutWithChatter:chatter];
+            [self presentViewController:_callController animated:YES completion:nil];
+        }
+        else{
+            [self showHint:@"正在通话中"];
+        }
+    }
+}
+
+- (void)callControllerClose:(NSNotification *)notification
+{
+    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
+    _callController = nil;
 }
 
 #pragma mark - IChatManagerDelegate 消息变化
@@ -453,7 +484,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [_contactsVC reloadDataSource];
 }
 
-- (void)didRejectedByBuddy:(NSString *)username{
+- (void)didRejectedByBuddy:(NSString *)username
+{
     NSString *message = [NSString stringWithFormat:@"你被'%@'无耻的拒绝了", username];
     TTAlertNoTitle(message);
 }
@@ -541,7 +573,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [_chatListVC networkChanged:connectionState];
 }
 
-#pragma mark - 
+#pragma mark - 自动登录回调
 
 - (void)willAutoReconnect{
     [self hideHud];
@@ -554,6 +586,24 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [self showHint:@"重连失败，稍候将继续重连"];
     }else{
         [self showHint:@"重连成功！"];
+    }
+}
+
+#pragma mark - ICallManagerDelegate
+
+- (void)callSessionStatusChanged:(EMCallSession *)callSession changeReason:(EMCallStatusChangedReason)reason error:(EMError *)error
+{
+    if (callSession.status == eCallSessionStatusIncoming)
+    {
+        if (_callController == nil) {
+            _callController = [[CallSessionViewController alloc] initCallInWithSession:callSession];
+            [self presentViewController:_callController animated:YES completion:nil];
+        }
+        else{
+            [self showHint:@"有新的语音请求，当前正在通话中，自动拒绝"];
+            
+            [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:callSession.sessionId chatter:callSession.chatter];
+        }
     }
 }
 

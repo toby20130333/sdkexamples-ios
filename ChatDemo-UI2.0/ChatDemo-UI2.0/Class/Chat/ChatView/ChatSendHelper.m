@@ -13,6 +13,8 @@
 #import "ChatSendHelper.h"
 #import "ConvertToCommonEmoticonsHelper.h"
 
+#import "EMCommandMessageBody.h"
+
 @interface ChatImageOptions : NSObject<IChatImageOptions>
 
 @property (assign, nonatomic) CGFloat compressionQuality;
@@ -86,11 +88,17 @@
               isChatGroup:(BOOL)isChatGroup
         requireEncryption:(BOOL)requireEncryption
 {
+    
     EMMessage *retureMsg = [[EMMessage alloc] initWithReceiver:username bodies:[NSArray arrayWithObject:body]];
     retureMsg.requireEncryption = requireEncryption;
     retureMsg.isGroup = isChatGroup;
     
     EMMessage *message = [[EaseMob sharedInstance].chatManager asyncSendMessage:retureMsg progress:nil];
+    
+//    EMChatCommand *cmd = [[EMChatCommand alloc] init];
+//    EMCommandMessageBody *mbody = [[EMCommandMessageBody alloc] initWithChatObject:cmd];
+//    EMMessage *msg = [[EMMessage alloc] initWithReceiver:username bodies:@[mbody]];
+//    EMMessage *message = [[EaseMob sharedInstance].chatManager asyncSendMessage:msg progress:nil];
     
     return message;
 }

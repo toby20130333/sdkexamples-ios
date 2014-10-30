@@ -229,7 +229,8 @@
     }
 }
 
-- (BOOL)hasSendBuddyRequest:(NSString *)buddyName{
+- (BOOL)hasSendBuddyRequest:(NSString *)buddyName
+{
     NSArray *buddyList = [[[EaseMob sharedInstance] chatManager] buddyList];
     for (EMBuddy *buddy in buddyList) {
         if ([buddy.username isEqualToString:buddyName] &&

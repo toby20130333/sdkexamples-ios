@@ -269,7 +269,7 @@
             [weakSelf showHint:@"申请已发送"];
         }
         else{
-            [weakSelf showHint:@"申请发送失败"];
+            [weakSelf showHint:error.description];
         }
     } onQueue:nil];
 }

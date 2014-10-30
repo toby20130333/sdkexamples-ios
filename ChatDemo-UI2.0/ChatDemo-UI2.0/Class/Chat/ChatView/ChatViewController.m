@@ -31,7 +31,6 @@
 #import "NSDate+Category.h"
 #import "DXMessageToolBar.h"
 #import "DXChatBarMoreView.h"
-#import "CallViewController.h"
 
 #define KPageCount 20
 
@@ -759,10 +758,7 @@
 
 - (void)moreViewAudioCallAction:(DXChatBarMoreView *)moreView
 {
-    CallViewController *callController = [CallViewController shareController];
-    [callController setupCallOutWithChatter:_chatter];
-//    [callController setupCallInWithChatter:_chatter];
-    [self presentViewController:callController animated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:_chatter];
 }
 
 #pragma mark - LocationViewDelegate

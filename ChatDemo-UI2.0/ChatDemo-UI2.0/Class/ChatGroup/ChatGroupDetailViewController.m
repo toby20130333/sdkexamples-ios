@@ -149,6 +149,13 @@
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     
+//    [[EaseMob sharedInstance].chatManager asyncChangeGroupSubject:@"xieyajie test345678" forGroup:@"1409903855656" completion:^(EMGroup *group, EMError *error) {
+//        NSLog(@"%@", group.groupSubject);
+//        if (!error) {
+//            [self fetchGroupInfo];
+//        }
+//    } onQueue:nil];
+    
     [self fetchGroupInfo];
 }
 
@@ -325,8 +332,11 @@
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
         NSString *username = [loginInfo objectForKey:kSDKUsername];
         NSString *messageStr = [NSString stringWithFormat:@"%@ 邀请你加入群组\'%@\'", username, weakSelf.chatGroup.groupSubject];
-        weakSelf.chatGroup = [[EaseMob sharedInstance].chatManager addOccupants:source toGroup:weakSelf.chatGroup.groupId welcomeMessage:messageStr error:nil];
-        [weakSelf reloadDataSource];
+        EMError *error = nil;
+        weakSelf.chatGroup = [[EaseMob sharedInstance].chatManager addOccupants:source toGroup:weakSelf.chatGroup.groupId welcomeMessage:messageStr error:&error];
+        if (!error) {
+            [weakSelf reloadDataSource];
+        }
     });
 }
 
@@ -341,12 +351,32 @@
             if (!error) {
                 weakSelf.chatGroup = group;
                 [weakSelf reloadDataSource];
+                
 //                NSString *tmp = [group.members objectAtIndex:0];
+                NSString *tmp = @"zxcvbn";
 //                [[EaseMob sharedInstance].chatManager asyncBlockOccupants:@[tmp] fromGroup:group.groupId completion:^(EMGroup *group, EMError *error){
 //                    if (!error) {
 //                        //
 //                    }
 //                    
+//                } onQueue:nil];
+                
+//                [[EaseMob sharedInstance].chatManager asyncUnblockOccupants:@[tmp] forGroup:group.groupId completion:^(EMGroup *group, EMError *error) {
+//                    if (!error) {
+//                        //
+//                    }
+//                } onQueue:nil];
+                
+//                [[EaseMob sharedInstance].chatManager asyncFetchGroupBansList:group.groupId completion:^(NSArray *groupBans, EMError *error) {
+//                    if (!error) {
+//                        //
+//                    }
+//                } onQueue:nil];
+                
+//                [[EaseMob sharedInstance].chatManager asyncLeaveGroup:@"1413452243774" completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+//                    if (!error) {
+//                        //
+//                    }
 //                } onQueue:nil];
             }
             else{
