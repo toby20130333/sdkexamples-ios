@@ -1,14 +1,14 @@
 /************************************************************
-  *  * EaseMob CONFIDENTIAL 
-  * __________________ 
-  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved. 
-  *  
-  * NOTICE: All information contained herein is, and remains 
-  * the property of EaseMob Technologies.
-  * Dissemination of this information or reproduction of this material 
-  * is strictly forbidden unless prior written permission is obtained
-  * from EaseMob Technologies.
-  */
+ *  * EaseMob CONFIDENTIAL
+ * __________________
+ * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of EaseMob Technologies.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from EaseMob Technologies.
+ */
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
@@ -32,7 +32,21 @@
         [[UINavigationBar appearance] setTitleTextAttributes:
          [NSDictionary dictionaryWithObjectsAndKeys:RGBACOLOR(245, 245, 245, 1), NSForegroundColorAttributeName, [UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
     }
-   
+    
+    //友盟
+    NSString *bundleID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+    if ([bundleID isEqualToString:@"com.easemob.enterprise.demo.ui"]) {
+        [MobClick startWithAppkey:@"5389bb7f56240ba94208ac97"
+                     reportPolicy:BATCH
+                        channelId:Nil];
+#if DEBUG
+        [MobClick setLogEnabled:YES];
+#else
+        [MobClick setLogEnabled:NO];
+#endif
+        
+    }
+    
     [self registerRemoteNotification];
     
 #warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
@@ -85,7 +99,7 @@
     }
     
 #endif
-
+    
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -145,7 +159,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    //    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
 #warning SDK方法调用
     [[EaseMob sharedInstance] applicationDidBecomeActive:application];
@@ -275,7 +289,7 @@
 -(void)loginStateChange:(NSNotification *)notification
 {
     UINavigationController *nav = nil;
-
+    
     BOOL isAutoLogin = [[[EaseMob sharedInstance] chatManager] isAutoLoginEnabled];
     BOOL loginSuccess = [notification.object boolValue];
     
@@ -293,7 +307,7 @@
         nav = [[UINavigationController alloc] initWithRootViewController:loginController];
         loginController.title = @"环信Demo";
     }
-
+    
     if ([UIDevice currentDevice].systemVersion.floatValue < 7.0){
         nav.navigationBar.barStyle = UIBarStyleDefault;
         [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"titleBar"]
