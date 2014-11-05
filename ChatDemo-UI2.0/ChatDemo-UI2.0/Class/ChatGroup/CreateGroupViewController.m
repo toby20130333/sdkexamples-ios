@@ -226,19 +226,7 @@
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     NSString *username = [loginInfo objectForKey:kSDKUsername];
     NSString *messageStr = [NSString stringWithFormat:@"%@ 邀请你加入群组\'%@\'", username, self.textField.text];
-//    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
-//        [weakSelf hideHud];
-//        if (group && !error) {
-//            [weakSelf showHint:@"创建群组成功"];
-//            [weakSelf.navigationController popViewControllerAnimated:YES];
-//        }
-//        else{
-//            [weakSelf showHint:@"创建群组失败，请重新操作"];
-//        }
-//    } onQueue:nil];
-
-    setting.groupStyle = eGroupStyle_PublicChatRoom;
-    [[EaseMob sharedInstance].chatManager asyncCreateChatRoomWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
+    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
         [weakSelf hideHud];
         if (group && !error) {
             [weakSelf showHint:@"创建群组成功"];
@@ -248,6 +236,18 @@
             [weakSelf showHint:@"创建群组失败，请重新操作"];
         }
     } onQueue:nil];
+
+//    setting.groupStyle = eGroupStyle_PublicChatRoom;
+//    [[EaseMob sharedInstance].chatManager asyncCreateChatRoomWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
+//        [weakSelf hideHud];
+//        if (group && !error) {
+//            [weakSelf showHint:@"创建群组成功"];
+//            [weakSelf.navigationController popViewControllerAnimated:YES];
+//        }
+//        else{
+//            [weakSelf showHint:@"创建群组失败，请重新操作"];
+//        }
+//    } onQueue:nil];
 }
 
 #pragma mark - action

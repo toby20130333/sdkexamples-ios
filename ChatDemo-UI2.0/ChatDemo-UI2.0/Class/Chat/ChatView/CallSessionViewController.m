@@ -181,7 +181,7 @@
     }
     else if (_callType == CallOut)
     {
-        _statusLabel.text = @"正在建立连接...";
+        _statusLabel.text = @"准备中...";
         _nameLabel.text = _chatter;
         
         [_answerButton removeFromSuperview];
@@ -265,22 +265,34 @@
                 }
             }
             
-            if (reason == eCallReason_Null) {
-                if(callSession.status == eCallSessionStatusIncoming)
-                {
-                    [self showHint:@"正在通话，自动拒接"];
-                    
-                    //TODO
-                    
-                }
-                else if (callSession.status == eCallSessionStatusConnecting)
-                {
-                    [self _setupSubviews];
-                }
-            }
-            else
+            if(callSession.status == eCallSessionStatusIncoming)
             {
+                [self showHint:@"正在通话，自动拒接"];
                 
+                //TODO
+                
+            }
+            else if (callSession.status == eCallSessionStatusConnecting)
+            {
+                _statusLabel.text = @"连接进行中...";
+
+                [_answerButton removeFromSuperview];
+                _hangupButton.frame = CGRectMake((self.view.frame.size.width - 200) / 2, self.view.frame.size.height - 120, 200, 40);
+                _silenceButton.hidden = NO;
+                _silenceLabel.hidden = NO;
+                _speakerOutButton.hidden = NO;
+                _outLabel.hidden = NO;
+            }
+            else if(callSession.status == eCallSessionStatusConnected)
+            {
+                _statusLabel.text = @"可以通话了";
+                
+                [_answerButton removeFromSuperview];
+                _hangupButton.frame = CGRectMake((self.view.frame.size.width - 200) / 2, self.view.frame.size.height - 120, 200, 40);
+                _silenceButton.hidden = NO;
+                _silenceLabel.hidden = NO;
+                _speakerOutButton.hidden = NO;
+                _outLabel.hidden = NO;
             }
         }
     }
@@ -307,6 +319,15 @@
 
 - (void)answerAction:(id)sender
 {
+    _statusLabel.text = @"正在连接对方，请稍后...";
+    
+    [_answerButton removeFromSuperview];
+    _hangupButton.frame = CGRectMake((self.view.frame.size.width - 200) / 2, self.view.frame.size.height - 120, 200, 40);
+    _silenceButton.hidden = NO;
+    _silenceLabel.hidden = NO;
+    _speakerOutButton.hidden = NO;
+    _outLabel.hidden = NO;
+    
     [[EMSDKFull sharedInstance].callManager asyncAcceptCallSessionWithId:_callSession.sessionId chatter:_callSession.chatter];
 }
 

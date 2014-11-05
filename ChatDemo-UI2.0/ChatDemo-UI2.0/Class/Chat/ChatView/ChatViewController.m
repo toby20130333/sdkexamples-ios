@@ -169,7 +169,6 @@
     
     // 设置当前conversation的所有message为已读
     [_conversation markMessagesAsRead:YES];
-    
 }
 
 - (void)dealloc
@@ -758,7 +757,20 @@
 
 - (void)moreViewAudioCallAction:(DXChatBarMoreView *)moreView
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:_chatter];
+    __weak typeof(self) weakSelf = self;
+    if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
+    {
+        //requestRecordPermission
+        [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+            NSLog(@"granted = %d",granted);
+            if(granted)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:weakSelf.chatter];
+                });
+            }
+        }];
+    }
 }
 
 #pragma mark - LocationViewDelegate
@@ -1085,7 +1097,7 @@
 
 - (void)removeAllMessages:(id)sender
 {
-    if (_conversation.messages.count == 0) {
+    if (_dataSource.count == 0) {
         [self showHint:@"消息已经清空"];
         return;
     }
