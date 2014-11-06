@@ -684,7 +684,7 @@
 
 -(void)didReceiveMessage:(EMMessage *)message
 {
-    if ([_conversation.chatter isEqualToString:message.conversation.chatter]) {
+    if ([_conversation.chatter isEqualToString:message.from]) {
         [self addChatDataToMessage:message];
     }
 }
