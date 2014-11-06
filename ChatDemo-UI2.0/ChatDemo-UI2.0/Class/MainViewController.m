@@ -15,22 +15,19 @@
 #import "ContactsViewController.h"
 #import "SettingsViewController.h"
 #import "ApplyViewController.h"
-#import "CallSessionViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
-@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate, ICallManagerDelegate>
+@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate>
 {
     ChatListViewController *_chatListVC;
     ContactsViewController *_contactsVC;
     SettingsViewController *_settingsVC;
-    CallSessionViewController *_callController;
     
     UIBarButtonItem *_addFriendItem;
 }
 
-@property (strong, nonatomic) CallSessionViewController *callController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 
 @end
@@ -128,13 +125,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self unregisterNotifications];
     
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
-    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
 }
 
 -(void)unregisterNotifications
 {
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
-    [[EMSDKFull sharedInstance].callManager removeDelegate:self];
 }
 
 - (void)setupSubviews
@@ -219,34 +214,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
             _contactsVC.tabBarItem.badgeValue = nil;
         }
     }
-}
-
-- (void)callOutWithChatter:(NSNotification *)notification
-{
-    id object = notification.object;
-    if ([object isKindOfClass:[NSString class]]) {
-        NSString *chatter = (NSString *)object;
-        
-        if (_callController == nil) {
-            [[EMSDKFull sharedInstance].callManager removeDelegate:self];
-            
-            _callController = [[CallSessionViewController alloc] initCallOutWithChatter:chatter];
-            [self presentViewController:_callController animated:YES completion:nil];
-        }
-        else{
-            [self showHint:@"正在通话中"];
-        }
-    }
-}
-
-- (void)callControllerClose:(NSNotification *)notification
-{
-    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
-    
-    __weak typeof(self) weakSelf = self;
-    [_callController dismissViewControllerAnimated:NO completion:^{
-        weakSelf.callController = nil;
-    }];
 }
 
 #pragma mark - IChatManagerDelegate 消息变化
@@ -591,35 +558,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [self showHint:@"重连失败，稍候将继续重连"];
     }else{
         [self showHint:@"重连成功！"];
-    }
-}
-
-#pragma mark - ICallManagerDelegate
-
-- (void)callSessionStatusChanged:(EMCallSession *)callSession changeReason:(EMCallStatusChangedReason)reason error:(EMError *)error
-{
-    if (callSession.status == eCallSessionStatusIncoming) {
-        if (!_callController && !_callController.isCalling)
-        {
-            //        __weak typeof(self) weakSelf = self;
-            //        if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
-            //        {
-            //            //requestRecordPermission
-            //            [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-            //                NSLog(@"granted = %d",granted);
-            //                if(granted)
-            //                {
-            //                    dispatch_async(dispatch_get_main_queue(), ^{
-            //                        weakSelf.callController = [[CallSessionViewController alloc] initCallInWithSession:callSession];
-            //                        [self presentViewController:weakSelf.callController animated:YES completion:nil];
-            //                    });
-            //                }
-            //            }];
-            //        }
-            
-            self.callController = [[CallSessionViewController alloc] initCallInWithSession:callSession];
-            [self presentViewController:self.callController animated:YES completion:nil];
-        }
     }
 }
 
