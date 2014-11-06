@@ -323,14 +323,14 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 }
 
 - (void)playSoundAndVibration{
-    
-    //如果距离上次响铃和震动时间太短, 则跳过响铃
-    NSLog(@"%@, %@", [NSDate date], self.lastPlaySoundDate);
     NSTimeInterval timeInterval = [[NSDate date]
                                    timeIntervalSinceDate:self.lastPlaySoundDate];
     if (timeInterval < kDefaultPlaySoundInterval) {
+        //如果距离上次响铃和震动时间太短, 则跳过响铃
+        NSLog(@"skip ringing & vibration %@, %@", [NSDate date], self.lastPlaySoundDate);
         return;
     }
+    
     //保存最后一次响铃时间
     self.lastPlaySoundDate = [NSDate date];
     
