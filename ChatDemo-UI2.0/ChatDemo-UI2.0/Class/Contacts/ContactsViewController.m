@@ -472,6 +472,10 @@
 
 - (void)cellImageViewLongPressAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        // 群组
+        return;
+    }
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
     EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
