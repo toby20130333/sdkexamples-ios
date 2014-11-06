@@ -16,6 +16,8 @@ typedef enum{
 
 @interface CallSessionViewController : UIViewController
 
+@property (nonatomic) BOOL isCalling;
+
 - (instancetype)initCallOutWithChatter:(NSString *)chatter;
 - (instancetype)initCallInWithSession:(EMCallSession *)callSession;
 

@@ -35,6 +35,7 @@
 @implementation CallSessionViewController
 
 @synthesize callSession = _callSession;
+@synthesize isCalling = _isCalling;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,6 +54,7 @@
 {
     self = [self initWithNibName:nil bundle:nil];
     if (self) {
+        _isCalling = YES;
         _callType = CallOut;
         _chatter = chatter;
     }
@@ -64,6 +66,7 @@
 {
     self = [self initWithNibName:nil bundle:nil];
     if (self) {
+        _isCalling = YES;
         _callType = CallIn;
         _chatter = callSession.chatter;
         _callSession = callSession;
@@ -208,6 +211,7 @@
 
 - (void)_callOutWithChatter:(NSString *)chatter
 {
+    _isCalling = YES;
     EMError *error = nil;
     _callSession = [[EMSDKFull sharedInstance].callManager asyncCallAudioWithChatter:chatter timeout:100 error:&error];
     if (error) {
@@ -219,8 +223,11 @@
 
 - (void)_close
 {
+    _isCalling = NO;
+    _callSession = nil;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"callControllerClose" object:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -237,14 +244,7 @@
 
 - (void)callSessionStatusChanged:(EMCallSession *)callSession changeReason:(EMCallStatusChangedReason)reason error:(EMError *)error
 {
-    if (callSession.status == eCallSessionStatusIncoming)
-    {
-        [self showHint:@"有新的语音请求，当前正在通话中，自动拒绝"];
-        
-        [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:callSession.sessionId chatter:callSession.chatter];
-        
-    }
-    else if ([_callSession.sessionId isEqualToString:callSession.sessionId])
+    if ([_callSession.sessionId isEqualToString:callSession.sessionId])
     {
         UIAlertView *alertView = nil;
         if (error) {
@@ -264,13 +264,12 @@
                     [self _close];
                 }
             }
-            
-            if(callSession.status == eCallSessionStatusIncoming)
+            else if(callSession.status == eCallSessionStatusIncoming)
             {
-                [self showHint:@"正在通话，自动拒接"];
-                
-                //TODO
-                
+                if (_isCalling) {
+                    [self showHint:@"正在通话，自动拒接"];
+                    [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:callSession.sessionId chatter:callSession.chatter];
+                }
             }
             else if (callSession.status == eCallSessionStatusConnecting)
             {
@@ -312,13 +311,12 @@
 
 - (void)hangupAction:(id)sender
 {
-    [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:_callSession.sessionId chatter:_callSession.chatter];
-    
-    [self _close];
+    [[EMSDKFull sharedInstance].callManager asyncTerminateCallSessionWithId:_callSession.sessionId chatter:_callSession.chatter];
 }
 
 - (void)answerAction:(id)sender
 {
+    _isCalling = YES;
     _statusLabel.text = @"正在连接对方，请稍后...";
     
     [_answerButton removeFromSuperview];

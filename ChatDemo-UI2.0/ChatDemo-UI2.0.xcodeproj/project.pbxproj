@@ -67,6 +67,7 @@
 		3C1CEF7D196E9F5400DBA56B /* MWPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3C1CEF66196E9F5400DBA56B /* MWPhotoBrowser.bundle */; };
 		3C1CEF7F196EA37600DBA56B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C1CEF7E196EA37600DBA56B /* ImageIO.framework */; };
 		3C1CEF81196EA49200DBA56B /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C1CEF80196EA49200DBA56B /* SDWebImage.framework */; };
+		3C22F5701A0A242600D4CD75 /* CallSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C22F56F1A0A242600D4CD75 /* CallSessionViewController.m */; };
 		3C2923B11988E13300DCCD40 /* BlackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2923B01988E13300DCCD40 /* BlackListViewController.m */; };
 		3C3527361931D1BE00385240 /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3527351931D1BE00385240 /* BaseTableViewCell.m */; };
 		3C3527451931D37900385240 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3527441931D37900385240 /* SystemConfiguration.framework */; };
@@ -302,11 +303,6 @@
 		90911032192EEA70008A48AA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 90911030192EEA70008A48AA /* InfoPlist.strings */; };
 		90911034192EEA70008A48AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 90911033192EEA70008A48AA /* main.m */; };
 		9091103A192EEA70008A48AA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90911039192EEA70008A48AA /* Images.xcassets */; };
-		90911041192EEA70008A48AA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90911040192EEA70008A48AA /* XCTest.framework */; };
-		90911042192EEA70008A48AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90911027192EEA70008A48AA /* Foundation.framework */; };
-		90911043192EEA70008A48AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9091102B192EEA70008A48AA /* UIKit.framework */; };
-		9091104B192EEA70008A48AA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 90911049192EEA70008A48AA /* InfoPlist.strings */; };
-		9091104D192EEA70008A48AA /* ChatDemo_UI2_0Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9091104C192EEA70008A48AA /* ChatDemo_UI2_0Tests.m */; };
 		909110F0192EEAED008A48AA /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 90911086192EEAED008A48AA /* MBProgressHUD+Add.m */; };
 		909110F1192EEAED008A48AA /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 90911088192EEAED008A48AA /* MBProgressHUD.m */; };
 		90911117192EEAED008A48AA /* THProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 909110E0192EEAED008A48AA /* THProgressView.m */; };
@@ -340,16 +336,6 @@
 		C09DF1F61983ABC1001C0D0D /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = C09DF1F01983ABC1001C0D0D /* 58.png */; };
 		C09DF1F71983ABC1001C0D0D /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = C09DF1F11983ABC1001C0D0D /* 80.png */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		90911044192EEA70008A48AA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9091101C192EEA70008A48AA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 90911023192EEA70008A48AA;
-			remoteInfo = "ChatDemo-UI2.0";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3C06AAA119401A2E0076FF0B /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
@@ -472,6 +458,8 @@
 		3C1CEF66196E9F5400DBA56B /* MWPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWPhotoBrowser.bundle; sourceTree = "<group>"; };
 		3C1CEF7E196EA37600DBA56B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		3C1CEF80196EA49200DBA56B /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = "ChatDemo-UI2.0/3rdparty/SDWebImage.framework"; sourceTree = "<group>"; };
+		3C22F56E1A0A242600D4CD75 /* CallSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallSessionViewController.h; sourceTree = "<group>"; };
+		3C22F56F1A0A242600D4CD75 /* CallSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallSessionViewController.m; sourceTree = "<group>"; };
 		3C2923AF1988E13300DCCD40 /* BlackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListViewController.h; sourceTree = "<group>"; };
 		3C2923B01988E13300DCCD40 /* BlackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlackListViewController.m; sourceTree = "<group>"; };
 		3C3527341931D1BE00385240 /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
@@ -765,7 +753,6 @@
 		90911033192EEA70008A48AA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		90911035192EEA70008A48AA /* ChatDemo-UI2.0-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChatDemo-UI2.0-Prefix.pch"; sourceTree = "<group>"; };
 		90911039192EEA70008A48AA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		9091103F192EEA70008A48AA /* ChatDemo-UI2.0Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ChatDemo-UI2.0Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90911040192EEA70008A48AA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		90911048192EEA70008A48AA /* ChatDemo-UI2.0Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChatDemo-UI2.0Tests-Info.plist"; sourceTree = "<group>"; };
 		9091104A192EEA70008A48AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -844,16 +831,6 @@
 				9091102C192EEA70008A48AA /* UIKit.framework in Frameworks */,
 				3C1CEF81196EA49200DBA56B /* SDWebImage.framework in Frameworks */,
 				90911028192EEA70008A48AA /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9091103C192EEA70008A48AA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				90911041192EEA70008A48AA /* XCTest.framework in Frameworks */,
-				90911043192EEA70008A48AA /* UIKit.framework in Frameworks */,
-				90911042192EEA70008A48AA /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1355,6 +1332,8 @@
 		9003D7821939D8D000DC38A4 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				3C22F56E1A0A242600D4CD75 /* CallSessionViewController.h */,
+				3C22F56F1A0A242600D4CD75 /* CallSessionViewController.m */,
 				3C61B4C419D3F8B500A8D58F /* call_silence.png */,
 				3C61B4C519D3F8B500A8D58F /* call_silence@2x.png */,
 				3C61B4C619D3F8B500A8D58F /* call_silence_h.png */,
@@ -1615,7 +1594,6 @@
 			isa = PBXGroup;
 			children = (
 				90911024192EEA70008A48AA /* ChatDemo-UI2.0.app */,
-				9091103F192EEA70008A48AA /* ChatDemo-UI2.0Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1850,24 +1828,6 @@
 			productReference = 90911024192EEA70008A48AA /* ChatDemo-UI2.0.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9091103E192EEA70008A48AA /* ChatDemo-UI2.0Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 90911053192EEA70008A48AA /* Build configuration list for PBXNativeTarget "ChatDemo-UI2.0Tests" */;
-			buildPhases = (
-				9091103B192EEA70008A48AA /* Sources */,
-				9091103C192EEA70008A48AA /* Frameworks */,
-				9091103D192EEA70008A48AA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				90911045192EEA70008A48AA /* PBXTargetDependency */,
-			);
-			name = "ChatDemo-UI2.0Tests";
-			productName = "ChatDemo-UI2.0Tests";
-			productReference = 9091103F192EEA70008A48AA /* ChatDemo-UI2.0Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1885,9 +1845,6 @@
 							};
 						};
 					};
-					9091103E192EEA70008A48AA = {
-						TestTargetID = 90911023192EEA70008A48AA;
-					};
 				};
 			};
 			buildConfigurationList = 9091101F192EEA70008A48AA /* Build configuration list for PBXProject "ChatDemo-UI2.0" */;
@@ -1903,7 +1860,6 @@
 			projectRoot = "";
 			targets = (
 				90911023192EEA70008A48AA /* ChatDemo-UI2.0 */,
-				9091103E192EEA70008A48AA /* ChatDemo-UI2.0Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -2108,14 +2064,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9091103D192EEA70008A48AA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9091104B192EEA70008A48AA /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2149,6 +2097,7 @@
 				3C1614F01973D4B700564BF5 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				90911117192EEAED008A48AA /* THProgressView.m in Sources */,
 				3C5EB36319407CAF005C7704 /* EMChooseViewController.m in Sources */,
+				3C22F5701A0A242600D4CD75 /* CallSessionViewController.m in Sources */,
 				3C1614F21973D4B700564BF5 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
 				3C1CEF7A196E9F5400DBA56B /* PSTGridLayoutItem.m in Sources */,
 				3C1614E31973D4B700564BF5 /* NSNumber+MagicalDataImport.m in Sources */,
@@ -2244,23 +2193,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9091103B192EEA70008A48AA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9091104D192EEA70008A48AA /* ChatDemo_UI2_0Tests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		90911045192EEA70008A48AA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 90911023192EEA70008A48AA /* ChatDemo-UI2.0 */;
-			targetProxy = 90911044192EEA70008A48AA /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		90911030192EEA70008A48AA /* InfoPlist.strings */ = {
@@ -2415,46 +2348,6 @@
 			};
 			name = Release;
 		};
-		90911054192EEA70008A48AA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ChatDemo-UI2.0.app/ChatDemo-UI2.0";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ChatDemo-UI2.0/ChatDemo-UI2.0-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ChatDemo-UI2.0Tests/ChatDemo-UI2.0Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		90911055192EEA70008A48AA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ChatDemo-UI2.0.app/ChatDemo-UI2.0";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ChatDemo-UI2.0/ChatDemo-UI2.0-Prefix.pch";
-				INFOPLIST_FILE = "ChatDemo-UI2.0Tests/ChatDemo-UI2.0Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2472,15 +2365,6 @@
 			buildConfigurations = (
 				90911051192EEA70008A48AA /* Debug */,
 				90911052192EEA70008A48AA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		90911053192EEA70008A48AA /* Build configuration list for PBXNativeTarget "ChatDemo-UI2.0Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				90911054192EEA70008A48AA /* Debug */,
-				90911055192EEA70008A48AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
