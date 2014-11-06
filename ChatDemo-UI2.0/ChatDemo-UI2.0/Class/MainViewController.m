@@ -412,6 +412,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                                   nil];
         alertView.tag = 99;
         [alertView show];
+        [_chatListVC isConnect:NO];
     }
 }
 

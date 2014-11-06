@@ -462,6 +462,16 @@
     [self hideHud];
 }
 
+- (void)isConnect:(BOOL)isConnect{
+    if (!isConnect) {
+        _tableView.tableHeaderView = _networkStateView;
+    }
+    else{
+        _tableView.tableHeaderView = nil;
+    }
+
+}
+
 - (void)networkChanged:(EMConnectionState)connectionState
 {
     if (connectionState == eEMConnectionDisconnected) {
