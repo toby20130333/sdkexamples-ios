@@ -757,20 +757,7 @@
 
 - (void)moreViewAudioCallAction:(DXChatBarMoreView *)moreView
 {
-    __weak typeof(self) weakSelf = self;
-    if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
-    {
-        //requestRecordPermission
-        [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-            NSLog(@"granted = %d",granted);
-            if(granted)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:weakSelf.chatter];
-                });
-            }
-        }];
-    }
+    
 }
 
 #pragma mark - LocationViewDelegate

@@ -348,12 +348,13 @@
     [self showHudInView:self.view hint:@"加载数据..."];
     [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:_chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf hideHud];
             if (!error) {
                 weakSelf.chatGroup = group;
                 [weakSelf reloadDataSource];
                 
 //                NSString *tmp = [group.members objectAtIndex:0];
-                NSString *tmp = @"zxcvbn";
+//                NSString *tmp = @"zxcvbn";
 //                [[EaseMob sharedInstance].chatManager asyncBlockOccupants:@[tmp] fromGroup:group.groupId completion:^(EMGroup *group, EMError *error){
 //                    if (!error) {
 //                        //
@@ -380,9 +381,8 @@
 //                } onQueue:nil];
             }
             else{
-                [weakSelf hideHud];
                 [weakSelf showHint:@"获取群组详情失败，请稍后重试"];
-                [weakSelf reloadDataSource];
+//                [weakSelf reloadDataSource];
             }
         });
     } onQueue:nil];

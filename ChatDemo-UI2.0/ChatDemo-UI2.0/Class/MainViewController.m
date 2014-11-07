@@ -57,8 +57,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 #warning 把self注册为SDK的delegate
     [self registerNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callOutWithChatter:) name:@"callOutWithChatter" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callControllerClose:) name:@"callControllerClose" object:nil];
     
     [self setupSubviews];
     self.selectedIndex = 0;
