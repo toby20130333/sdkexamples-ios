@@ -812,15 +812,17 @@
 //    }
 //    _isRecording = YES;
     
-    DXRecordView *tmpView = (DXRecordView *)recordView;
-    tmpView.center = self.view.center;
-    [self.view addSubview:tmpView];
-    [self.view bringSubviewToFront:recordView];
-    
-    NSError *error = nil;
-    [[EaseMob sharedInstance].chatManager startRecordingAudioWithError:&error];
-    if (error) {
-        NSLog(@"开始录音失败");
+    if ([self canRecord]) {
+        DXRecordView *tmpView = (DXRecordView *)recordView;
+        tmpView.center = self.view.center;
+        [self.view addSubview:tmpView];
+        [self.view bringSubviewToFront:recordView];
+        
+        NSError *error = nil;
+        [[EaseMob sharedInstance].chatManager startRecordingAudioWithError:&error];
+        if (error) {
+            NSLog(@"开始录音失败");
+        }
     }
 }
 
@@ -933,19 +935,12 @@
     __block BOOL bCanRecord = YES;
     if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending)
     {
-        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         if ([audioSession respondsToSelector:@selector(requestRecordPermission:)]) {
             [audioSession performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
-                if (granted) {
-                    bCanRecord = YES;
-                } else {
-                    bCanRecord = NO;
-                }
+                bCanRecord = granted;
             }];
         }
-        
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
     }
     
     return bCanRecord;
