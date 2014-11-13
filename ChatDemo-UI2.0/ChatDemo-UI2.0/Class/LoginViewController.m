@@ -126,7 +126,7 @@
         UITextField *nameTextField = [alertView textFieldAtIndex:0];
         if(nameTextField.text.length > 0)
         {
-            [[EaseMob sharedInstance].chatManager setNickname:nameTextField.text];
+            [[EaseMob sharedInstance].chatManager setApnsNickname:nameTextField.text];
         }
     }
     

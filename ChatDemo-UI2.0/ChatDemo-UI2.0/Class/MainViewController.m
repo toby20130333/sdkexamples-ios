@@ -234,7 +234,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (BOOL)needShowNotification:(NSString *)fromChatter
 {
     BOOL ret = YES;
-    NSArray *igGroupIds = [[EaseMob sharedInstance].chatManager ignoredGroupList];
+    NSArray *igGroupIds = [[EaseMob sharedInstance].chatManager ignoredGroupIds];
     for (NSString *str in igGroupIds) {
         if ([str isEqualToString:fromChatter]) {
             ret = NO;
@@ -274,7 +274,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 // 收到消息回调
 -(void)didReceiveMessage:(EMMessage *)message
 {
-    BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversation.chatter] : YES;
+    BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversationChatter] : YES;
     if (needShowNotification) {
 #if !TARGET_IPHONE_SIMULATOR
         [self playSoundAndVibration];
@@ -348,7 +348,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         if (message.isGroup) {
             NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
             for (EMGroup *group in groupArray) {
-                if ([group.groupId isEqualToString:message.conversation.chatter]) {
+                if ([group.groupId isEqualToString:message.conversationChatter]) {
                     title = [NSString stringWithFormat:@"%@(%@)", message.groupSenderName, group.groupSubject];
                     break;
                 }

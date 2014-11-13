@@ -171,6 +171,31 @@
     [[EaseMob sharedInstance] applicationWillTerminate:application];
 }
 
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    [EaseMob sharedInstance];
+//    UINavigationController *navigationController = (UINavigationController*)self.window.rootViewController;
+//    
+//    id fetchViewController = navigationController.topViewController;
+//    if ([fetchViewController respondsToSelector:@selector(fetchDataResult:)]) {
+//        [fetchViewController fetchDataResult:^(NSError *error, NSArray *results){
+//            if (!error) {
+//                if (results.count != 0) {
+//                    //Update UI with results.
+//                    //Tell system all done.
+//                    completionHandler(UIBackgroundFetchResultNewData);
+//                } else {
+//                    completionHandler(UIBackgroundFetchResultNoData);
+//                }
+//            } else {
+//                completionHandler(UIBackgroundFetchResultFailed);
+//            }
+//        }];
+//    } else {
+//        completionHandler(UIBackgroundFetchResultFailed);
+//    }
+}
+
 #pragma mark - IChatManagerDelegate 好友变化
 
 - (void)didReceiveBuddyRequest:(NSString *)username

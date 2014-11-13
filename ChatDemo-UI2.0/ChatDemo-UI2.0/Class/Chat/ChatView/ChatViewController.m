@@ -45,6 +45,7 @@
     
     dispatch_queue_t _messageQueue;
     
+    NSMutableArray *_messages;
     BOOL _isScrollToBottom;
 }
 
@@ -62,6 +63,7 @@
 @property (strong, nonatomic) EMConversation *conversation;//会话管理者
 @property (strong, nonatomic) NSDate *chatTagDate;
 
+@property (strong, nonatomic) NSMutableArray *messages;
 @property (nonatomic) BOOL isScrollToBottom;
 @property (nonatomic) BOOL isPlayingAudio;
 
@@ -76,6 +78,7 @@
         _isPlayingAudio = NO;
         _chatter = chatter;
         _isChatGroup = isGroup;
+        _messages = [NSMutableArray array];
         
         //根据接收者的username获取当前会话的管理者
         _conversation = [[EaseMob sharedInstance].chatManager conversationForChatter:chatter isGroup:_isChatGroup];
@@ -168,7 +171,7 @@
     [super viewWillDisappear:animated];
     
     // 设置当前conversation的所有message为已读
-    [_conversation markMessagesAsRead:YES];
+    [_conversation markAllMessagesAsRead:YES];
 }
 
 - (void)dealloc
@@ -492,11 +495,11 @@
 {
     id <IEMFileMessageBody> body = [model.message.messageBodies firstObject];
     EMAttachmentDownloadStatus downloadStatus = [body attachmentDownloadStatus];
-    if (downloadStatus == EMAttachmentDownloading) {
+    if (downloadStatus == eAttachmentDownloading) {
         [self showHint:@"正在下载语音，稍后点击"];
         return;
     }
-    else if (downloadStatus == EMAttachmentDownloadFailure)
+    else if (downloadStatus == eAttachmentDownloadFailure)
     {
         [self showHint:@"正在下载语音，稍后点击"];
         [[EaseMob sharedInstance].chatManager asyncFetchMessage:model.message progress:nil];
@@ -576,7 +579,7 @@
     id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
     if ([model.messageBody messageBodyType] == eMessageBodyType_Image) {
         EMImageMessageBody *imageBody = (EMImageMessageBody *)model.messageBody;
-        if (imageBody.thumbnailDownloadStatus == EMAttachmentDownloadSuccessed) {
+        if (imageBody.thumbnailDownloadStatus == eAttachmentDownloadSuccessed) {
             [weakSelf showHudInView:weakSelf.view hint:@"正在获取大图..."];
             [chatManager asyncFetchMessage:model.message progress:nil completion:^(EMMessage *aMessage, EMError *error) {
                 [weakSelf hideHud];
@@ -605,7 +608,7 @@
     }else if ([model.messageBody messageBodyType] == eMessageBodyType_Video) {
         //获取缩略图
         EMVideoMessageBody *videoBody = (EMVideoMessageBody *)model.messageBody;
-        if (videoBody.thumbnailDownloadStatus != EMAttachmentDownloadSuccessed) {
+        if (videoBody.thumbnailDownloadStatus != eAttachmentDownloadSuccessed) {
             [chatManager asyncFetchMessageThumbnail:model.message progress:nil completion:^(EMMessage *aMessage, EMError *error) {
                 if (!error) {
                     [weakSelf reloadTableViewDataWithMessage:model.message];
@@ -627,7 +630,7 @@
 - (void)reloadTableViewDataWithMessage:(EMMessage *)message{
     __weak ChatViewController *weakSelf = self;
     dispatch_async(_messageQueue, ^{
-        if ([weakSelf.conversation.chatter isEqualToString:message.conversation.chatter])
+        if ([weakSelf.conversation.chatter isEqualToString:message.conversationChatter])
         {
             for (int i = 0; i < weakSelf.dataSource.count; i ++) {
                 id object = [weakSelf.dataSource objectAtIndex:i];
@@ -656,18 +659,18 @@
         id<IEMFileMessageBody>fileBody = (id<IEMFileMessageBody>)[message.messageBodies firstObject];
         if ([fileBody messageBodyType] == eMessageBodyType_Image) {
             EMImageMessageBody *imageBody = (EMImageMessageBody *)fileBody;
-            if ([imageBody thumbnailDownloadStatus] == EMAttachmentDownloadSuccessed)
+            if ([imageBody thumbnailDownloadStatus] == eAttachmentDownloadSuccessed)
             {
                 [self reloadTableViewDataWithMessage:message];
             }
         }else if([fileBody messageBodyType] == eMessageBodyType_Video){
             EMVideoMessageBody *videoBody = (EMVideoMessageBody *)fileBody;
-            if ([videoBody thumbnailDownloadStatus] == EMAttachmentDownloadSuccessed)
+            if ([videoBody thumbnailDownloadStatus] == eAttachmentDownloadSuccessed)
             {
                 [self reloadTableViewDataWithMessage:message];
             }
         }else if([fileBody messageBodyType] == eMessageBodyType_Voice){
-            if ([fileBody attachmentDownloadStatus] == EMAttachmentDownloadSuccessed)
+            if ([fileBody attachmentDownloadStatus] == eAttachmentDownloadSuccessed)
             {
                 [self reloadTableViewDataWithMessage:message];
             }
@@ -702,7 +705,7 @@
     [_chatToolBar cancelTouchRecord];
     
     // 设置当前conversation的所有message为已读
-    [_conversation markMessagesAsRead:YES];
+    [_conversation markAllMessagesAsRead:YES];
     
     [self stopAudioPlaying];
 }
@@ -970,19 +973,22 @@
 {
     __weak typeof(self) weakSelf = self;
     dispatch_async(_messageQueue, ^{
+//        NSInteger currentCount = [weakSelf.dataSource count];
+//        EMMessage *latestMessage = [weakSelf.conversation latestMessage];
+//        NSTimeInterval beforeTime = 0;
+//        if (latestMessage) {
+//            beforeTime = latestMessage.timestamp + 1;
+//        }else{
+//            beforeTime = [[NSDate date] timeIntervalSince1970] * 1000 + 1;
+//        }
+        
+//        NSArray *chats = [weakSelf.conversation loadNumbersOfMessages:(currentCount + KPageCount) before:beforeTime];
         NSInteger currentCount = [weakSelf.dataSource count];
-        EMMessage *latestMessage = [weakSelf.conversation latestMessage];
-        NSTimeInterval beforeTime = 0;
-        if (latestMessage) {
-            beforeTime = latestMessage.timestamp + 1;
-        }else{
-            beforeTime = [[NSDate date] timeIntervalSince1970] * 1000 + 1;
-        }
-        
-        NSArray *chats = [weakSelf.conversation loadNumbersOfMessages:(currentCount + KPageCount) before:beforeTime];
-        
-        if ([chats count] > currentCount) {
-            weakSelf.dataSource.array = [weakSelf sortChatSource:chats];
+        NSArray *chats = [weakSelf.conversation loadMessagesFromIndex:[weakSelf.messages count] limit:20];
+        if ([chats count] > 0) {
+            [weakSelf.messages addObjectsFromArray:chats];
+            
+            [weakSelf.dataSource addObjectsFromArray:[weakSelf sortChatSource:chats]];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView reloadData];
                 
@@ -1144,7 +1150,7 @@
     [_chatToolBar cancelTouchRecord];
     
     // 设置当前conversation的所有message为已读
-    [_conversation markMessagesAsRead:YES];
+    [_conversation markAllMessagesAsRead:YES];
 }
 
 #pragma mark - send message
