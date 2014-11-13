@@ -202,43 +202,31 @@
     }
     
     EMGroupStyleSetting *setting = [[EMGroupStyleSetting alloc] init];
-//    if (_isPublic) {
-//        if(_isMemberOn)
-//        {
-//            setting.groupStyle = eGroupStyle_PublicOpenJoin;
-//        }
-//        else{
-//            setting.groupStyle = eGroupStyle_PublicJoinNeedApproval;
-//        }
-//    }
-//    else{
-//        if(_isMemberOn)
-//        {
-//            setting.groupStyle = eGroupStyle_PrivateMemberCanInvite;
-//        }
-//        else{
-//            setting.groupStyle = eGroupStyle_PrivateOnlyOwnerInvite;
-//        }
-//    }
+    if (_isPublic) {
+        if(_isMemberOn)
+        {
+            setting.groupStyle = eGroupStyle_PublicOpenJoin;
+        }
+        else{
+            setting.groupStyle = eGroupStyle_PublicJoinNeedApproval;
+        }
+    }
+    else{
+        if(_isMemberOn)
+        {
+            setting.groupStyle = eGroupStyle_PrivateMemberCanInvite;
+        }
+        else{
+            setting.groupStyle = eGroupStyle_PrivateOnlyOwnerInvite;
+        }
+    }
     
 //    setting.groupMaxUsersCount = 4;
     __weak CreateGroupViewController *weakSelf = self;
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     NSString *username = [loginInfo objectForKey:kSDKUsername];
     NSString *messageStr = [NSString stringWithFormat:@"%@ 邀请你加入群组\'%@\'", username, self.textField.text];
-//    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
-//        [weakSelf hideHud];
-//        if (group && !error) {
-//            [weakSelf showHint:@"创建群组成功"];
-//            [weakSelf.navigationController popViewControllerAnimated:YES];
-//        }
-//        else{
-//            [weakSelf showHint:@"创建群组失败，请重新操作"];
-//        }
-//    } onQueue:nil];
-
-    setting.groupStyle = eGroupStyle_PublicChatRoom;
-    [[EaseMob sharedInstance].chatManager asyncCreateChatRoomWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
+    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
         [weakSelf hideHud];
         if (group && !error) {
             [weakSelf showHint:@"创建群组成功"];

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "EMSDKFull.h"
+#import "EMCallSession.h"
+
 typedef enum{
     CallNone = 0,
     CallOut,
