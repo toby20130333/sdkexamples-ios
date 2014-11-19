@@ -594,17 +594,17 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)callSessionStatusChanged:(EMCallSession *)callSession changeReason:(EMCallStatusChangedReason)reason error:(EMError *)error
 {
-    if (callSession.status == eCallSessionStatusIncoming)
+    if (callSession.status == eCallSessionStatusConnected)
     {
         if (_callController == nil) {
             _callController = [[CallSessionViewController alloc] initCallInWithSession:callSession];
             [self presentViewController:_callController animated:YES completion:nil];
         }
-        else{
-            [self showHint:@"有新的语音请求，当前正在通话中，自动拒绝"];
-            
-            [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:callSession.sessionId chatter:callSession.chatter];
-        }
+//        else{
+//            [self showHint:@"有新的语音请求，当前正在通话中，自动拒绝"];
+//            
+//            [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:callSession.sessionId];
+//        }
     }
 }
 

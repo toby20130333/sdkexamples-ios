@@ -26,5 +26,7 @@
 
     #import "EaseMob.h"
     #import "EMError.h"
+    #import "EMSDKFull.h"
+    #import "EMCallSession.h"
 
 #endif

@@ -65,7 +65,6 @@
     self = [self initWithNibName:nil bundle:nil];
     if (self) {
         _callType = CallIn;
-        _chatter = callSession.chatter;
         _callSession = callSession;
     }
     
@@ -237,14 +236,15 @@
 
 - (void)callSessionStatusChanged:(EMCallSession *)callSession changeReason:(EMCallStatusChangedReason)reason error:(EMError *)error
 {
-    if (callSession.status == eCallSessionStatusIncoming)
+    if (_callSession && ![callSession.sessionId isEqualToString:_callSession.sessionId] && callSession.status == eCallSessionStatusRinging)
     {
         [self showHint:@"有新的语音请求，当前正在通话中，自动拒绝"];
         
-        [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:callSession.sessionId chatter:callSession.chatter];
-        
+        [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:callSession.sessionId];
+        return;
     }
-    else if ([_callSession.sessionId isEqualToString:callSession.sessionId])
+    
+    if ([_callSession.sessionId isEqualToString:callSession.sessionId])
     {
         UIAlertView *alertView = nil;
         if (error) {
@@ -264,23 +264,19 @@
                     [self _close];
                 }
             }
-            
-            if (reason == eCallReason_Null) {
-                if(callSession.status == eCallSessionStatusIncoming)
-                {
-                    [self showHint:@"正在通话，自动拒接"];
-                    
-                    //TODO
-                    
-                }
-                else if (callSession.status == eCallSessionStatusConnecting)
-                {
-                    [self _setupSubviews];
-                }
-            }
-            else
+            else if (callSession.status == eCallSessionStatusAccepted)
             {
+                _statusLabel.text = @"可以通话了...";
                 
+                if(_callType == CallIn)
+                {
+                    [_answerButton removeFromSuperview];
+                    _hangupButton.frame = CGRectMake((self.view.frame.size.width - 200) / 2, self.view.frame.size.height - 120, 200, 40);
+                    _silenceButton.hidden = NO;
+                    _silenceLabel.hidden = NO;
+                    _speakerOutButton.hidden = NO;
+                    _outLabel.hidden = NO;
+                }
             }
         }
     }
@@ -300,14 +296,14 @@
 
 - (void)hangupAction:(id)sender
 {
-    [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:_callSession.sessionId chatter:_callSession.chatter];
+    [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:_callSession.sessionId];
     
     [self _close];
 }
 
 - (void)answerAction:(id)sender
 {
-    [[EMSDKFull sharedInstance].callManager asyncAcceptCallSessionWithId:_callSession.sessionId chatter:_callSession.chatter];
+    [[EMSDKFull sharedInstance].callManager asyncAcceptCallSessionWithId:_callSession.sessionId];
 }
 
 @end

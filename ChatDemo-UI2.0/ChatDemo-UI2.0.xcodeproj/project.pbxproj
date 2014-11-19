@@ -220,12 +220,15 @@
 		3C914D8719514BBD0002DAD3 /* groupPrivateHeader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C914D7D19514BBD0002DAD3 /* groupPrivateHeader@2x.png */; };
 		3C914D8819514BBD0002DAD3 /* nav_createGroup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C914D7E19514BBD0002DAD3 /* nav_createGroup@2x.png */; };
 		3C9DDAB4193871D8007C765A /* EMSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9DDAB3193871D8007C765A /* EMSearchDisplayController.m */; };
+		3CA121481A14D97900753D7F /* CallSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA121471A14D97900753D7F /* CallSessionViewController.m */; };
 		3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB931B1A14B227007FED9E /* libsqlite3.dylib */; };
 		3CBB94301A14B400007FED9E /* libvoice_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB942F1A14B400007FED9E /* libvoice_engine.a */; };
-		3CBB94321A14B522007FED9E /* libEaseMobClientSDKLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB94311A14B522007FED9E /* libEaseMobClientSDKLite.a */; };
-		3CBB95A01A14BC8A007FED9E /* CallSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBB959F1A14BC8A007FED9E /* CallSessionViewController.m */; };
 		3CBF90C019302F5000AD68AE /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF90BF19302F5000AD68AE /* BaseViewController.m */; };
+		3CDDDCB01A1B555C0082A710 /* libEaseMobClientSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA121441A14D8FE00753D7F /* libEaseMobClientSDK.a */; };
 		3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE6293219A1B13700829632 /* CoreText.framework */; };
+		3CE7BC8C1A1C7F8100B76A0B /* EasemobSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7BC8B1A1C7F8100B76A0B /* EasemobSDKTests.m */; };
+		3CE7BC931A1C81BD00B76A0B /* LoginTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7BC921A1C81BD00B76A0B /* LoginTest.m */; };
+		3CE7BC951A1C828800B76A0B /* FetchBuddyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7BC941A1C828800B76A0B /* FetchBuddyTest.m */; };
 		9003D8681939D8D000DC38A4 /* ChatListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D7791939D8D000DC38A4 /* ChatListCell.m */; };
 		9003D8691939D8D000DC38A4 /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D77B1939D8D000DC38A4 /* ChatListViewController.m */; };
 		9003D86E1939D8D000DC38A4 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D7861939D8D000DC38A4 /* ChatViewController.m */; };
@@ -342,6 +345,16 @@
 		C09DF1F61983ABC1001C0D0D /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = C09DF1F01983ABC1001C0D0D /* 58.png */; };
 		C09DF1F71983ABC1001C0D0D /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = C09DF1F11983ABC1001C0D0D /* 80.png */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3CE7BC8D1A1C7F8200B76A0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9091101C192EEA70008A48AA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 90911023192EEA70008A48AA;
+			remoteInfo = "ChatDemo-UI2.0";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3C06AAA119401A2E0076FF0B /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
@@ -478,7 +491,6 @@
 		3C3527441931D37900385240 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C35365A19A22164003EF79E /* GroupSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSettingViewController.h; sourceTree = "<group>"; };
 		3C35365B19A22164003EF79E /* GroupSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupSettingViewController.m; sourceTree = "<group>"; };
-		3C372B6019FE64EE005925B6 /* libEaseMobClientSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libEaseMobClientSDK.a; path = "../../../emclient-ios/EaseMobClientSDK/build/Debug-iphoneos/libEaseMobClientSDK.a"; sourceTree = "<group>"; };
 		3C3E18EB19751D2A00D1658E /* chatListCellHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatListCellHead.png; sourceTree = "<group>"; };
 		3C3E18EC19751D2A00D1658E /* chatListCellHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatListCellHead@2x.png"; sourceTree = "<group>"; };
 		3C3E18EF19751D2A00D1658E /* chatFire_audioPlaying0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatFire_audioPlaying0.png; sourceTree = "<group>"; };
@@ -636,15 +648,20 @@
 		3C914D7E19514BBD0002DAD3 /* nav_createGroup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_createGroup@2x.png"; sourceTree = "<group>"; };
 		3C9DDAB2193871D8007C765A /* EMSearchDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSearchDisplayController.h; sourceTree = "<group>"; };
 		3C9DDAB3193871D8007C765A /* EMSearchDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSearchDisplayController.m; sourceTree = "<group>"; };
-		3CA4C82D196B8ED100B9116C /* libEaseMobClientSDKLite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libEaseMobClientSDKLite.a; path = "../../../../Library/Developer/Xcode/DerivedData/sdk-dfpwntqtiycqrodopkocwdmlbjeu/Build/Products/Debug-iphoneos/libEaseMobClientSDKLite.a"; sourceTree = "<group>"; };
+		3CA121441A14D8FE00753D7F /* libEaseMobClientSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libEaseMobClientSDK.a; path = "../../../../../Library/Developer/Xcode/DerivedData/sdk-cyvrcbrfzbzlhqdmmmcqwaqmwvrv/Build/Products/Debug-iphoneos/libEaseMobClientSDK.a"; sourceTree = "<group>"; };
+		3CA121461A14D97900753D7F /* CallSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallSessionViewController.h; sourceTree = "<group>"; };
+		3CA121471A14D97900753D7F /* CallSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallSessionViewController.m; sourceTree = "<group>"; };
 		3CBB931B1A14B227007FED9E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3CBB942F1A14B400007FED9E /* libvoice_engine.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvoice_engine.a; path = "ChatDemo-UI2.0/3rdparty/libvoice_engine.a"; sourceTree = "<group>"; };
 		3CBB94311A14B522007FED9E /* libEaseMobClientSDKLite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libEaseMobClientSDKLite.a; path = "../../../../../Library/Developer/Xcode/DerivedData/sdk-cyvrcbrfzbzlhqdmmmcqwaqmwvrv/Build/Products/Debug-iphoneos/libEaseMobClientSDKLite.a"; sourceTree = "<group>"; };
-		3CBB959E1A14BC8A007FED9E /* CallSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallSessionViewController.h; sourceTree = "<group>"; };
-		3CBB959F1A14BC8A007FED9E /* CallSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallSessionViewController.m; sourceTree = "<group>"; };
 		3CBF90BE19302F5000AD68AE /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3CBF90BF19302F5000AD68AE /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3CE6293219A1B13700829632 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		3CE7BC871A1C7F8100B76A0B /* EasemobSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EasemobSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CE7BC8A1A1C7F8100B76A0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CE7BC8B1A1C7F8100B76A0B /* EasemobSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EasemobSDKTests.m; sourceTree = "<group>"; };
+		3CE7BC921A1C81BD00B76A0B /* LoginTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTest.m; sourceTree = "<group>"; };
+		3CE7BC941A1C828800B76A0B /* FetchBuddyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchBuddyTest.m; sourceTree = "<group>"; };
 		9003D7781939D8D000DC38A4 /* ChatListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatListCell.h; sourceTree = "<group>"; };
 		9003D7791939D8D000DC38A4 /* ChatListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatListCell.m; sourceTree = "<group>"; };
 		9003D77A1939D8D000DC38A4 /* ChatListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatListViewController.h; sourceTree = "<group>"; };
@@ -766,10 +783,6 @@
 		90911033192EEA70008A48AA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		90911035192EEA70008A48AA /* ChatDemo-UI2.0-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChatDemo-UI2.0-Prefix.pch"; sourceTree = "<group>"; };
 		90911039192EEA70008A48AA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		90911040192EEA70008A48AA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		90911048192EEA70008A48AA /* ChatDemo-UI2.0Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChatDemo-UI2.0Tests-Info.plist"; sourceTree = "<group>"; };
-		9091104A192EEA70008A48AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9091104C192EEA70008A48AA /* ChatDemo_UI2_0Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatDemo_UI2_0Tests.m; sourceTree = "<group>"; };
 		90911085192EEAED008A48AA /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		90911086192EEAED008A48AA /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
 		90911087192EEAED008A48AA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -823,11 +836,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3CE7BC841A1C7F8100B76A0B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		90911021192EEA70008A48AA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CBB94321A14B522007FED9E /* libEaseMobClientSDKLite.a in Frameworks */,
+				3CDDDCB01A1B555C0082A710 /* libEaseMobClientSDK.a in Frameworks */,
 				3CBB94301A14B400007FED9E /* libvoice_engine.a in Frameworks */,
 				3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */,
 				3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */,
@@ -1329,6 +1349,25 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		3CE7BC881A1C7F8100B76A0B /* EasemobSDKTests */ = {
+			isa = PBXGroup;
+			children = (
+				3CE7BC8B1A1C7F8100B76A0B /* EasemobSDKTests.m */,
+				3CE7BC891A1C7F8100B76A0B /* Supporting Files */,
+				3CE7BC921A1C81BD00B76A0B /* LoginTest.m */,
+				3CE7BC941A1C828800B76A0B /* FetchBuddyTest.m */,
+			);
+			path = EasemobSDKTests;
+			sourceTree = "<group>";
+		};
+		3CE7BC891A1C7F8100B76A0B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3CE7BC8A1A1C7F8100B76A0B /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		9003D7761939D8D000DC38A4 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -1352,8 +1391,8 @@
 		9003D7821939D8D000DC38A4 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
-				3CBB959E1A14BC8A007FED9E /* CallSessionViewController.h */,
-				3CBB959F1A14BC8A007FED9E /* CallSessionViewController.m */,
+				3CA121461A14D97900753D7F /* CallSessionViewController.h */,
+				3CA121471A14D97900753D7F /* CallSessionViewController.m */,
 				3C61B4C419D3F8B500A8D58F /* call_silence.png */,
 				3C61B4C519D3F8B500A8D58F /* call_silence@2x.png */,
 				3C61B4C619D3F8B500A8D58F /* call_silence_h.png */,
@@ -1604,7 +1643,7 @@
 			isa = PBXGroup;
 			children = (
 				9091102D192EEA70008A48AA /* ChatDemo-UI2.0 */,
-				90911046192EEA70008A48AA /* ChatDemo-UI2.0Tests */,
+				3CE7BC881A1C7F8100B76A0B /* EasemobSDKTests */,
 				90911026192EEA70008A48AA /* Frameworks */,
 				90911025192EEA70008A48AA /* Products */,
 			);
@@ -1614,6 +1653,7 @@
 			isa = PBXGroup;
 			children = (
 				90911024192EEA70008A48AA /* ChatDemo-UI2.0.app */,
+				3CE7BC871A1C7F8100B76A0B /* EasemobSDKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1621,14 +1661,13 @@
 		90911026192EEA70008A48AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3CA121441A14D8FE00753D7F /* libEaseMobClientSDK.a */,
 				3CBB94311A14B522007FED9E /* libEaseMobClientSDKLite.a */,
 				3CBB942F1A14B400007FED9E /* libvoice_engine.a */,
 				3CBB931B1A14B227007FED9E /* libsqlite3.dylib */,
-				3C372B6019FE64EE005925B6 /* libEaseMobClientSDK.a */,
 				3CE6293219A1B13700829632 /* CoreText.framework */,
 				3C1CEF80196EA49200DBA56B /* SDWebImage.framework */,
 				3C1CEF7E196EA37600DBA56B /* ImageIO.framework */,
-				3CA4C82D196B8ED100B9116C /* libEaseMobClientSDKLite.a */,
 				3C06AB0219405D330076FF0B /* MapKit.framework */,
 				3C06AAFE194050A00076FF0B /* CoreLocation.framework */,
 				902DEC541931D934006CA75E /* libresolv.dylib */,
@@ -1645,7 +1684,6 @@
 				90911027192EEA70008A48AA /* Foundation.framework */,
 				90911029192EEA70008A48AA /* CoreGraphics.framework */,
 				9091102B192EEA70008A48AA /* UIKit.framework */,
-				90911040192EEA70008A48AA /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1672,24 +1710,6 @@
 				90911033192EEA70008A48AA /* main.m */,
 				90911035192EEA70008A48AA /* ChatDemo-UI2.0-Prefix.pch */,
 				90911133192EEC59008A48AA /* ChatDemoUIDefine.h */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		90911046192EEA70008A48AA /* ChatDemo-UI2.0Tests */ = {
-			isa = PBXGroup;
-			children = (
-				9091104C192EEA70008A48AA /* ChatDemo_UI2_0Tests.m */,
-				90911047192EEA70008A48AA /* Supporting Files */,
-			);
-			path = "ChatDemo-UI2.0Tests";
-			sourceTree = "<group>";
-		};
-		90911047192EEA70008A48AA /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				90911048192EEA70008A48AA /* ChatDemo-UI2.0Tests-Info.plist */,
-				90911049192EEA70008A48AA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1768,8 +1788,8 @@
 				9003D84D1939D8D000DC38A4 /* Contacts */,
 				90911125192EEBB8008A48AA /* Settings */,
 				90911134192EEC91008A48AA /* LoginViewController.h */,
-				90911135192EEC91008A48AA /* LoginViewController.m */,
 				90911136192EEC91008A48AA /* LoginViewController.xib */,
+				90911135192EEC91008A48AA /* LoginViewController.m */,
 				90911142192EEE6E008A48AA /* MainViewController.h */,
 				90911143192EEE6E008A48AA /* MainViewController.m */,
 				90911121192EEBB8008A48AA /* AppDelegate.h */,
@@ -1834,6 +1854,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3CE7BC861A1C7F8100B76A0B /* EasemobSDKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CE7BC911A1C7F8200B76A0B /* Build configuration list for PBXNativeTarget "EasemobSDKTests" */;
+			buildPhases = (
+				3CE7BC831A1C7F8100B76A0B /* Sources */,
+				3CE7BC841A1C7F8100B76A0B /* Frameworks */,
+				3CE7BC851A1C7F8100B76A0B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3CE7BC8E1A1C7F8200B76A0B /* PBXTargetDependency */,
+			);
+			name = EasemobSDKTests;
+			productName = EasemobSDKTests;
+			productReference = 3CE7BC871A1C7F8100B76A0B /* EasemobSDKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		90911023192EEA70008A48AA /* ChatDemo-UI2.0 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 90911050192EEA70008A48AA /* Build configuration list for PBXNativeTarget "ChatDemo-UI2.0" */;
@@ -1860,6 +1898,10 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
+					3CE7BC861A1C7F8100B76A0B = {
+						CreatedOnToolsVersion = 6.0.1;
+						TestTargetID = 90911023192EEA70008A48AA;
+					};
 					90911023192EEA70008A48AA = {
 						DevelopmentTeam = 499WYUV8Q2;
 						SystemCapabilities = {
@@ -1883,11 +1925,19 @@
 			projectRoot = "";
 			targets = (
 				90911023192EEA70008A48AA /* ChatDemo-UI2.0 */,
+				3CE7BC861A1C7F8100B76A0B /* EasemobSDKTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3CE7BC851A1C7F8100B76A0B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		90911022192EEA70008A48AA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2091,6 +2141,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3CE7BC831A1C7F8100B76A0B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CE7BC8C1A1C7F8100B76A0B /* EasemobSDKTests.m in Sources */,
+				3CE7BC931A1C81BD00B76A0B /* LoginTest.m in Sources */,
+				3CE7BC951A1C828800B76A0B /* FetchBuddyTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		90911020192EEA70008A48AA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2110,7 +2170,7 @@
 				3C1614F91973D4B700564BF5 /* MagicalRecord.m in Sources */,
 				3C16149F1973D1A600564BF5 /* UIDemo.xcdatamodeld in Sources */,
 				3C1614F81973D4B700564BF5 /* MagicalRecord+ShorthandSupport.m in Sources */,
-				3CBB95A01A14BC8A007FED9E /* CallSessionViewController.m in Sources */,
+				3CA121481A14D97900753D7F /* CallSessionViewController.m in Sources */,
 				909308BE19604821005013BD /* Emoji.m in Sources */,
 				3C1614F41973D4B700564BF5 /* MagicalRecord+ErrorHandling.m in Sources */,
 				905326B519333E8E00F064D7 /* TTGlobalUICommon.m in Sources */,
@@ -2221,6 +2281,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3CE7BC8E1A1C7F8200B76A0B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 90911023192EEA70008A48AA /* ChatDemo-UI2.0 */;
+			targetProxy = 3CE7BC8D1A1C7F8200B76A0B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		90911030192EEA70008A48AA /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -2230,17 +2298,51 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		90911049192EEA70008A48AA /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9091104A192EEA70008A48AA /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3CE7BC8F1A1C7F8200B76A0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ChatDemo-UI2.0.app/ChatDemo-UI2.0";
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = EasemobSDKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Debug;
+		};
+		3CE7BC901A1C7F8200B76A0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ChatDemo-UI2.0.app/ChatDemo-UI2.0";
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = EasemobSDKTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Release;
+		};
 		9091104E192EEA70008A48AA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2334,11 +2436,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty",
 					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty/UMeng",
+					"$(SRCROOT)/../../../xyjeasemobRepo/emclient-ios/EaseMobClientSDK/export/**",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/sdk-cyvrcbrfzbzlhqdmmmcqwaqmwvrv/Build/Products/Debug-iphoneos",
+					"$(PROJECT_DIR)/EaseMobSDK/lib",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bff50853-ed55-4718-b5b1-37f6c9745948";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2349,7 +2454,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ji Fang (4BQ5R7ZSAG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2367,10 +2472,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty",
 					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty/UMeng",
+					"$(SRCROOT)/../../../xyjeasemobRepo/emclient-ios/EaseMobClientSDK/export/**",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/sdk-cyvrcbrfzbzlhqdmmmcqwaqmwvrv/Build/Products/Debug-iphoneos",
+					"$(PROJECT_DIR)/EaseMobSDK/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bff50853-ed55-4718-b5b1-37f6c9745948";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2379,6 +2487,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3CE7BC911A1C7F8200B76A0B /* Build configuration list for PBXNativeTarget "EasemobSDKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CE7BC8F1A1C7F8200B76A0B /* Debug */,
+				3CE7BC901A1C7F8200B76A0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9091101F192EEA70008A48AA /* Build configuration list for PBXProject "ChatDemo-UI2.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
