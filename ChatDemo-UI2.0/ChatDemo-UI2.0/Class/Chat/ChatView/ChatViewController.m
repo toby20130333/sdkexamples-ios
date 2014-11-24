@@ -687,8 +687,9 @@
 
 -(void)didReceiveMessage:(EMMessage *)message
 {
-    if ([_conversation.chatter isEqualToString:message.from]) {
-        [self addChatDataToMessage:message];
+    if ([_conversation.chatter isEqualToString:message.conversationChatter]) {
+        [self addMessage:message];
+        [_messages addObject:message];
     }
 }
 
@@ -783,7 +784,7 @@
 -(void)sendLocationLatitude:(double)latitude longitude:(double)longitude andAddress:(NSString *)address
 {
     EMMessage *locationMessage = [ChatSendHelper sendLocationLatitude:latitude longitude:longitude address:address toUsername:_conversation.chatter isChatGroup:_isChatGroup requireEncryption:NO];
-    [self addChatDataToMessage:locationMessage];
+    [self addMessage:locationMessage];
 }
 
 #pragma mark - DXMessageToolBarDelegate
@@ -926,7 +927,7 @@
     if (_longPressIndexPath && _longPressIndexPath.row > 0) {
         MessageModel *model = [self.dataSource objectAtIndex:_longPressIndexPath.row];
         NSMutableArray *messages = [NSMutableArray arrayWithObjects:model, nil];
-        [_conversation removeMessage:model.messageId];
+        [_conversation removeMessage:model.message];
         NSMutableArray *indexPaths = [NSMutableArray arrayWithObjects:_longPressIndexPath, nil];;
         if (_longPressIndexPath.row - 1 >= 0) {
             id nextMessage = nil;
@@ -988,22 +989,16 @@
 {
     __weak typeof(self) weakSelf = self;
     dispatch_async(_messageQueue, ^{
-//        NSInteger currentCount = [weakSelf.dataSource count];
-//        EMMessage *latestMessage = [weakSelf.conversation latestMessage];
-//        NSTimeInterval beforeTime = 0;
-//        if (latestMessage) {
-//            beforeTime = latestMessage.timestamp + 1;
-//        }else{
-//            beforeTime = [[NSDate date] timeIntervalSince1970] * 1000 + 1;
-//        }
+        long long timestamp = [[NSDate date] timeIntervalSince1970] * 1000 + 1;
         
-//        NSArray *chats = [weakSelf.conversation loadNumbersOfMessages:(currentCount + KPageCount) before:beforeTime];
-        NSInteger currentCount = [weakSelf.dataSource count];
-        NSArray *chats = [weakSelf.conversation loadMessagesFromIndex:[weakSelf.messages count] limit:20];
-        if ([chats count] > 0) {
-            [weakSelf.messages addObjectsFromArray:chats];
+        NSArray *messages = [weakSelf.conversation loadNumbersOfMessages:([weakSelf.messages count] + KPageCount) before:timestamp];
+        if ([messages count] > 0) {
+            [weakSelf.messages removeAllObjects];
+            [weakSelf.messages addObjectsFromArray:messages];
             
-            [weakSelf.dataSource addObjectsFromArray:[weakSelf sortChatSource:chats]];
+            NSInteger currentCount = [weakSelf.dataSource count];
+            [weakSelf.dataSource removeAllObjects];
+            [weakSelf.dataSource addObjectsFromArray:[weakSelf formatMessages:messages]];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView reloadData];
                 
@@ -1013,30 +1008,29 @@
     });
 }
 
-- (NSArray *)sortChatSource:(NSArray *)array
+- (NSArray *)formatMessages:(NSArray *)messagesArray
 {
-    NSMutableArray *resultArray = [[NSMutableArray alloc] init];
-    if (array && [array count] > 0) {
-        
-        for (EMMessage *message in array) {
+    NSMutableArray *formatArray = [[NSMutableArray alloc] init];
+    if ([messagesArray count] > 0) {
+        for (EMMessage *message in messagesArray) {
             NSDate *createDate = [NSDate dateWithTimeIntervalInMilliSecondSince1970:(NSTimeInterval)message.timestamp];
             NSTimeInterval tempDate = [createDate timeIntervalSinceDate:self.chatTagDate];
             if (tempDate > 60 || tempDate < -60 || (self.chatTagDate == nil)) {
-                [resultArray addObject:[createDate formattedTime]];
+                [formatArray addObject:[createDate formattedTime]];
                 self.chatTagDate = createDate;
             }
             
             MessageModel *model = [MessageModelManager modelWithMessage:message];
             if (model) {
-                [resultArray addObject:model];
+                [formatArray addObject:model];
             }
         }
     }
     
-    return resultArray;
+    return formatArray;
 }
 
--(NSMutableArray *)addChatToMessage:(EMMessage *)message
+-(NSMutableArray *)formatMessage:(EMMessage *)message
 {
     NSMutableArray *ret = [[NSMutableArray alloc] init];
     NSDate *createDate = [NSDate dateWithTimeIntervalInMilliSecondSince1970:(NSTimeInterval)message.timestamp];
@@ -1054,11 +1048,11 @@
     return ret;
 }
 
--(void)addChatDataToMessage:(EMMessage *)message
+-(void)addMessage:(EMMessage *)message
 {
     __weak ChatViewController *weakSelf = self;
     dispatch_async(_messageQueue, ^{
-        NSArray *messages = [weakSelf addChatToMessage:message];
+        NSArray *messages = [weakSelf formatMessage:message];
         NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
         
         for (int i = 0; i < messages.count; i++) {
@@ -1178,25 +1172,25 @@
 //        [self addChatDataToMessage:tempMessage];
 //    }
     EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:textMessage toUsername:_conversation.chatter isChatGroup:_isChatGroup requireEncryption:NO];
-    [self addChatDataToMessage:tempMessage];
+    [self addMessage:tempMessage];
 }
 
 -(void)sendImageMessage:(UIImage *)imageMessage
 {
     EMMessage *tempMessage = [ChatSendHelper sendImageMessageWithImage:imageMessage toUsername:_conversation.chatter isChatGroup:_isChatGroup requireEncryption:NO];
-    [self addChatDataToMessage:tempMessage];
+    [self addMessage:tempMessage];
 }
 
 -(void)sendAudioMessage:(EMChatVoice *)voice
 {
     EMMessage *tempMessage = [ChatSendHelper sendVoice:voice toUsername:_conversation.chatter isChatGroup:_isChatGroup requireEncryption:NO];
-    [self addChatDataToMessage:tempMessage];
+    [self addMessage:tempMessage];
 }
 
 -(void)sendVideoMessage:(EMChatVideo *)video
 {
     EMMessage *tempMessage = [ChatSendHelper sendVideo:video toUsername:_conversation.chatter isChatGroup:_isChatGroup requireEncryption:NO];
-    [self addChatDataToMessage:tempMessage];
+    [self addMessage:tempMessage];
 }
 
 #pragma mark - EMDeviceManagerProximitySensorDelegate
