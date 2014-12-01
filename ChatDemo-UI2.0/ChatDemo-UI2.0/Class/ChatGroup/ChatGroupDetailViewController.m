@@ -227,7 +227,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 5;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -449,22 +449,9 @@
                 
                 __weak typeof(self) weakSelf = self;
                 [contactView setDeleteContact:^(NSInteger index) {
-//                    [weakSelf showHudInView:weakSelf.view hint:@"正在删除成员..."];
-//                    NSArray *occupants = [NSArray arrayWithObject:[weakSelf.dataSource objectAtIndex:index]];
-//                    [[EaseMob sharedInstance].chatManager asyncRemoveOccupants:occupants fromGroup:weakSelf.chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
-//                        [weakSelf hideHud];
-//                        if (!error) {
-//                            weakSelf.chatGroup = group;
-//                            [weakSelf.dataSource removeObjectAtIndex:index];
-//                            [weakSelf refreshScrollView];
-//                        }
-//                        else{
-//                            [weakSelf showHint:error.description];
-//                        }
-//                    } onQueue:nil];
-                    [weakSelf showHudInView:weakSelf.view hint:@"正在将成员加入黑名单..."];
+                    [weakSelf showHudInView:weakSelf.view hint:@"正在删除成员..."];
                     NSArray *occupants = [NSArray arrayWithObject:[weakSelf.dataSource objectAtIndex:index]];
-                    [[EaseMob sharedInstance].chatManager asyncBlockOccupants:occupants fromGroup:weakSelf.chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
+                    [[EaseMob sharedInstance].chatManager asyncRemoveOccupants:occupants fromGroup:weakSelf.chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
                         [weakSelf hideHud];
                         if (!error) {
                             weakSelf.chatGroup = group;
@@ -475,6 +462,19 @@
                             [weakSelf showHint:error.description];
                         }
                     } onQueue:nil];
+//                    [weakSelf showHudInView:weakSelf.view hint:@"正在将成员加入黑名单..."];
+//                    NSArray *occupants = [NSArray arrayWithObject:[weakSelf.dataSource objectAtIndex:index]];
+//                    [[EaseMob sharedInstance].chatManager asyncBlockOccupants:occupants fromGroup:weakSelf.chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
+//                        [weakSelf hideHud];
+//                        if (!error) {
+//                            weakSelf.chatGroup = group;
+//                            [weakSelf.dataSource removeObjectAtIndex:index];
+//                            [weakSelf refreshScrollView];
+//                        }
+//                        else{
+//                            [weakSelf showHint:error.description];
+//                        }
+//                    } onQueue:nil];
                 }];
                 
                 [self.scrollView addSubview:contactView];

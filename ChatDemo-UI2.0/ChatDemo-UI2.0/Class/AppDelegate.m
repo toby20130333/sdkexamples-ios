@@ -20,6 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    _connectionState = eEMConnectionConnected;
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -44,7 +46,6 @@
 #else
         [MobClick setLogEnabled:NO];
 #endif
-        
     }
     
     [self registerRemoteNotification];
@@ -63,13 +64,13 @@
 #endif
     [[[EaseMob sharedInstance] chatManager] setIsAutoFetchBuddyList:YES];
     
-    //以下一行代码的方法里实现了自动登录，异步登录，需要监听[didLoginWithInfo: error:]
-    //demo中此监听方法在MainViewController中
-    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
-    
 #warning 注册为SDK的ChatManager的delegate (及时监听到申请和通知)
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+    
+    //以下一行代码的方法里实现了自动登录，异步登录，需要监听[didLoginWithInfo: error:]
+    //demo中此监听方法在MainViewController中
+    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
 #warning 如果使用MagicalRecord, 要加上这句初始化MagicalRecord
     //demo coredata, .pch中有相关头文件引用
@@ -300,7 +301,15 @@
     }
 }
 
-#pragma mark - push
+#pragma mark - IChatManagerDelegate
+
+- (void)didConnectionStateChanged:(EMConnectionState)connectionState
+{
+    _connectionState = connectionState;
+    [_mainController networkChanged:connectionState];
+}
+
+#pragma mark - EMChatManagerPushNotificationDelegate
 
 - (void)didBindDeviceWithError:(EMError *)error
 {
@@ -322,6 +331,7 @@
         [[ApplyViewController shareController] loadDataSourceFromLocalDB];
         if (_mainController == nil) {
             _mainController = [[MainViewController alloc] init];
+            [_mainController networkChanged:_connectionState];
             nav = [[UINavigationController alloc] initWithRootViewController:_mainController];
         }else{
             nav  = _mainController.navigationController;

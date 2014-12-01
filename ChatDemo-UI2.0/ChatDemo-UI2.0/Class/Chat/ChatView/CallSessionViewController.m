@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 dhcdht. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import "CallSessionViewController.h"
 
 #define kAlertViewTag_Close 1000
@@ -13,6 +14,7 @@
 @interface CallSessionViewController ()<UIAlertViewDelegate, ICallManagerDelegate>
 {
     NSString *_chatter;
+    NSUInteger _callLength;
     
     int _callType;
     UIImageView *_bgImageView;
@@ -26,6 +28,8 @@
     UILabel *_outLabel;
     UIButton *_hangupButton;
     UIButton *_answerButton;
+    
+    AVAudioPlayer *_player;
 }
 
 @property (strong, nonatomic) EMCallSession *callSession;
@@ -43,6 +47,7 @@
         // Custom initialization
         _callType = CallNone;
         _callSession = nil;
+        _callLength = 0;
         
         [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
     }
@@ -79,6 +84,7 @@
         [self _callOutWithChatter:_chatter];
     }
     [self _setupSubviews];
+    [self _beginRing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -222,6 +228,37 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)_insertMessageWithStr:(NSString *)str
+{
+    EMChatText *chatText = [[EMChatText alloc] initWithText:str];
+    EMTextMessageBody *textBody = [[EMTextMessageBody alloc] initWithChatObject:chatText];
+    EMMessage *message = [[EMMessage alloc] initWithReceiver:_callSession.conversationChatter bodies:@[textBody]];
+    message.isRead = YES;
+    [[EaseMob sharedInstance].chatManager insertMessageToDB:message append2Chat:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"insertCallMessage" object:message];
+}
+
+- (void)_beginRing
+{
+    [_player stop];
+    
+    NSString *musicPath = [[NSBundle mainBundle] pathForResource:@"callRing" ofType:@"mp3"];
+    NSURL *url = [[NSURL alloc] initFileURLWithPath:musicPath];
+    
+    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    [_player setVolume:1];
+    _player.numberOfLoops = -1; //设置音乐播放次数  -1为一直循环
+    if([_player prepareToPlay])
+    {
+        [_player play]; //播放
+    }
+}
+
+- (void)_stopRing
+{
+    [_player stop];
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -238,9 +275,10 @@
 {
     if (_callSession && ![callSession.sessionId isEqualToString:_callSession.sessionId] && callSession.status == eCallSessionStatusRinging)
     {
-        [self showHint:@"有新的语音请求，当前正在通话中，自动拒绝"];
+        [self showHint:@"有新的语音请求，当前正在通话中，已自动拒绝"];
         
-        [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:callSession.sessionId];
+        [self _insertMessageWithStr:@"语音通话已取消"];
+        
         return;
     }
     
@@ -248,6 +286,9 @@
     {
         UIAlertView *alertView = nil;
         if (error) {
+            [self _stopRing];
+            [self _insertMessageWithStr:@"语音通话失败"];
+            
             _statusLabel.text = @"连接失败";
             alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:error.description delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             alertView.tag = kAlertViewTag_Close;
@@ -255,18 +296,30 @@
         }
         else{
             if (callSession.status == eCallSessionStatusDisconnected) {
-                if (reason == eCallReason_Hangup || reason == eCallReason_Reject)
+                [self _stopRing];
+                NSString *str = @"语音通话结束";
+                if(_callLength == 0)
                 {
-                    _statusLabel.text = @"通话已挂断";
-                    
-                    [_answerButton removeFromSuperview];
-                    [_hangupButton removeFromSuperview];
-                    [self _close];
+                    if (_callType == CallIn) {
+                        str = reason == eCallReason_Reject ? @"拒接语音通话" : @"对方取消语音通话";
+                    }
+                    else{
+                        str = reason == eCallReason_Hangup ? @"取消语音通话" : @"对方拒接语音通话";
+                    }
                 }
+                [self _insertMessageWithStr:str];
+                
+                _statusLabel.text = @"通话已挂断";
+                [_answerButton removeFromSuperview];
+                [_hangupButton removeFromSuperview];
+                [self _close];
             }
             else if (callSession.status == eCallSessionStatusAccepted)
             {
+                [self _stopRing];
                 _statusLabel.text = @"可以通话了...";
+                //开始计时,测试数据
+                _callLength = 1;
                 
                 if(_callType == CallIn)
                 {
@@ -296,13 +349,23 @@
 
 - (void)hangupAction:(id)sender
 {
-    [[EMSDKFull sharedInstance].callManager asyncRejectCallSessionWithId:_callSession.sessionId];
+    [self _stopRing];
+    
+    EMCallStatusChangedReason reason = eCallReason_Hangup;
+    if(_callLength == 0)
+    {
+        reason = _callType == CallIn ? eCallReason_Reject : eCallReason_Hangup;
+    }
+    
+    [[EMSDKFull sharedInstance].callManager asyncTerminateCallSessionWithId:_callSession.sessionId reason:reason];
     
     [self _close];
 }
 
 - (void)answerAction:(id)sender
 {
+    [self _stopRing];
+    
     [[EMSDKFull sharedInstance].callManager asyncAcceptCallSessionWithId:_callSession.sessionId];
 }
 

@@ -14,7 +14,6 @@
 		3C06AB0319405D330076FF0B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C06AB0219405D330076FF0B /* MapKit.framework */; };
 		3C11304E195AFFDD00ED1D0D /* EMChatVideoBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C11304D195AFFDD00ED1D0D /* EMChatVideoBubbleView.m */; };
 		3C117122197D243B00E2DBEC /* PushNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C117121197D243B00E2DBEC /* PushNotificationViewController.m */; };
-		3C1284551A1E0F7E006BD146 /* libEaseMobClientSDKLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB94311A14B522007FED9E /* libEaseMobClientSDKLite.a */; };
 		3C13D94B1A12095D00903622 /* GroupBansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C13D94A1A12095D00903622 /* GroupBansViewController.m */; };
 		3C13D94E1A120BA200903622 /* ContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C13D94D1A120BA200903622 /* ContactView.m */; };
 		3C16149F1973D1A600564BF5 /* UIDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3C16149D1973D1A600564BF5 /* UIDemo.xcdatamodeld */; };
@@ -71,6 +70,10 @@
 		3C1CEF7D196E9F5400DBA56B /* MWPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3C1CEF66196E9F5400DBA56B /* MWPhotoBrowser.bundle */; };
 		3C1CEF7F196EA37600DBA56B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C1CEF7E196EA37600DBA56B /* ImageIO.framework */; };
 		3C1CEF81196EA49200DBA56B /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C1CEF80196EA49200DBA56B /* SDWebImage.framework */; };
+		3C22AB7D1A284D950079FD87 /* libvoice_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB942F1A14B400007FED9E /* libvoice_engine.a */; };
+		3C23CA741A29A933007D7F76 /* CallSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C23CA731A29A933007D7F76 /* CallSessionViewController.m */; };
+		3C23CAFB1A29B24F007D7F76 /* callRing.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3C23CAFA1A29B24F007D7F76 /* callRing.mp3 */; };
+		3C23CAFC1A29B2A5007D7F76 /* libEaseMobClientSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA121441A14D8FE00753D7F /* libEaseMobClientSDK.a */; };
 		3C2923B11988E13300DCCD40 /* BlackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2923B01988E13300DCCD40 /* BlackListViewController.m */; };
 		3C3527361931D1BE00385240 /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3527351931D1BE00385240 /* BaseTableViewCell.m */; };
 		3C3527451931D37900385240 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3527441931D37900385240 /* SystemConfiguration.framework */; };
@@ -205,21 +208,6 @@
 		3C61B4D119D3F8B500A8D58F /* call_out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C61B4C919D3F8B500A8D58F /* call_out@2x.png */; };
 		3C61B4D219D3F8B500A8D58F /* call_out_h.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C61B4CA19D3F8B500A8D58F /* call_out_h.png */; };
 		3C61B4D319D3F8B500A8D58F /* call_out_h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C61B4CB19D3F8B500A8D58F /* call_out_h@2x.png */; };
-		3C6AC6F21A2329D0004D34A0 /* ChatDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AC6F11A2329D0004D34A0 /* ChatDemoTests.m */; };
-		3C6AC6FA1A232B53004D34A0 /* EMTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6AC6F91A232B53004D34A0 /* EMTestManager.m */; };
-		3C6AC6FB1A232C10004D34A0 /* libEaseMobClientSDKLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB94311A14B522007FED9E /* libEaseMobClientSDKLite.a */; };
-		3C6AC6FC1A232C27004D34A0 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB931B1A14B227007FED9E /* libsqlite3.dylib */; };
-		3C6AC6FD1A232C2E004D34A0 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 902DEC541931D934006CA75E /* libresolv.dylib */; };
-		3C6AC6FE1A232C37004D34A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F1BED21930493F00121AEC /* libstdc++.dylib */; };
-		3C6AC6FF1A232C40004D34A0 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F1BED01930493100121AEC /* libiconv.dylib */; };
-		3C6AC7001A232C45004D34A0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F1BECA1930491C00121AEC /* libz.dylib */; };
-		3C6AC7011A232C4E004D34A0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F1BEC81930491600121AEC /* libxml2.dylib */; };
-		3C6AC7021A232C54004D34A0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9091102B192EEA70008A48AA /* UIKit.framework */; };
-		3C6AC7031A232C69004D34A0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3527441931D37900385240 /* SystemConfiguration.framework */; };
-		3C6AC7041A232C70004D34A0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F1BED41930495800121AEC /* MobileCoreServices.framework */; };
-		3C6AC7051A232C7B004D34A0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F1BECC1930492300121AEC /* CFNetwork.framework */; };
-		3C6AC7061A232C87004D34A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90911027192EEA70008A48AA /* Foundation.framework */; };
-		3C6AC7071A232D28004D34A0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C36CA691A1EDB6200CDDD48 /* CoreData.framework */; };
 		3C6BBA0619419EBD00A64684 /* EMRemarkImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BBA0519419EBD00A64684 /* EMRemarkImageView.m */; };
 		3C6BBA091941A58C00A64684 /* XHMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BBA081941A58C00A64684 /* XHMessageTextView.m */; };
 		3C6BBA0C1941A7CF00A64684 /* EMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BBA0B1941A7CF00A64684 /* EMTextView.m */; };
@@ -237,7 +225,6 @@
 		3C914D8819514BBD0002DAD3 /* nav_createGroup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C914D7E19514BBD0002DAD3 /* nav_createGroup@2x.png */; };
 		3C9DDAB4193871D8007C765A /* EMSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9DDAB3193871D8007C765A /* EMSearchDisplayController.m */; };
 		3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB931B1A14B227007FED9E /* libsqlite3.dylib */; };
-		3CBB94301A14B400007FED9E /* libvoice_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB942F1A14B400007FED9E /* libvoice_engine.a */; };
 		3CBF90C019302F5000AD68AE /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF90BF19302F5000AD68AE /* BaseViewController.m */; };
 		3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE6293219A1B13700829632 /* CoreText.framework */; };
 		9003D8681939D8D000DC38A4 /* ChatListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D7791939D8D000DC38A4 /* ChatListCell.m */; };
@@ -356,16 +343,6 @@
 		C09DF1F61983ABC1001C0D0D /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = C09DF1F01983ABC1001C0D0D /* 58.png */; };
 		C09DF1F71983ABC1001C0D0D /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = C09DF1F11983ABC1001C0D0D /* 80.png */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		3C6AC6F31A2329D0004D34A0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9091101C192EEA70008A48AA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 90911023192EEA70008A48AA;
-			remoteInfo = "ChatDemo-UI2.0";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3C06AAA119401A2E0076FF0B /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
@@ -493,6 +470,9 @@
 		3C1CEF66196E9F5400DBA56B /* MWPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWPhotoBrowser.bundle; sourceTree = "<group>"; };
 		3C1CEF7E196EA37600DBA56B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		3C1CEF80196EA49200DBA56B /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = "ChatDemo-UI2.0/3rdparty/SDWebImage.framework"; sourceTree = "<group>"; };
+		3C23CA721A29A933007D7F76 /* CallSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallSessionViewController.h; sourceTree = "<group>"; };
+		3C23CA731A29A933007D7F76 /* CallSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallSessionViewController.m; sourceTree = "<group>"; };
+		3C23CAFA1A29B24F007D7F76 /* callRing.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = callRing.mp3; sourceTree = "<group>"; };
 		3C27F9101A1C8FCD008272EF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3C2923AF1988E13300DCCD40 /* BlackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListViewController.h; sourceTree = "<group>"; };
 		3C2923B01988E13300DCCD40 /* BlackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlackListViewController.m; sourceTree = "<group>"; };
@@ -636,11 +616,6 @@
 		3C61B4C919D3F8B500A8D58F /* call_out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call_out@2x.png"; sourceTree = "<group>"; };
 		3C61B4CA19D3F8B500A8D58F /* call_out_h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call_out_h.png; sourceTree = "<group>"; };
 		3C61B4CB19D3F8B500A8D58F /* call_out_h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "call_out_h@2x.png"; sourceTree = "<group>"; };
-		3C6AC6ED1A2329D0004D34A0 /* ChatDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C6AC6F01A2329D0004D34A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C6AC6F11A2329D0004D34A0 /* ChatDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatDemoTests.m; sourceTree = "<group>"; };
-		3C6AC6F81A232B53004D34A0 /* EMTestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMTestManager.h; sourceTree = "<group>"; };
-		3C6AC6F91A232B53004D34A0 /* EMTestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMTestManager.m; sourceTree = "<group>"; };
 		3C6BBA0419419EBD00A64684 /* EMRemarkImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMRemarkImageView.h; sourceTree = "<group>"; };
 		3C6BBA0519419EBD00A64684 /* EMRemarkImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMRemarkImageView.m; sourceTree = "<group>"; };
 		3C6BBA071941A58C00A64684 /* XHMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHMessageTextView.h; sourceTree = "<group>"; };
@@ -847,32 +822,12 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3C6AC6EA1A2329D0004D34A0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3C6AC7071A232D28004D34A0 /* CoreData.framework in Frameworks */,
-				3C6AC7061A232C87004D34A0 /* Foundation.framework in Frameworks */,
-				3C6AC7051A232C7B004D34A0 /* CFNetwork.framework in Frameworks */,
-				3C6AC7041A232C70004D34A0 /* MobileCoreServices.framework in Frameworks */,
-				3C6AC7031A232C69004D34A0 /* SystemConfiguration.framework in Frameworks */,
-				3C6AC7021A232C54004D34A0 /* UIKit.framework in Frameworks */,
-				3C6AC7011A232C4E004D34A0 /* libxml2.dylib in Frameworks */,
-				3C6AC7001A232C45004D34A0 /* libz.dylib in Frameworks */,
-				3C6AC6FF1A232C40004D34A0 /* libiconv.dylib in Frameworks */,
-				3C6AC6FE1A232C37004D34A0 /* libstdc++.dylib in Frameworks */,
-				3C6AC6FD1A232C2E004D34A0 /* libresolv.dylib in Frameworks */,
-				3C6AC6FC1A232C27004D34A0 /* libsqlite3.dylib in Frameworks */,
-				3C6AC6FB1A232C10004D34A0 /* libEaseMobClientSDKLite.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		90911021192EEA70008A48AA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C1284551A1E0F7E006BD146 /* libEaseMobClientSDKLite.a in Frameworks */,
-				3CBB94301A14B400007FED9E /* libvoice_engine.a in Frameworks */,
+				3C23CAFC1A29B2A5007D7F76 /* libEaseMobClientSDK.a in Frameworks */,
+				3C22AB7D1A284D950079FD87 /* libvoice_engine.a in Frameworks */,
 				3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */,
 				3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */,
 				3C1CEF7F196EA37600DBA56B /* ImageIO.framework in Frameworks */,
@@ -1302,25 +1257,6 @@
 			path = tabbar;
 			sourceTree = "<group>";
 		};
-		3C6AC6EE1A2329D0004D34A0 /* ChatDemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				3C6AC6F11A2329D0004D34A0 /* ChatDemoTests.m */,
-				3C6AC6EF1A2329D0004D34A0 /* Supporting Files */,
-				3C6AC6F81A232B53004D34A0 /* EMTestManager.h */,
-				3C6AC6F91A232B53004D34A0 /* EMTestManager.m */,
-			);
-			path = ChatDemoTests;
-			sourceTree = "<group>";
-		};
-		3C6AC6EF1A2329D0004D34A0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				3C6AC6F01A2329D0004D34A0 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		3C6BBA0319419EBD00A64684 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1415,6 +1351,9 @@
 		9003D7821939D8D000DC38A4 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				3C23CAFA1A29B24F007D7F76 /* callRing.mp3 */,
+				3C23CA721A29A933007D7F76 /* CallSessionViewController.h */,
+				3C23CA731A29A933007D7F76 /* CallSessionViewController.m */,
 				3C61B4C419D3F8B500A8D58F /* call_silence.png */,
 				3C61B4C519D3F8B500A8D58F /* call_silence@2x.png */,
 				3C61B4C619D3F8B500A8D58F /* call_silence_h.png */,
@@ -1665,7 +1604,6 @@
 			isa = PBXGroup;
 			children = (
 				9091102D192EEA70008A48AA /* ChatDemo-UI2.0 */,
-				3C6AC6EE1A2329D0004D34A0 /* ChatDemoTests */,
 				90911026192EEA70008A48AA /* Frameworks */,
 				90911025192EEA70008A48AA /* Products */,
 			);
@@ -1675,7 +1613,6 @@
 			isa = PBXGroup;
 			children = (
 				90911024192EEA70008A48AA /* ChatDemo-UI2.0.app */,
-				3C6AC6ED1A2329D0004D34A0 /* ChatDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1878,24 +1815,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3C6AC6EC1A2329D0004D34A0 /* ChatDemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3C6AC6F51A2329D0004D34A0 /* Build configuration list for PBXNativeTarget "ChatDemoTests" */;
-			buildPhases = (
-				3C6AC6E91A2329D0004D34A0 /* Sources */,
-				3C6AC6EA1A2329D0004D34A0 /* Frameworks */,
-				3C6AC6EB1A2329D0004D34A0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3C6AC6F41A2329D0004D34A0 /* PBXTargetDependency */,
-			);
-			name = ChatDemoTests;
-			productName = ChatDemoTests;
-			productReference = 3C6AC6ED1A2329D0004D34A0 /* ChatDemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		90911023192EEA70008A48AA /* ChatDemo-UI2.0 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 90911050192EEA70008A48AA /* Build configuration list for PBXNativeTarget "ChatDemo-UI2.0" */;
@@ -1922,12 +1841,7 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
-					3C6AC6EC1A2329D0004D34A0 = {
-						CreatedOnToolsVersion = 6.0.1;
-						TestTargetID = 90911023192EEA70008A48AA;
-					};
 					90911023192EEA70008A48AA = {
-						DevelopmentTeam = 499WYUV8Q2;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1950,19 +1864,11 @@
 			projectRoot = "";
 			targets = (
 				90911023192EEA70008A48AA /* ChatDemo-UI2.0 */,
-				3C6AC6EC1A2329D0004D34A0 /* ChatDemoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		3C6AC6EB1A2329D0004D34A0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		90911022192EEA70008A48AA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2065,6 +1971,7 @@
 				3C3E199419751D2A00D1658E /* VoiceSearchFeedback018@2x.png in Resources */,
 				3C3E19C419751D2A00D1658E /* account.png in Resources */,
 				3C3E197A19751D2A00D1658E /* VoiceSearchFeedback005@2x.png in Resources */,
+				3C23CAFB1A29B24F007D7F76 /* callRing.mp3 in Resources */,
 				3C3E19D019751D2A00D1658E /* tabbar_contactsHL.png in Resources */,
 				3C3E19C819751D2A00D1658E /* titleBar.png in Resources */,
 				3C3E19A619751D2A00D1658E /* chat_location_detail_disclosure.png in Resources */,
@@ -2166,15 +2073,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3C6AC6E91A2329D0004D34A0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3C6AC6F21A2329D0004D34A0 /* ChatDemoTests.m in Sources */,
-				3C6AC6FA1A232B53004D34A0 /* EMTestManager.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		90911020192EEA70008A48AA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2194,6 +2092,7 @@
 				3C1614F91973D4B700564BF5 /* MagicalRecord.m in Sources */,
 				3C16149F1973D1A600564BF5 /* UIDemo.xcdatamodeld in Sources */,
 				3C1614F81973D4B700564BF5 /* MagicalRecord+ShorthandSupport.m in Sources */,
+				3C23CA741A29A933007D7F76 /* CallSessionViewController.m in Sources */,
 				909308BE19604821005013BD /* Emoji.m in Sources */,
 				3C1614F41973D4B700564BF5 /* MagicalRecord+ErrorHandling.m in Sources */,
 				905326B519333E8E00F064D7 /* TTGlobalUICommon.m in Sources */,
@@ -2304,14 +2203,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		3C6AC6F41A2329D0004D34A0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 90911023192EEA70008A48AA /* ChatDemo-UI2.0 */;
-			targetProxy = 3C6AC6F31A2329D0004D34A0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		90911030192EEA70008A48AA /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -2324,54 +2215,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		3C6AC6F61A2329D0004D34A0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ChatDemoTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/sdk-cyvrcbrfzbzlhqdmmmcqwaqmwvrv/Build/Products/Debug-iphoneos",
-				);
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChatDemo-UI2.0.app/ChatDemo-UI2.0";
-			};
-			name = Debug;
-		};
-		3C6AC6F71A2329D0004D34A0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ChatDemoTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/sdk-cyvrcbrfzbzlhqdmmmcqwaqmwvrv/Build/Products/Debug-iphoneos",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChatDemo-UI2.0.app/ChatDemo-UI2.0";
-			};
-			name = Release;
-		};
 		9091104E192EEA70008A48AA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2465,18 +2308,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty",
 					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty/UMeng",
-					"$(SRCROOT)/../../../xyjeasemobRepo/emclient-ios/EaseMobClientSDK/export/**",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/sdk-cyvrcbrfzbzlhqdmmmcqwaqmwvrv/Build/Products/Debug-iphoneos",
-					"$(PROJECT_DIR)/EaseMobSDK/lib",
-					"/Users/dhcdht/Desktop/Project/xyjeasemobRepo/emclient-ios/EaseMobClientSDK/Utility/network/ICE/third_party/pjsip/pjlib/lib",
-					"/Users/dhcdht/Desktop/Project/xyjeasemobRepo/emclient-ios/EaseMobClientSDK/Utility/network/ICE/third_party/pjsip/pjlib-util/lib",
-					"/Users/dhcdht/Desktop/Project/xyjeasemobRepo/emclient-ios/EaseMobClientSDK/Utility/network/ICE/third_party/pjsip/pjnath/lib",
-					"/Users/dhcdht/Desktop/iOSSDK-20141107/EaseMobSDK/lib",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "1c5f61c8-18cd-4ef8-bffd-23f712dc05d0";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2487,7 +2324,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ji Fang (4BQ5R7ZSAG)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2505,17 +2342,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty",
 					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty/UMeng",
-					"$(SRCROOT)/../../../xyjeasemobRepo/emclient-ios/EaseMobClientSDK/export/**",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/sdk-cyvrcbrfzbzlhqdmmmcqwaqmwvrv/Build/Products/Debug-iphoneos",
-					"$(PROJECT_DIR)/EaseMobSDK/lib",
-					"/Users/dhcdht/Desktop/Project/xyjeasemobRepo/emclient-ios/EaseMobClientSDK/Utility/network/ICE/third_party/pjsip/pjlib/lib",
-					"/Users/dhcdht/Desktop/Project/xyjeasemobRepo/emclient-ios/EaseMobClientSDK/Utility/network/ICE/third_party/pjsip/pjlib-util/lib",
-					"/Users/dhcdht/Desktop/Project/xyjeasemobRepo/emclient-ios/EaseMobClientSDK/Utility/network/ICE/third_party/pjsip/pjnath/lib",
-					"/Users/dhcdht/Desktop/iOSSDK-20141107/EaseMobSDK/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "1c5f61c8-18cd-4ef8-bffd-23f712dc05d0";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2524,14 +2355,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C6AC6F51A2329D0004D34A0 /* Build configuration list for PBXNativeTarget "ChatDemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C6AC6F61A2329D0004D34A0 /* Debug */,
-				3C6AC6F71A2329D0004D34A0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		9091101F192EEA70008A48AA /* Build configuration list for PBXProject "ChatDemo-UI2.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

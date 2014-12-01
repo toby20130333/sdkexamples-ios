@@ -14,6 +14,9 @@
 #import "MainViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, IChatManagerDelegate>
+{
+    EMConnectionState _connectionState;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) MainViewController *mainController;

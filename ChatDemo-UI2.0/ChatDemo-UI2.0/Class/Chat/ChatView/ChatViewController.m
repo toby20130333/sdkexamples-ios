@@ -104,6 +104,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeAllMessages:) name:@"RemoveAllMessages" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitGroup) name:@"ExitGroup" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(insertCallMessage:) name:@"insertCallMessage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:@"applicationDidEnterBackground" object:nil];
     
     _messageQueue = dispatch_queue_create("easemob.com", NULL);
@@ -1152,6 +1153,15 @@
 {
     [self.navigationController popToViewController:self animated:NO];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)insertCallMessage:(NSNotification *)notification
+{
+    id object = notification.object;
+    if (object) {
+        EMMessage *message = (EMMessage *)object;
+        [self didReceiveMessage:message];
+    }
 }
 
 - (void)applicationDidEnterBackground

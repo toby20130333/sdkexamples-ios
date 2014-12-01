@@ -102,6 +102,10 @@
          [self hideHud];
          if (loginInfo && !error) {
              [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+             EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
+             if (!error) {
+                 error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
+             }
          }else {
              switch (error.errorCode) {
                  case EMErrorServerNotReachable:
