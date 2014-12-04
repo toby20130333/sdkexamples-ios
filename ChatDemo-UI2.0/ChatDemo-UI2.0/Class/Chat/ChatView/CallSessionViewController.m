@@ -214,7 +214,7 @@
 - (void)_callOutWithChatter:(NSString *)chatter
 {
     EMError *error = nil;
-    _callSession = [[EMSDKFull sharedInstance].callManager asyncCallAudioWithChatter:chatter timeout:100 error:&error];
+    _callSession = [[EMSDKFull sharedInstance].callManager asyncCallAudioWithChatter:chatter timeout:50 error:&error];
     if (error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:error.description delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         alertView.tag = kAlertViewTag_Close;
