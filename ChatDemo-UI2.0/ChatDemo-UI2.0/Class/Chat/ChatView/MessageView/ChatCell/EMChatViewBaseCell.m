@@ -11,7 +11,7 @@
   */
 
 #import "EMChatViewBaseCell.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+EMWebCache.h"
 
 NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadImageTapEventName";
 
