@@ -314,11 +314,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversationChatter] : YES;
     if (needShowNotification) {
 #if !TARGET_IPHONE_SIMULATOR
-        [self playSoundAndVibration];
         
         BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
         if (!isAppActivity) {
             [self showNotificationWithMessage:message];
+        }else {
+            [self playSoundAndVibration];
         }
 #endif
     }
@@ -403,6 +404,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     notification.alertAction = @"打开";
     notification.timeZone = [NSTimeZone defaultTimeZone];
+    notification.soundName = UILocalNotificationDefaultSoundName;
     //发送通知
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 //    UIApplication *application = [UIApplication sharedApplication];
