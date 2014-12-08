@@ -239,7 +239,7 @@
             }
             dispatch_semaphore_signal(wait);
         }];
-        int timeout = dispatch_semaphore_wait(wait, DISPATCH_TIME_FOREVER);
+        long timeout = dispatch_semaphore_wait(wait, DISPATCH_TIME_FOREVER);
         if (timeout) {
             NSLog(@"timeout.");
         }
