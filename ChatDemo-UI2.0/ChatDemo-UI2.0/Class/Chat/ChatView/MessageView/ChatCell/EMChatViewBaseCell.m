@@ -11,7 +11,7 @@
   */
 
 #import "EMChatViewBaseCell.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+EMWebCache.h"
 
 NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadImageTapEventName";
 
@@ -73,7 +73,7 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
     _nameLabel.hidden = !messageModel.isChatGroup;
     
     UIImage *placeholderImage = [UIImage imageNamed:@"chatListCellHead"];
-    [self.headImageView setImageWithURL:_messageModel.headImageURL placeholderImage:placeholderImage];
+    [self.headImageView sd_setImageWithURL:_messageModel.headImageURL placeholderImage:placeholderImage];
 }
 
 #pragma mark - private

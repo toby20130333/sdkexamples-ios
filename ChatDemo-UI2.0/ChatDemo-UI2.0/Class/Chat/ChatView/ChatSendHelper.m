@@ -88,12 +88,26 @@
               isChatGroup:(BOOL)isChatGroup
         requireEncryption:(BOOL)requireEncryption
 {
-    
     EMMessage *retureMsg = [[EMMessage alloc] initWithReceiver:username bodies:[NSArray arrayWithObject:body]];
     retureMsg.requireEncryption = requireEncryption;
     retureMsg.isGroup = isChatGroup;
     
     EMMessage *message = [[EaseMob sharedInstance].chatManager asyncSendMessage:retureMsg progress:nil];
+    
+//    EMChatText *text = [[EMChatText alloc] initWithText:@"1111111"];
+//    EMTextMessageBody *textbody = [[EMTextMessageBody alloc] initWithChatObject:text];
+//    EMMessage *message = [[EMMessage alloc] initWithReceiver:@"zxcvbn" bodies:[NSArray arrayWithObject:textbody]];
+//    NSMutableDictionary *extDic = [NSMutableDictionary dictionary];
+//    [extDic setObject:@"header" forKey:@"xieyajie header"];
+//    
+//    message.ext = extDic;
+//    message.requireEncryption = NO;
+//    message.isGroup = NO;
+//    message.messageId = @"xieyajie";
+//    message.timestamp = [[NSDate date] timeIntervalSince1970] * 1000;
+//    message.from = @"asdfgh";
+//    message.deliveryState = eMessageDeliveryState_Delivered;
+//    BOOL ret = [[EaseMob sharedInstance].chatManager insertMessageToDB:message append2Chat:YES];
     
 //    EMChatCommand *cmd = [[EMChatCommand alloc] init];
 //    EMCommandMessageBody *mbody = [[EMCommandMessageBody alloc] initWithChatObject:cmd];

@@ -12,17 +12,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "EMRemarkImageView.h"
-
-@interface ChatGroupContactView : EMRemarkImageView
-{
-    UIButton *_deleteButton;
-}
-
-@property (copy) void (^deleteContact)(NSInteger index);
-
-@end
-
 /**
  *  群组成员类型
  */

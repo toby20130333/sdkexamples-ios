@@ -102,13 +102,17 @@
          [self hideHud];
          if (loginInfo && !error) {
              [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+             EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
+             if (!error) {
+                 error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
+             }
          }else {
              switch (error.errorCode) {
                  case EMErrorServerNotReachable:
                      TTAlertNoTitle(@"连接服务器失败!");
                      break;
                  case EMErrorServerAuthenticationFailure:
-                     TTAlertNoTitle(@"用户名或密码错误");
+                     TTAlertNoTitle(error.description);
                      break;
                  case EMErrorServerTimeout:
                      TTAlertNoTitle(@"连接服务器超时!");
@@ -126,7 +130,7 @@
         UITextField *nameTextField = [alertView textFieldAtIndex:0];
         if(nameTextField.text.length > 0)
         {
-            [[EaseMob sharedInstance].chatManager setNickname:nameTextField.text];
+            [[EaseMob sharedInstance].chatManager setApnsNickname:nameTextField.text];
         }
     }
     

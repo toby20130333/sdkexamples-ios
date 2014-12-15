@@ -11,7 +11,7 @@
   */
 
 #import "MessageReadManager.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+EMWebCache.h"
 
 static MessageReadManager *detailInstance = nil;
 
@@ -173,7 +173,7 @@ static MessageReadManager *detailInstance = nil;
                     if (![[dict objectForKey:@"isPlayed"] boolValue]) {
                         [dict setObject:@YES forKey:@"isPlayed"];
                         chatMessage.ext = dict;
-                        [[EaseMob sharedInstance].chatManager saveMessage:chatMessage];
+                        [chatMessage updateMessageExtToDB];
                     }
                 }
             }

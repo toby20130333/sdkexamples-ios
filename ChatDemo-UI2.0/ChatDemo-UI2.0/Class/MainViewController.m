@@ -15,15 +15,17 @@
 #import "ContactsViewController.h"
 #import "SettingsViewController.h"
 #import "ApplyViewController.h"
+#import "CallSessionViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
-@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate>
+@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate, ICallManagerDelegate>
 {
     ChatListViewController *_chatListVC;
     ContactsViewController *_contactsVC;
     SettingsViewController *_settingsVC;
+    CallSessionViewController *_callController;
     
     UIBarButtonItem *_addFriendItem;
 }
@@ -57,6 +59,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 #warning 把self注册为SDK的delegate
     [self registerNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callOutWithChatter:) name:@"callOutWithChatter" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callControllerClose:) name:@"callControllerClose" object:nil];
     
     [self setupSubviews];
     self.selectedIndex = 0;
@@ -123,11 +127,13 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self unregisterNotifications];
     
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
 }
 
 -(void)unregisterNotifications
 {
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
+    [[EMSDKFull sharedInstance].callManager removeDelegate:self];
 }
 
 - (void)setupSubviews
@@ -136,6 +142,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.tabBar.selectionIndicatorImage = [[UIImage imageNamed:@"tabbarSelectBg"] stretchableImageWithLeftCapWidth:25 topCapHeight:25];
     
     _chatListVC = [[ChatListViewController alloc] init];
+    [_chatListVC networkChanged:_connectionState];
     _chatListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"会话"
                                                            image:nil
                                                              tag:0];
@@ -214,6 +221,36 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
 }
 
+- (void)networkChanged:(EMConnectionState)connectionState
+{
+    _connectionState = connectionState;
+    [_chatListVC networkChanged:connectionState];
+}
+
+- (void)callOutWithChatter:(NSNotification *)notification
+{
+    id object = notification.object;
+    if ([object isKindOfClass:[NSString class]]) {
+        NSString *chatter = (NSString *)object;
+        
+        if (_callController == nil) {
+            [[EMSDKFull sharedInstance].callManager removeDelegate:self];
+            
+            _callController = [[CallSessionViewController alloc] initCallOutWithChatter:chatter];
+            [self presentViewController:_callController animated:YES completion:nil];
+        }
+        else{
+            [self showHint:@"正在通话中"];
+        }
+    }
+}
+
+- (void)callControllerClose:(NSNotification *)notification
+{
+    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
+    _callController = nil;
+}
+
 #pragma mark - IChatManagerDelegate 消息变化
 
 - (void)didUpdateConversationList:(NSArray *)conversationList
@@ -234,7 +271,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (BOOL)needShowNotification:(NSString *)fromChatter
 {
     BOOL ret = YES;
-    NSArray *igGroupIds = [[EaseMob sharedInstance].chatManager ignoredGroupList];
+    NSArray *igGroupIds = [[EaseMob sharedInstance].chatManager ignoredGroupIds];
     for (NSString *str in igGroupIds) {
         if ([str isEqualToString:fromChatter]) {
             ret = NO;
@@ -274,14 +311,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 // 收到消息回调
 -(void)didReceiveMessage:(EMMessage *)message
 {
-    BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversation.chatter] : YES;
+    BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversationChatter] : YES;
     if (needShowNotification) {
 #if !TARGET_IPHONE_SIMULATOR
-        [self playSoundAndVibration];
         
         BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
         if (!isAppActivity) {
             [self showNotificationWithMessage:message];
+        }else {
+            [self playSoundAndVibration];
         }
 #endif
     }
@@ -348,7 +386,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         if (message.isGroup) {
             NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
             for (EMGroup *group in groupArray) {
-                if ([group.groupId isEqualToString:message.conversation.chatter]) {
+                if ([group.groupId isEqualToString:message.conversationChatter]) {
                     title = [NSString stringWithFormat:@"%@(%@)", message.groupSenderName, group.groupSubject];
                     break;
                 }
@@ -366,6 +404,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     notification.alertAction = @"打开";
     notification.timeZone = [NSTimeZone defaultTimeZone];
+    notification.soundName = UILocalNotificationDefaultSoundName;
     //发送通知
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 //    UIApplication *application = [UIApplication sharedApplication];
@@ -539,10 +578,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     } onQueue:nil];
 }
 
-- (void)didConnectionStateChanged:(EMConnectionState)connectionState
-{
-    [_chatListVC networkChanged:connectionState];
-}
+//- (void)didConnectionStateChanged:(EMConnectionState)connectionState
+//{
+//    [_chatListVC networkChanged:connectionState];
+//}
 
 #pragma mark - 自动登录回调
 
@@ -557,6 +596,19 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [self showHint:@"重连失败，稍候将继续重连"];
     }else{
         [self showHint:@"重连成功！"];
+    }
+}
+
+#pragma mark - ICallManagerDelegate
+
+- (void)callSessionStatusChanged:(EMCallSession *)callSession changeReason:(EMCallStatusChangedReason)reason error:(EMError *)error
+{
+    if (callSession.status == eCallSessionStatusConnected)
+    {
+        if (_callController == nil) {
+            _callController = [[CallSessionViewController alloc] initCallInWithSession:callSession];
+            [self presentViewController:_callController animated:YES completion:nil];
+        }
     }
 }
 

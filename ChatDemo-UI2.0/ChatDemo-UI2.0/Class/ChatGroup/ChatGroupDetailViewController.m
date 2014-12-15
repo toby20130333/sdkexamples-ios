@@ -11,44 +11,12 @@
   */
 
 #import "ChatGroupDetailViewController.h"
+
 #import "ContactSelectionViewController.h"
 #import "GroupSettingViewController.h"
 #import "EMGroup.h"
-
-#pragma mark - ChatGroupContactView
-
-@implementation ChatGroupContactView
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        _deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imageView.frame) - 20, 3, 30, 30)];
-        [_deleteButton addTarget:self action:@selector(deleteAction) forControlEvents:UIControlEventTouchUpInside];
-        [_deleteButton setImage:[UIImage imageNamed:@"group_invitee_delete"] forState:UIControlStateNormal];
-        _deleteButton.hidden = YES;
-        [self addSubview:_deleteButton];
-    }
-    
-    return self;
-}
-
-- (void)setEditing:(BOOL)editing
-{
-    if (_editing != editing) {
-        _editing = editing;
-        _deleteButton.hidden = !_editing;
-    }
-}
-
-- (void)deleteAction
-{
-    if (_deleteContact) {
-        _deleteContact(self.index);
-    }
-}
-
-@end
+#import "ContactView.h"
+#import "GroupBansViewController.h"
 
 #pragma mark - ChatGroupDetailViewController
 
@@ -148,6 +116,8 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapView:)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupBansChanged) name:@"GroupBansChanged" object:nil];
     
 //    [[EaseMob sharedInstance].chatManager asyncChangeGroupSubject:@"xieyajie test345678" forGroup:@"1409903855656" completion:^(EMGroup *group, EMError *error) {
 //        NSLog(@"%@", group.groupSubject);
@@ -283,11 +253,16 @@
     {
         cell.textLabel.text = @"群组人数";
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i / %i", _chatGroup.groupOccupantsCount, _chatGroup.groupSetting.groupMaxUsersCount];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i / %i", [_chatGroup.occupants count], _chatGroup.groupSetting.groupMaxUsersCount];
     }
     else if (indexPath.row == 3)
     {
         cell.textLabel.text = @"群设置";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else if (indexPath.row == 4)
+    {
+        cell.textLabel.text = @"群组黑名单";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
@@ -315,6 +290,10 @@
         GroupSettingViewController *settingController = [[GroupSettingViewController alloc] initWithGroup:_chatGroup];
         [self.navigationController pushViewController:settingController animated:YES];
     }
+    else if (indexPath.row == 4) {
+        GroupBansViewController *bansController = [[GroupBansViewController alloc] initWithGroup:_chatGroup];
+        [self.navigationController pushViewController:bansController animated:YES];
+    }
 }
 
 #pragma mark - EMChooseViewDelegate
@@ -338,6 +317,13 @@
             [weakSelf reloadDataSource];
         }
     });
+}
+
+- (void)groupBansChanged
+{
+    [self.dataSource removeAllObjects];
+    [self.dataSource addObjectsFromArray:self.chatGroup.occupants];
+    [self refreshScrollView];
 }
 
 #pragma mark - data
@@ -453,7 +439,7 @@
             NSInteger index = i * kColOfRow + j;
             if (index < [self.dataSource count]) {
                 NSString *username = [self.dataSource objectAtIndex:index];
-                ChatGroupContactView *contactView = [[ChatGroupContactView alloc] initWithFrame:CGRectMake(j * kContactSize, i * kContactSize, kContactSize, kContactSize)];
+                ContactView *contactView = [[ContactView alloc] initWithFrame:CGRectMake(j * kContactSize, i * kContactSize, kContactSize, kContactSize)];
                 contactView.index = i * kColOfRow + j;
                 contactView.image = [UIImage imageNamed:@"chatListCellHead.png"];
                 contactView.remark = username;
@@ -476,6 +462,19 @@
                             [weakSelf showHint:error.description];
                         }
                     } onQueue:nil];
+//                    [weakSelf showHudInView:weakSelf.view hint:@"正在将成员加入黑名单..."];
+//                    NSArray *occupants = [NSArray arrayWithObject:[weakSelf.dataSource objectAtIndex:index]];
+//                    [[EaseMob sharedInstance].chatManager asyncBlockOccupants:occupants fromGroup:weakSelf.chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
+//                        [weakSelf hideHud];
+//                        if (!error) {
+//                            weakSelf.chatGroup = group;
+//                            [weakSelf.dataSource removeObjectAtIndex:index];
+//                            [weakSelf refreshScrollView];
+//                        }
+//                        else{
+//                            [weakSelf showHint:error.description];
+//                        }
+//                    } onQueue:nil];
                 }];
                 
                 [self.scrollView addSubview:contactView];
@@ -537,9 +536,9 @@
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
     
-    for (ChatGroupContactView *contactView in self.scrollView.subviews)
+    for (ContactView *contactView in self.scrollView.subviews)
     {
-        if ([contactView isKindOfClass:[ChatGroupContactView class]]) {
+        if ([contactView isKindOfClass:[ContactView class]]) {
             if ([contactView.remark isEqualToString:loginUsername]) {
                 continue;
             }

@@ -13,9 +13,14 @@
 #import <UIKit/UIKit.h>
 
 @interface MainViewController : UITabBarController
+{
+    EMConnectionState _connectionState;
+}
 
 - (void)jumpToChatList;
 
 - (void)setupUntreatedApplyCount;
+
+- (void)networkChanged:(EMConnectionState)connectionState;
 
 @end

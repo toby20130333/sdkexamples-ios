@@ -1,14 +1,14 @@
 /************************************************************
-  *  * EaseMob CONFIDENTIAL 
-  * __________________ 
-  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved. 
-  *  
-  * NOTICE: All information contained herein is, and remains 
-  * the property of EaseMob Technologies.
-  * Dissemination of this information or reproduction of this material 
-  * is strictly forbidden unless prior written permission is obtained
-  * from EaseMob Technologies.
-  */
+ *  * EaseMob CONFIDENTIAL
+ * __________________
+ * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of EaseMob Technologies.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from EaseMob Technologies.
+ */
 
 #import <CoreText/CoreText.h>
 #import "EMChatTextBubbleView.h"
@@ -65,7 +65,15 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
     CGSize textBlockMinSize = {TEXTLABEL_MAX_WIDTH, CGFLOAT_MAX};
     CGSize retSize;
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
-        retSize = [self.model.content boundingRectWithSize:textBlockMinSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[[self class] textLabelFont]} context:nil].size;
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineSpacing:[[self class] lineSpacing]];//调整行间距
+        
+        retSize = [self.model.content boundingRectWithSize:textBlockMinSize options:NSStringDrawingUsesLineFragmentOrigin
+                                                attributes:@{
+                                                             NSFontAttributeName:[[self class] textLabelFont],
+                                                             NSParagraphStyleAttributeName:paragraphStyle
+                                                             }
+                                                   context:nil].size;
     }else{
         retSize = [self.model.content sizeWithFont:[[self class] textLabelFont] constrainedToSize:textBlockMinSize lineBreakMode:[[self class] textLabelLineBreakModel]];
     }
@@ -85,7 +93,14 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
     [super setModel:model];
     
     _urlMatches = [_detector matchesInString:self.model.content options:0 range:NSMakeRange(0, self.model.content.length)];
-    _textLabel.text = self.model.content;
+    NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc]
+                                                    initWithString:self.model.content];
+    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:[[self class] lineSpacing]];
+    [attributedString addAttribute:NSParagraphStyleAttributeName
+                             value:paragraphStyle
+                             range:NSMakeRange(0, [self.model.content length])];
+    [_textLabel setAttributedText:attributedString];
     [self highlightLinksWithIndex:NSNotFound];
 }
 
@@ -142,15 +157,15 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
     // modify kCTLineBreakByTruncatingTail lineBreakMode to kCTLineBreakByWordWrapping
     [optimizedAttributedText enumerateAttribute:(NSString*)kCTParagraphStyleAttributeName inRange:NSMakeRange(0, [optimizedAttributedText length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop)
      {
-        NSMutableParagraphStyle* paragraphStyle = [value mutableCopy];
-        
-        if ([paragraphStyle lineBreakMode] == NSLineBreakByTruncatingTail) {
-            [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
-        }
-        
-        [optimizedAttributedText removeAttribute:(NSString*)kCTParagraphStyleAttributeName range:range];
-        [optimizedAttributedText addAttribute:(NSString*)kCTParagraphStyleAttributeName value:paragraphStyle range:range];
-    }];
+         NSMutableParagraphStyle* paragraphStyle = [value mutableCopy];
+         
+         if ([paragraphStyle lineBreakMode] == NSLineBreakByTruncatingTail) {
+             [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+         }
+         
+         [optimizedAttributedText removeAttribute:(NSString*)kCTParagraphStyleAttributeName range:range];
+         [optimizedAttributedText addAttribute:(NSString*)kCTParagraphStyleAttributeName value:paragraphStyle range:range];
+     }];
     
     if (!CGRectContainsPoint(self.bounds, point)) {
         return NSNotFound;
@@ -268,9 +283,18 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
         systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
     });
     if (systemVersion >= 7.0) {
-        size = [object.content boundingRectWithSize:textBlockMinSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[self textLabelFont]} context:nil].size;
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineSpacing:[[self class] lineSpacing]];//调整行间距
+        size = [object.content boundingRectWithSize:textBlockMinSize options:NSStringDrawingUsesLineFragmentOrigin
+                                         attributes:@{
+                                                      NSFontAttributeName:[[self class] textLabelFont],
+                                                      NSParagraphStyleAttributeName:paragraphStyle
+                                                      }
+                                            context:nil].size;
     }else{
-        size = [object.content sizeWithFont:[self textLabelFont] constrainedToSize:textBlockMinSize lineBreakMode:[self textLabelLineBreakModel]];
+        size = [object.content sizeWithFont:[self textLabelFont]
+                          constrainedToSize:textBlockMinSize
+                              lineBreakMode:[self textLabelLineBreakModel]];
     }
     return 2 * BUBBLE_VIEW_PADDING + size.height;
 }
@@ -278,6 +302,10 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
 +(UIFont *)textLabelFont
 {
     return [UIFont systemFontOfSize:LABEL_FONT_SIZE];
+}
+
++(CGFloat)lineSpacing{
+    return LABEL_LINESPACE;
 }
 
 +(NSLineBreakMode)textLabelLineBreakModel
