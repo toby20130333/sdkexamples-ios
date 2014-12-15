@@ -202,24 +202,24 @@
     }
     
     EMGroupStyleSetting *setting = [[EMGroupStyleSetting alloc] init];
-//    if (_isPublic) {
-//        if(_isMemberOn)
-//        {
-//            setting.groupStyle = eGroupStyle_PublicOpenJoin;
-//        }
-//        else{
-//            setting.groupStyle = eGroupStyle_PublicJoinNeedApproval;
-//        }
-//    }
-//    else{
-//        if(_isMemberOn)
-//        {
-//            setting.groupStyle = eGroupStyle_PrivateMemberCanInvite;
-//        }
-//        else{
-//            setting.groupStyle = eGroupStyle_PrivateOnlyOwnerInvite;
-//        }
-//    }
+    if (_isPublic) {
+        if(_isMemberOn)
+        {
+            setting.groupStyle = eGroupStyle_PublicOpenJoin;
+        }
+        else{
+            setting.groupStyle = eGroupStyle_PublicJoinNeedApproval;
+        }
+    }
+    else{
+        if(_isMemberOn)
+        {
+            setting.groupStyle = eGroupStyle_PrivateMemberCanInvite;
+        }
+        else{
+            setting.groupStyle = eGroupStyle_PrivateOnlyOwnerInvite;
+        }
+    }
     
 //    setting.groupMaxUsersCount = 4;
     __weak CreateGroupViewController *weakSelf = self;
