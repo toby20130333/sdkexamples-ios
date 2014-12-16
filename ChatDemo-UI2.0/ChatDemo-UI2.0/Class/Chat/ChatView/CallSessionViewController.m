@@ -94,7 +94,7 @@
 
 - (void)dealloc
 {
-    [[EMSDKFull sharedInstance].callManager removeDelegate:self];
+//    [[EMSDKFull sharedInstance].callManager removeDelegate:self];
 }
 
 #pragma mark - private
