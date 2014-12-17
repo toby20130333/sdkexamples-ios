@@ -270,6 +270,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self setupUnreadMessageCount];
 }
 
+- (void)didFinishedReceiveOfflineCmdMessages:(NSArray *)offlineCmdMessages
+{
+    NSString *str = [NSString stringWithFormat:@"接收离线透传消息完毕，一共%d条", [offlineCmdMessages count]];
+    [self showHint:str];
+}
+
 - (BOOL)needShowNotification:(NSString *)fromChatter
 {
     BOOL ret = YES;
