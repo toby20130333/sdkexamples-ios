@@ -11,6 +11,8 @@
   */
 
 #import "MainViewController.h"
+
+#import "UIViewController+HUD.h"
 #import "ChatListViewController.h"
 #import "ContactsViewController.h"
 #import "SettingsViewController.h"
@@ -323,6 +325,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         }
 #endif
     }
+}
+
+-(void)didReceiveCmdMessage:(EMMessage *)message
+{
+    [self showHint:@"有透传消息"];
 }
 
 - (void)playSoundAndVibration{

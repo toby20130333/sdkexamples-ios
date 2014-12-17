@@ -694,6 +694,13 @@
     }
 }
 
+-(void)didReceiveCmdMessage:(EMMessage *)message
+{
+    if ([_conversation.chatter isEqualToString:message.conversationChatter]) {
+        [self showHint:@"有透传消息"];
+    }
+}
+
 - (void)group:(EMGroup *)group didLeave:(EMGroupLeaveReason)reason error:(EMError *)error
 {
     if (_isChatGroup && [group.groupId isEqualToString:_chatter]) {
