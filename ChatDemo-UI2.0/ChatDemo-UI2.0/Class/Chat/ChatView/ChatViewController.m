@@ -496,11 +496,11 @@
 {
     id <IEMFileMessageBody> body = [model.message.messageBodies firstObject];
     EMAttachmentDownloadStatus downloadStatus = [body attachmentDownloadStatus];
-    if (downloadStatus == eAttachmentDownloading) {
+    if (downloadStatus == EMAttachmentDownloading) {
         [self showHint:@"正在下载语音，稍后点击"];
         return;
     }
-    else if (downloadStatus == eAttachmentDownloadFailure)
+    else if (downloadStatus == EMAttachmentDownloadFailure)
     {
         [self showHint:@"正在下载语音，稍后点击"];
         [[EaseMob sharedInstance].chatManager asyncFetchMessage:model.message progress:nil];
@@ -580,7 +580,7 @@
     id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
     if ([model.messageBody messageBodyType] == eMessageBodyType_Image) {
         EMImageMessageBody *imageBody = (EMImageMessageBody *)model.messageBody;
-        if (imageBody.thumbnailDownloadStatus == eAttachmentDownloadSuccessed) {
+        if (imageBody.thumbnailDownloadStatus == EMAttachmentDownloadSuccessed) {
             [weakSelf showHudInView:weakSelf.view hint:@"正在获取大图..."];
             [chatManager asyncFetchMessage:model.message progress:nil completion:^(EMMessage *aMessage, EMError *error) {
                 [weakSelf hideHud];
@@ -609,7 +609,7 @@
     }else if ([model.messageBody messageBodyType] == eMessageBodyType_Video) {
         //获取缩略图
         EMVideoMessageBody *videoBody = (EMVideoMessageBody *)model.messageBody;
-        if (videoBody.thumbnailDownloadStatus != eAttachmentDownloadSuccessed) {
+        if (videoBody.thumbnailDownloadStatus != EMAttachmentDownloadSuccessed) {
             [chatManager asyncFetchMessageThumbnail:model.message progress:nil completion:^(EMMessage *aMessage, EMError *error) {
                 if (!error) {
                     [weakSelf reloadTableViewDataWithMessage:model.message];
@@ -660,18 +660,18 @@
         id<IEMFileMessageBody>fileBody = (id<IEMFileMessageBody>)[message.messageBodies firstObject];
         if ([fileBody messageBodyType] == eMessageBodyType_Image) {
             EMImageMessageBody *imageBody = (EMImageMessageBody *)fileBody;
-            if ([imageBody thumbnailDownloadStatus] == eAttachmentDownloadSuccessed)
+            if ([imageBody thumbnailDownloadStatus] == EMAttachmentDownloadSuccessed)
             {
                 [self reloadTableViewDataWithMessage:message];
             }
         }else if([fileBody messageBodyType] == eMessageBodyType_Video){
             EMVideoMessageBody *videoBody = (EMVideoMessageBody *)fileBody;
-            if ([videoBody thumbnailDownloadStatus] == eAttachmentDownloadSuccessed)
+            if ([videoBody thumbnailDownloadStatus] == EMAttachmentDownloadSuccessed)
             {
                 [self reloadTableViewDataWithMessage:message];
             }
         }else if([fileBody messageBodyType] == eMessageBodyType_Voice){
-            if ([fileBody attachmentDownloadStatus] == eAttachmentDownloadSuccessed)
+            if ([fileBody attachmentDownloadStatus] == EMAttachmentDownloadSuccessed)
             {
                 [self reloadTableViewDataWithMessage:message];
             }
