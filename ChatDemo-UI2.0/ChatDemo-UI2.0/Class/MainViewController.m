@@ -272,8 +272,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)didFinishedReceiveOfflineCmdMessages:(NSArray *)offlineCmdMessages
 {
-    NSString *str = [NSString stringWithFormat:@"接收离线透传消息完毕，一共%d条", [offlineCmdMessages count]];
-    [self showHint:str];
+//    NSString *str = [NSString stringWithFormat:@"接收离线透传消息完毕，一共%d条", [offlineCmdMessages count]];
+//    [self showHint:str];
 }
 
 - (BOOL)needShowNotification:(NSString *)fromChatter
@@ -513,7 +513,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     TTAlertNoTitle(message);
 }
 
-- (void)didAcceptBuddySucceed:(NSString *)username{
+- (void)didAcceptBuddySucceed:(NSString *)username
+{
     [_contactsVC reloadDataSource];
 }
 
