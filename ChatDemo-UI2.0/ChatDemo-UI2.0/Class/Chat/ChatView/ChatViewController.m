@@ -683,7 +683,8 @@
     }
 }
 
-- (void)didFetchingMessageAttachments:(EMMessage *)message progress:(float)progress{
+- (void)didFetchingMessageAttachments:(EMMessage *)message progress:(float)progress
+{
     NSLog(@"didFetchingMessageAttachment: %f", progress);
 }
 
@@ -692,6 +693,9 @@
     if ([_conversation.chatter isEqualToString:message.conversationChatter]) {
         [self addMessage:message];
         [_messages addObject:message];
+        
+//        EMMessage *tmpMessage = [[EMMessage alloc] initMessageWithID:message.messageId sender:message.to receiver:message.from bodies:nil];
+//        [[EaseMob sharedInstance].chatManager sendHasReadResponseForMessage:tmpMessage];
     }
 }
 
@@ -700,6 +704,13 @@
     if ([_conversation.chatter isEqualToString:message.conversationChatter]) {
         [self showHint:@"有透传消息"];
     }
+}
+
+- (void)didReceiveHasReadResponse:(EMReceipt *)resp
+{
+//    if ([_conversation.chatter isEqualToString:resp.conversationChatter]) {
+//        
+//    }
 }
 
 - (void)group:(EMGroup *)group didLeave:(EMGroupLeaveReason)reason error:(EMError *)error
