@@ -39,7 +39,7 @@
 - (id)init {
     if ((self = [super init])) {
         _manager = [EMSDWebImageManager new];
-        _options = SDWebImageLowPriority;
+        _options = EMSDWebImageLowPriority;
         self.maxConcurrentDownloads = 3;
     }
     return self;

@@ -49,10 +49,10 @@
  *
  * @param url         The url for the image.
  * @param placeholder The image to be set initially, until the image request finishes.
- * @param options     The options to use when downloading the image. @see SDWebImageOptions for the possible values.
+ * @param options     The options to use when downloading the image. @see EMSDWebImageOptions for the possible values.
  */
 
-- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options;
+- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(EMSDWebImageOptions)options;
 
 /**
  * Set the imageView `image` with an `url`.
@@ -66,7 +66,7 @@
  *                       indicating if the image was retrived from the local cache of from the network.
  *                       The forth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(NSURL *)url completed:(SDWebImageCompletionBlock)completedBlock;
+- (void)sd_setImageWithURL:(NSURL *)url completed:(EMSDWebImageCompletionBlock)completedBlock;
 
 /**
  * Set the imageView `image` with an `url`, placeholder.
@@ -81,7 +81,7 @@
  *                       indicating if the image was retrived from the local cache of from the network.
  *                       The forth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletionBlock)completedBlock;
+- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(EMSDWebImageCompletionBlock)completedBlock;
 
 /**
  * Set the imageView `image` with an `url`, placeholder and custom options.
@@ -90,14 +90,14 @@
  *
  * @param url            The url for the image.
  * @param placeholder    The image to be set initially, until the image request finishes.
- * @param options        The options to use when downloading the image. @see SDWebImageOptions for the possible values.
+ * @param options        The options to use when downloading the image. @see EMSDWebImageOptions for the possible values.
  * @param completedBlock A block called when operation has been completed. This block has no return value
  *                       and takes the requested UIImage as first parameter. In case of error the image parameter
  *                       is nil and the second parameter may contain an NSError. The third parameter is a Boolean
  *                       indicating if the image was retrived from the local cache of from the network.
  *                       The forth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options completed:(SDWebImageCompletionBlock)completedBlock;
+- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(EMSDWebImageOptions)options completed:(EMSDWebImageCompletionBlock)completedBlock;
 
 /**
  * Cancel the current download
@@ -113,11 +113,11 @@
 
 - (void)setImageWithURL:(NSURL *)url __deprecated_msg("Method deprecated. Use `sd_setImageWithURL:`");
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder __deprecated_msg("Method deprecated. Use `sd_setImageWithURL:placeholderImage:`");
-- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options __deprecated_msg("Method deprecated. Use `sd_setImageWithURL:placeholderImage:options:`");
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(EMSDWebImageOptions)options __deprecated_msg("Method deprecated. Use `sd_setImageWithURL:placeholderImage:options:`");
 
 - (void)setImageWithURL:(NSURL *)url completed:(SDWebImageCompletedBlock)completedBlock __deprecated_msg("Method deprecated. Use `sd_setImageWithURL:completed:`");
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletedBlock)completedBlock __deprecated_msg("Method deprecated. Use `sd_setImageWithURL:placeholderImage:completed:`");
-- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options completed:(SDWebImageCompletedBlock)completedBlock __deprecated_msg("Method deprecated. Use `sd_setImageWithURL:placeholderImage:options:completed:`");
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(EMSDWebImageOptions)options completed:(SDWebImageCompletedBlock)completedBlock __deprecated_msg("Method deprecated. Use `sd_setImageWithURL:placeholderImage:options:completed:`");
 
 - (void)cancelCurrentImageLoad __deprecated_msg("Use `sd_cancelCurrentImageLoad`");
 
