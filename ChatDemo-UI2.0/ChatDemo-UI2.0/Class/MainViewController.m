@@ -426,7 +426,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 #pragma mark - IChatManagerDelegate 登陆回调（主要用于监听自动登录是否成功）
 
-- (void)didLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error
+- (void)didAutoLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error
 {
     if (error) {
         /*NSString *hintText = @"";
@@ -597,7 +597,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //    [_chatListVC networkChanged:connectionState];
 //}
 
-#pragma mark - 自动登录回调
+#pragma mark - 自动重连回调
 
 - (void)willAutoReconnect{
     [self hideHud];
