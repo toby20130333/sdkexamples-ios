@@ -11,29 +11,29 @@
 #import "EMSDWebImageDownloader.h"
 #import "EMSDImageCache.h"
 
-typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) {
+typedef NS_OPTIONS(NSUInteger, EMSDWebImageOptions) {
     /**
      * By default, when a URL fail to be downloaded, the URL is blacklisted so the library won't keep trying.
      * This flag disable this blacklisting.
      */
-    SDWebImageRetryFailed = 1 << 0,
+    EMSDWebImageRetryFailed = 1 << 0,
 
     /**
      * By default, image downloads are started during UI interactions, this flags disable this feature,
      * leading to delayed download on UIScrollView deceleration for instance.
      */
-    SDWebImageLowPriority = 1 << 1,
+    EMSDWebImageLowPriority = 1 << 1,
 
     /**
      * This flag disables on-disk caching
      */
-    SDWebImageCacheMemoryOnly = 1 << 2,
+    EMSDWebImageCacheMemoryOnly = 1 << 2,
 
     /**
      * This flag enables progressive download, the image is displayed progressively during download as a browser would do.
      * By default, the image is only displayed once completely downloaded.
      */
-    SDWebImageProgressiveDownload = 1 << 3,
+    EMSDWebImageProgressiveDownload = 1 << 3,
 
     /**
      * Even if the image is cached, respect the HTTP response cache control, and refresh the image from remote location if needed.
@@ -43,45 +43,45 @@ typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) {
      *
      * Use this flag only if you can't make your URLs static with embeded cache busting parameter.
      */
-    SDWebImageRefreshCached = 1 << 4,
+    EMSDWebImageRefreshCached = 1 << 4,
 
     /**
      * In iOS 4+, continue the download of the image if the app goes to background. This is achieved by asking the system for
      * extra time in background to let the request finish. If the background task expires the operation will be cancelled.
      */
-    SDWebImageContinueInBackground = 1 << 5,
+    EMSDWebImageContinueInBackground = 1 << 5,
 
     /**
      * Handles cookies stored in NSHTTPCookieStore by setting
      * NSMutableURLRequest.HTTPShouldHandleCookies = YES;
      */
-    SDWebImageHandleCookies = 1 << 6,
+    EMSDWebImageHandleCookies = 1 << 6,
 
     /**
      * Enable to allow untrusted SSL ceriticates.
      * Useful for testing purposes. Use with caution in production.
      */
-    SDWebImageAllowInvalidSSLCertificates = 1 << 7,
+    EMSDWebImageAllowInvalidSSLCertificates = 1 << 7,
 
     /**
      * By default, image are loaded in the order they were queued. This flag move them to
      * the front of the queue and is loaded immediately instead of waiting for the current queue to be loaded (which 
      * could take a while).
      */
-    SDWebImageHighPriority = 1 << 8,
+    EMSDWebImageHighPriority = 1 << 8,
     
     /**
      * By default, placeholder images are loaded while the image is loading. This flag will delay the loading
      * of the placeholder image until after the image has finished loading.
      */
-    SDWebImageDelayPlaceholder = 1 << 9
+    EMSDWebImageDelayPlaceholder = 1 << 9
 };
 
-typedef void(^SDWebImageCompletionBlock)(UIImage *image, NSError *error, EMSDImageCacheType cacheType, NSURL *imageURL);
+typedef void(^EMSDWebImageCompletionBlock)(UIImage *image, NSError *error, EMSDImageCacheType cacheType, NSURL *imageURL);
 
-typedef void(^SDWebImageCompletionWithFinishedBlock)(UIImage *image, NSError *error, EMSDImageCacheType cacheType, BOOL finished, NSURL *imageURL);
+typedef void(^EMSDWebImageCompletionWithFinishedBlock)(UIImage *image, NSError *error, EMSDImageCacheType cacheType, BOOL finished, NSURL *imageURL);
 
-typedef NSString *(^SDWebImageCacheKeyFilterBlock)(NSURL *url);
+typedef NSString *(^EMSDWebImageCacheKeyFilterBlock)(NSURL *url);
 
 
 @class EMSDWebImageManager;
@@ -159,7 +159,7 @@ EMSDWebImageManager *manager = [EMSDWebImageManager sharedManager];
 
  * @endcode
  */
-@property (copy) SDWebImageCacheKeyFilterBlock cacheKeyFilter;
+@property (copy) EMSDWebImageCacheKeyFilterBlock cacheKeyFilter;
 
 /**
  * Returns global EMSDWebImageManager instance.
@@ -184,16 +184,16 @@ EMSDWebImageManager *manager = [EMSDWebImageManager sharedManager];
  *   The third parameter is an `EMSDImageCacheType` enum indicating if the image was retrived from the local cache
  *   or from the memory cache or from the network.
  *
- *   The last parameter is set to NO when the SDWebImageProgressiveDownload option is used and the image is 
+ *   The last parameter is set to NO when the EMSDWebImageProgressiveDownload option is used and the image is 
  *   downloading. This block is thus called repetidly with a partial image. When image is fully downloaded, the
  *   block is called a last time with the full image and the last parameter set to YES.
  *
  * @return Returns an NSObject conforming to EMSDWebImageOperation. Should be an instance of EMSDWebImageDownloaderOperation
  */
 - (id <EMSDWebImageOperation>)downloadImageWithURL:(NSURL *)url
-                                         options:(SDWebImageOptions)options
+                                         options:(EMSDWebImageOptions)options
                                         progress:(EMSDWebImageDownloaderProgressBlock)progressBlock
-                                       completed:(SDWebImageCompletionWithFinishedBlock)completedBlock;
+                                       completed:(EMSDWebImageCompletionWithFinishedBlock)completedBlock;
 
 /**
  * Saves image to cache for given URL
@@ -266,8 +266,8 @@ EMSDWebImageManager *manager = [EMSDWebImageManager sharedManager];
 
 #pragma mark - Deprecated
 
-typedef void(^SDWebImageCompletedBlock)(UIImage *image, NSError *error, EMSDImageCacheType cacheType) __deprecated_msg("Block type deprecated. Use `SDWebImageCompletionBlock`");
-typedef void(^SDWebImageCompletedWithFinishedBlock)(UIImage *image, NSError *error, EMSDImageCacheType cacheType, BOOL finished) __deprecated_msg("Block type deprecated. Use `SDWebImageCompletionWithFinishedBlock`");
+typedef void(^SDWebImageCompletedBlock)(UIImage *image, NSError *error, EMSDImageCacheType cacheType) __deprecated_msg("Block type deprecated. Use `EMSDWebImageCompletionBlock`");
+typedef void(^SDWebImageCompletedWithFinishedBlock)(UIImage *image, NSError *error, EMSDImageCacheType cacheType, BOOL finished) __deprecated_msg("Block type deprecated. Use `EMSDWebImageCompletionWithFinishedBlock`");
 
 
 @interface EMSDWebImageManager (Deprecated)
@@ -278,7 +278,7 @@ typedef void(^SDWebImageCompletedWithFinishedBlock)(UIImage *image, NSError *err
  *  @deprecated This method has been deprecated. Use `downloadImageWithURL:options:progress:completed:`
  */
 - (id <EMSDWebImageOperation>)downloadWithURL:(NSURL *)url
-                                    options:(SDWebImageOptions)options
+                                    options:(EMSDWebImageOptions)options
                                    progress:(EMSDWebImageDownloaderProgressBlock)progressBlock
                                   completed:(SDWebImageCompletedWithFinishedBlock)completedBlock __deprecated_msg("Method deprecated. Use `downloadImageWithURL:options:progress:completed:`");
 

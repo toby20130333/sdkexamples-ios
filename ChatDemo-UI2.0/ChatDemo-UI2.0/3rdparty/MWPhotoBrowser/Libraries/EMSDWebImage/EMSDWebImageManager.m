@@ -108,9 +108,9 @@
 }
 
 - (id <EMSDWebImageOperation>)downloadImageWithURL:(NSURL *)url
-                                         options:(SDWebImageOptions)options
+                                         options:(EMSDWebImageOptions)options
                                         progress:(EMSDWebImageDownloaderProgressBlock)progressBlock
-                                       completed:(SDWebImageCompletionWithFinishedBlock)completedBlock {
+                                       completed:(EMSDWebImageCompletionWithFinishedBlock)completedBlock {
     // Invoking this method without a completedBlock is pointless
     NSParameterAssert(completedBlock);
 
@@ -133,7 +133,7 @@
         isFailedUrl = [self.failedURLs containsObject:url];
     }
 
-    if (!url || (!(options & SDWebImageRetryFailed) && isFailedUrl)) {
+    if (!url || (!(options & EMSDWebImageRetryFailed) && isFailedUrl)) {
         dispatch_main_sync_safe(^{
             NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:nil];
             completedBlock(nil, error, EMSDImageCacheTypeNone, YES, url);
@@ -155,10 +155,10 @@
             return;
         }
 
-        if ((!image || options & SDWebImageRefreshCached) && (![self.delegate respondsToSelector:@selector(imageManager:shouldDownloadImageForURL:)] || [self.delegate imageManager:self shouldDownloadImageForURL:url])) {
-            if (image && options & SDWebImageRefreshCached) {
+        if ((!image || options & EMSDWebImageRefreshCached) && (![self.delegate respondsToSelector:@selector(imageManager:shouldDownloadImageForURL:)] || [self.delegate imageManager:self shouldDownloadImageForURL:url])) {
+            if (image && options & EMSDWebImageRefreshCached) {
                 dispatch_main_sync_safe(^{
-                    // If image was found in the cache bug SDWebImageRefreshCached is provided, notify about the cached image
+                    // If image was found in the cache bug EMSDWebImageRefreshCached is provided, notify about the cached image
                     // AND try to re-download it in order to let a chance to NSURLCache to refresh it from server.
                     completedBlock(image, nil, cacheType, YES, url);
                 });
@@ -166,14 +166,14 @@
 
             // download if no image or requested to refresh anyway, and download allowed by delegate
             EMSDWebImageDownloaderOptions downloaderOptions = 0;
-            if (options & SDWebImageLowPriority) downloaderOptions |= EMSDWebImageDownloaderLowPriority;
-            if (options & SDWebImageProgressiveDownload) downloaderOptions |= EMSDWebImageDownloaderProgressiveDownload;
-            if (options & SDWebImageRefreshCached) downloaderOptions |= EMSDWebImageDownloaderUseNSURLCache;
-            if (options & SDWebImageContinueInBackground) downloaderOptions |= EMSDWebImageDownloaderContinueInBackground;
-            if (options & SDWebImageHandleCookies) downloaderOptions |= EMSDWebImageDownloaderHandleCookies;
-            if (options & SDWebImageAllowInvalidSSLCertificates) downloaderOptions |= EMSDWebImageDownloaderAllowInvalidSSLCertificates;
-            if (options & SDWebImageHighPriority) downloaderOptions |= EMSDWebImageDownloaderHighPriority;
-            if (image && options & SDWebImageRefreshCached) {
+            if (options & EMSDWebImageLowPriority) downloaderOptions |= EMSDWebImageDownloaderLowPriority;
+            if (options & EMSDWebImageProgressiveDownload) downloaderOptions |= EMSDWebImageDownloaderProgressiveDownload;
+            if (options & EMSDWebImageRefreshCached) downloaderOptions |= EMSDWebImageDownloaderUseNSURLCache;
+            if (options & EMSDWebImageContinueInBackground) downloaderOptions |= EMSDWebImageDownloaderContinueInBackground;
+            if (options & EMSDWebImageHandleCookies) downloaderOptions |= EMSDWebImageDownloaderHandleCookies;
+            if (options & EMSDWebImageAllowInvalidSSLCertificates) downloaderOptions |= EMSDWebImageDownloaderAllowInvalidSSLCertificates;
+            if (options & EMSDWebImageHighPriority) downloaderOptions |= EMSDWebImageDownloaderHighPriority;
+            if (image && options & EMSDWebImageRefreshCached) {
                 // force progressive off if image already cached but forced refreshing
                 downloaderOptions &= ~EMSDWebImageDownloaderProgressiveDownload;
                 // ignore image read from NSURLCache if image if cached but force refreshing
@@ -199,9 +199,9 @@
                     }
                 }
                 else {
-                    BOOL cacheOnDisk = !(options & SDWebImageCacheMemoryOnly);
+                    BOOL cacheOnDisk = !(options & EMSDWebImageCacheMemoryOnly);
 
-                    if (options & SDWebImageRefreshCached && image && !downloadedImage) {
+                    if (options & EMSDWebImageRefreshCached && image && !downloadedImage) {
                         // Image refresh hit the NSURLCache cache, do not call the completion block
                     }
                             // NOTE: We don't call transformDownloadedImage delegate method on animated images as most transformation code would mangle it
@@ -332,7 +332,7 @@
 
 // deprecated method, uses the non deprecated method
 // adapter for the completion block
-- (id <EMSDWebImageOperation>)downloadWithURL:(NSURL *)url options:(SDWebImageOptions)options progress:(EMSDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedWithFinishedBlock)completedBlock {
+- (id <EMSDWebImageOperation>)downloadWithURL:(NSURL *)url options:(EMSDWebImageOptions)options progress:(EMSDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedWithFinishedBlock)completedBlock {
     return [self downloadImageWithURL:url
                               options:options
                              progress:progressBlock

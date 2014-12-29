@@ -54,9 +54,9 @@ typedef void(^EMSDWebImagePrefetcherCompletionBlock)(NSUInteger noOfFinishedUrls
 @property (nonatomic, assign) NSUInteger maxConcurrentDownloads;
 
 /**
- * SDWebImageOptions for prefetcher. Defaults to SDWebImageLowPriority.
+ * EMSDWebImageOptions for prefetcher. Defaults to EMSDWebImageLowPriority.
  */
-@property (nonatomic, assign) SDWebImageOptions options;
+@property (nonatomic, assign) EMSDWebImageOptions options;
 
 @property (weak, nonatomic) id <EMSDWebImagePrefetcherDelegate> delegate;
 
