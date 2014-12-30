@@ -22,7 +22,7 @@ static LocationViewController *defaultLocation = nil;
 {
     MKMapView *_mapView;
     MKPointAnnotation *_annotation;
-    
+    CLLocationManager *_locationManager;
     CLLocationCoordinate2D _currentLocationCoordinate;
     BOOL _isSendLocation;
 }
@@ -40,6 +40,11 @@ static LocationViewController *defaultLocation = nil;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _isSendLocation = YES;
+        _locationManager = [[CLLocationManager alloc] init];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        {
+            [_locationManager requestWhenInUseAuthorization];
+        }
     }
     
     return self;
