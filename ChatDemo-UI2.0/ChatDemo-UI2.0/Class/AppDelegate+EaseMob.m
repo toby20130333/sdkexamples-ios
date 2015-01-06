@@ -27,7 +27,7 @@
     [[EaseMob sharedInstance] registerSDKWithAppKey:@"easemob-demo#chatdemoui"
                                        apnsCertName:nil];
     // 登录成功后，自动去取好友列表
-    // SDK获取结束后，会回掉
+    // SDK获取结束后，会回调
     // - (void)didFetchedBuddyList:(NSArray *)buddyList error:(EMError *)error方法。
     [[EaseMob sharedInstance].chatManager setIsAutoFetchBuddyList:YES];
     
