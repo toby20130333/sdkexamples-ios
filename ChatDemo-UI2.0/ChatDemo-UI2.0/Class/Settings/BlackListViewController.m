@@ -252,7 +252,7 @@
 - (void)reloadDataSource
 {
     [_dataSource removeAllObjects];
-    NSArray *blocked = [[EaseMob sharedInstance].chatManager blockedList];
+    NSArray *blocked = [[EaseMob sharedInstance].chatManager fetchBlockedList:nil];
     [_dataSource addObjectsFromArray:[self sortDataArray:blocked]];
     [self.tableView reloadData];
 }

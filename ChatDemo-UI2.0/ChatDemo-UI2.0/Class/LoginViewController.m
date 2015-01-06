@@ -101,6 +101,7 @@
      ^(NSDictionary *loginInfo, EMError *error) {
          [self hideHud];
          if (loginInfo && !error) {
+             [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:YES];
              [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
              EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
              if (!error) {
