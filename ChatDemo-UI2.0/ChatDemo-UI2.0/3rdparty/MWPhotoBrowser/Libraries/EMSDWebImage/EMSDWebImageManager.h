@@ -242,7 +242,7 @@ EMSDWebImageManager *manager = [EMSDWebImageManager sharedManager];
  *  @note the completion block is always executed on the main queue
  */
 - (void)cachedImageExistsForURL:(NSURL *)url
-                     completion:(SDWebImageCheckCacheCompletionBlock)completionBlock;
+                     completion:(EMSDWebImageCheckCacheCompletionBlock)completionBlock;
 
 /**
  *  Async check if image has already been cached on disk only
@@ -253,7 +253,7 @@ EMSDWebImageManager *manager = [EMSDWebImageManager sharedManager];
  *  @note the completion block is always executed on the main queue
  */
 - (void)diskImageExistsForURL:(NSURL *)url
-                   completion:(SDWebImageCheckCacheCompletionBlock)completionBlock;
+                   completion:(EMSDWebImageCheckCacheCompletionBlock)completionBlock;
 
 
 /**

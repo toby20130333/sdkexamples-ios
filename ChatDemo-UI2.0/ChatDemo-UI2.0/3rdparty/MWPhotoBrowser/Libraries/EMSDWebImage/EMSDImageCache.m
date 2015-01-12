@@ -209,7 +209,7 @@ BOOL EMImageDataHasPNGPreffix(NSData *data) {
     return exists;
 }
 
-- (void)diskImageExistsWithKey:(NSString *)key completion:(SDWebImageCheckCacheCompletionBlock)completionBlock {
+- (void)diskImageExistsWithKey:(NSString *)key completion:(EMSDWebImageCheckCacheCompletionBlock)completionBlock {
     dispatch_async(_ioQueue, ^{
         BOOL exists = [self->_fileManager fileExistsAtPath:[self defaultCachePathForKey:key]];
         if (completionBlock) {
@@ -276,7 +276,7 @@ BOOL EMImageDataHasPNGPreffix(NSData *data) {
     return EMSDScaledImageForKey(key, image);
 }
 
-- (NSOperation *)queryDiskCacheForKey:(NSString *)key done:(SDWebImageQueryCompletedBlock)doneBlock {
+- (NSOperation *)queryDiskCacheForKey:(NSString *)key done:(EMSDWebImageQueryCompletedBlock)doneBlock {
     if (!doneBlock) {
         return nil;
     }
@@ -504,7 +504,7 @@ BOOL EMImageDataHasPNGPreffix(NSData *data) {
     return count;
 }
 
-- (void)calculateSizeWithCompletionBlock:(SDWebImageCalculateSizeBlock)completionBlock {
+- (void)calculateSizeWithCompletionBlock:(EMSDWebImageCalculateSizeBlock)completionBlock {
     NSURL *diskCacheURL = [NSURL fileURLWithPath:self.diskCachePath isDirectory:YES];
 
     dispatch_async(self.ioQueue, ^{
