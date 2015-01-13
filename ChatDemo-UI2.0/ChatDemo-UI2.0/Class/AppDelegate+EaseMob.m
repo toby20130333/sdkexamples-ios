@@ -81,12 +81,6 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appSignificantTimeChangeNotif:)
-                                                 name:UIApplicationSignificantTimeChangeNotification
-                                               object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appProtectedDataWillBecomeUnavailableNotif:)
                                                  name:UIApplicationProtectedDataWillBecomeUnavailable
                                                object:nil];
@@ -131,12 +125,6 @@
 {
     [[EaseMob sharedInstance] applicationWillTerminate:notif.object];
 }
-
-- (void)appSignificantTimeChangeNotif:(NSNotification*)notif
-{
-    [[EaseMob sharedInstance] applicationSignificantTimeChange:notif.object];
-}
-
 
 - (void)appProtectedDataWillBecomeUnavailableNotif:(NSNotification*)notif
 {
