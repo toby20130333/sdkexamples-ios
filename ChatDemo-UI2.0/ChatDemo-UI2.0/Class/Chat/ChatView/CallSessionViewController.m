@@ -240,23 +240,23 @@
 
 - (void)_beginRing
 {
-    [_player stop];
-    
-    NSString *musicPath = [[NSBundle mainBundle] pathForResource:@"callRing" ofType:@"mp3"];
-    NSURL *url = [[NSURL alloc] initFileURLWithPath:musicPath];
-    
-    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-    [_player setVolume:1];
-    _player.numberOfLoops = -1; //设置音乐播放次数  -1为一直循环
-    if([_player prepareToPlay])
-    {
-        [_player play]; //播放
-    }
+//    [_player stop];
+//    
+//    NSString *musicPath = [[NSBundle mainBundle] pathForResource:@"callRing" ofType:@"mp3"];
+//    NSURL *url = [[NSURL alloc] initFileURLWithPath:musicPath];
+//    
+//    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+//    [_player setVolume:1];
+//    _player.numberOfLoops = -1; //设置音乐播放次数  -1为一直循环
+//    if([_player prepareToPlay])
+//    {
+//        [_player play]; //播放
+//    }
 }
 
 - (void)_stopRing
 {
-    [_player stop];
+//    [_player stop];
 }
 
 #pragma mark - UIAlertViewDelegate

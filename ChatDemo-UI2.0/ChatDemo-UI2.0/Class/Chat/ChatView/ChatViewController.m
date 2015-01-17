@@ -781,7 +781,7 @@
 
 - (void)moreViewAudioCallAction:(DXChatBarMoreView *)moreView
 {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:self.chatter];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:self.chatter];
     
 //    __weak typeof(self) weakSelf = self;
 //    if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])

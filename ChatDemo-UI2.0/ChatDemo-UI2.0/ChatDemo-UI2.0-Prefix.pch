@@ -25,7 +25,6 @@
     #import "CoreData+MagicalRecord.h"
 
     #import "EaseMob.h"
-//    #import "EMSDKFull.h"
-//    #import "EMCallSession.h"
+    #import "EMSDKFull.h"
 
 #endif
