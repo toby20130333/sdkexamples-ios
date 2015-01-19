@@ -287,18 +287,13 @@
     }
 }
 
-// 收到群组邀请回调
+// 已经同意并且加入群组后的回调
 - (void)didAcceptInvitationFromGroup:(EMGroup *)group
-                               error:(EMError *)error{
-    
-    NSString *groupName = group.groupSubject;
-    NSString *username = group.owner;
-    NSString *message = [NSString stringWithFormat:@"%@ 邀请你加入群组\'%@\'", username, groupName];
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":groupName, @"groupId":group.groupId, @"username":username, @"applyMessage":message, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleGroupInvitation]}];
-    [[ApplyViewController shareController] addNewApply:dic];
-    if (self.mainController) {
-        [self.mainController setupUntreatedApplyCount];
-    }
+                               error:(EMError *)error
+{
+    NSString *message = [NSString stringWithFormat:@"你被邀请并加入了群组 \'%@\'", group.groupSubject];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 
