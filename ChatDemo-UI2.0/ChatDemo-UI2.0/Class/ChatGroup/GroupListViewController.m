@@ -53,7 +53,7 @@
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
     
-    self.title = @"群组";
+    self.title = NSLocalizedString(@"title.group", @"Group");
     
 #warning 把self注册为SDK的delegate
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
@@ -123,7 +123,7 @@
     if (_searchBar == nil) {
         _searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 44)];
         _searchBar.delegate = self;
-        _searchBar.placeholder = @"搜索";
+        _searchBar.placeholder = NSLocalizedString(@"search", @"Search");
         _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
     }
     

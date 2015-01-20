@@ -100,7 +100,7 @@
     if (!_searchBar) {
         _searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 44)];
         _searchBar.delegate = self;
-        _searchBar.placeholder = @"搜索";
+        _searchBar.placeholder = NSLocalizedString(@"search", @"Search");
         _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
     }
     
@@ -200,7 +200,7 @@
         label.font = [UIFont systemFontOfSize:15.0];
         label.textColor = [UIColor grayColor];
         label.backgroundColor = [UIColor clearColor];
-        label.text = @"当前网络连接失败";
+        label.text = NSLocalizedString(@"network.disconnection", @"Network disconnection");
         [_networkStateView addSubview:label];
     }
     
@@ -257,7 +257,7 @@
         id<IEMMessageBody> messageBody = lastMessage.messageBodies.lastObject;
         switch (messageBody.messageBodyType) {
             case eMessageBodyType_Image:{
-                ret = @"[图片]";
+                ret = NSLocalizedString(@"message.image1", @"[image]");
             } break;
             case eMessageBodyType_Text:{
                 // 表情映射。
@@ -266,13 +266,13 @@
                 ret = didReceiveText;
             } break;
             case eMessageBodyType_Voice:{
-                ret = @"[声音]";
+                ret = NSLocalizedString(@"message.voice1", @"[voice]");
             } break;
             case eMessageBodyType_Location: {
-                ret = @"[位置]";
+                ret = NSLocalizedString(@"message.location1", @"[location]");
             } break;
             case eMessageBodyType_Video: {
-                ret = @"[视频]";
+                ret = NSLocalizedString(@"message.vidio1", @"[vidio]");
             } break;
             default: {
             } break;
@@ -360,7 +360,7 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         EMConversation *converation = [self.dataSource objectAtIndex:indexPath.row];
-        [[EaseMob sharedInstance].chatManager removeConversationByChatter:converation.chatter deleteMessages:YES append2Chat:YES];
+        [[EaseMob sharedInstance].chatManager removeConversationByChatter:converation.chatter deleteMessages:NO];
         [self.dataSource removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -482,11 +482,11 @@
 }
 
 - (void)willReceiveOfflineMessages{
-    NSLog(@"开始接收离线消息");
+    NSLog(NSLocalizedString(@"message.beginReceiveOffine", @"Begin to receive offline messages"));
 }
 
 - (void)didFinishedReceiveOfflineMessages:(NSArray *)offlineMessages{
-    NSLog(@"离线消息接收成功");
+    NSLog(NSLocalizedString(@"message.endReceiveOffine", @"End to receive offline messages"));
     [self refreshDataSource];
 }
 

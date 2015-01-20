@@ -164,7 +164,7 @@
 {
     if (_clearButton == nil) {
         _clearButton = [[UIButton alloc] init];
-        [_clearButton setTitle:@"清空聊天记录" forState:UIControlStateNormal];
+        [_clearButton setTitle:NSLocalizedString(@"group.removeAllMessages", @"remove all messages") forState:UIControlStateNormal];
         [_clearButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_clearButton addTarget:self action:@selector(clearAction) forControlEvents:UIControlEventTouchUpInside];
         [_clearButton setBackgroundColor:[UIColor colorWithRed:87 / 255.0 green:186 / 255.0 blue:205 / 255.0 alpha:1.0]];
@@ -177,7 +177,7 @@
 {
     if (_dissolveButton == nil) {
         _dissolveButton = [[UIButton alloc] init];
-        [_dissolveButton setTitle:@"解散该群" forState:UIControlStateNormal];
+        [_dissolveButton setTitle:NSLocalizedString(@"group.destroy", @"dissolution of the group") forState:UIControlStateNormal];
         [_dissolveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_dissolveButton addTarget:self action:@selector(dissolveAction) forControlEvents:UIControlEventTouchUpInside];
         [_dissolveButton setBackgroundColor: [UIColor colorWithRed:191 / 255.0 green:48 / 255.0 blue:49 / 255.0 alpha:1.0]];
@@ -190,7 +190,7 @@
 {
     if (_exitButton == nil) {
         _exitButton = [[UIButton alloc] init];
-        [_exitButton setTitle:@"退出该群" forState:UIControlStateNormal];
+        [_exitButton setTitle:NSLocalizedString(@"group.leave", @"quit the group") forState:UIControlStateNormal];
         [_exitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_exitButton addTarget:self action:@selector(exitAction) forControlEvents:UIControlEventTouchUpInside];
         [_exitButton setBackgroundColor:[UIColor colorWithRed:191 / 255.0 green:48 / 255.0 blue:49 / 255.0 alpha:1.0]];
@@ -245,24 +245,24 @@
     }
     else if (indexPath.row == 1)
     {
-        cell.textLabel.text = @"群组ID";
+        cell.textLabel.text = NSLocalizedString(@"group.id", @"group ID");
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.detailTextLabel.text = _chatGroup.groupId;
     }
     else if (indexPath.row == 2)
     {
-        cell.textLabel.text = @"群组人数";
+        cell.textLabel.text = NSLocalizedString(@"group.occupantCount", @"members count");
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%i / %i", [_chatGroup.occupants count], _chatGroup.groupSetting.groupMaxUsersCount];
     }
     else if (indexPath.row == 3)
     {
-        cell.textLabel.text = @"群设置";
+        cell.textLabel.text = NSLocalizedString(@"title.groupSetting", @"Group Setting");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else if (indexPath.row == 4)
     {
-        cell.textLabel.text = @"群组黑名单";
+        cell.textLabel.text = NSLocalizedString(@"title.groupBlackList", @"Group black list");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
@@ -299,7 +299,7 @@
 #pragma mark - EMChooseViewDelegate
 - (void)viewController:(EMChooseViewController *)viewController didFinishSelectedSources:(NSArray *)selectedSources
 {
-    [self showHudInView:self.view hint:@"添加组成员..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.addingOccupant", @"add a group member...")];
     
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -310,7 +310,7 @@
         
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
         NSString *username = [loginInfo objectForKey:kSDKUsername];
-        NSString *messageStr = [NSString stringWithFormat:@"%@ 邀请你加入群组\'%@\'", username, weakSelf.chatGroup.groupSubject];
+        NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join group \'%@\'"), username, weakSelf.chatGroup.groupSubject];
         EMError *error = nil;
         weakSelf.chatGroup = [[EaseMob sharedInstance].chatManager addOccupants:source toGroup:weakSelf.chatGroup.groupId welcomeMessage:messageStr error:&error];
         if (!error) {
@@ -331,7 +331,7 @@
 - (void)fetchGroupInfo
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:@"加载数据..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
     [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:_chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf hideHud];
@@ -367,7 +367,7 @@
 //                } onQueue:nil];
             }
             else{
-                [weakSelf showHint:@"获取群组详情失败，请稍后重试"];
+                [weakSelf showHint:NSLocalizedString(@"group.fetchInfoFail", @"failed to get the group details, please try again later")];
 //                [weakSelf reloadDataSource];
             }
         });
@@ -449,7 +449,7 @@
                 
                 __weak typeof(self) weakSelf = self;
                 [contactView setDeleteContact:^(NSInteger index) {
-                    [weakSelf showHudInView:weakSelf.view hint:@"正在删除成员..."];
+                    [weakSelf showHudInView:weakSelf.view hint:NSLocalizedString(@"group.removingOccupant", @"deleting member...")];
                     NSArray *occupants = [NSArray arrayWithObject:[weakSelf.dataSource objectAtIndex:index]];
                     [[EaseMob sharedInstance].chatManager asyncRemoveOccupants:occupants fromGroup:weakSelf.chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
                         [weakSelf hideHud];
@@ -561,23 +561,23 @@
 - (void)clearAction
 {
     __weak typeof(self) weakSelf = self;
-    [WCAlertView showAlertWithTitle:@"提示" message:@"请确认删除" customizationBlock:nil completionBlock:
+    [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"sureToDelete", @"please make sure to delete") customizationBlock:nil completionBlock:
      ^(NSUInteger buttonIndex, WCAlertView *alertView) {
          if (buttonIndex == 1) {
              [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveAllMessages" object:weakSelf.chatGroup.groupId];
          }
-     } cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+     } cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
 }
 
 //解散群组
 - (void)dissolveAction
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:@"解散群组"];
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
     [[EaseMob sharedInstance].chatManager asyncDestroyGroup:_chatGroup.groupId completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
         [weakSelf hideHud];
         if (error) {
-            [weakSelf showHint:@"解散群组失败"];
+            [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
         }
         else{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitGroup" object:nil];
@@ -602,11 +602,11 @@
 - (void)exitAction
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:@"退出群组"];
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.leave", @"quit the group")];
     [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
         [weakSelf hideHud];
         if (error) {
-            [weakSelf showHint:@"退出群组失败"];
+            [weakSelf showHint:NSLocalizedString(@"group.leaveFail", @"exit the group failure")];
         }
         else{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"ExitGroup" object:nil];

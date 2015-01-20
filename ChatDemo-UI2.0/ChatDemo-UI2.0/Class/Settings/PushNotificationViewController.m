@@ -38,10 +38,10 @@
 {
     [super viewDidLoad];
     
-    self.title = @"消息推送设置";
+    self.title = NSLocalizedString(@"title.apnsSetting", @"Apns Settings");
     
     UIButton *saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-    [saveButton setTitle:@"保存" forState:UIControlStateNormal];
+    [saveButton setTitle:NSLocalizedString(@"save", @"Save") forState:UIControlStateNormal];
     [saveButton addTarget:self action:@selector(savePushOptions) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
     
@@ -104,7 +104,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 1) {
-        return @"功能消息免打扰";
+        return NSLocalizedString(@"setting.notDisturb", @"No disturbing");
     }
     return nil;
 }
@@ -120,7 +120,7 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"通知显示消息详情";
+            cell.textLabel.text = NSLocalizedString(@"setting.showDetail", @"notify the display messages");
             
             self.pushDisplaySwitch.frame = CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 10, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, self.pushDisplaySwitch.frame.size.width, self.pushDisplaySwitch.frame.size.height);
             [cell.contentView addSubview:self.pushDisplaySwitch];
@@ -129,7 +129,7 @@
     else if (indexPath.section == 1)
     {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"开启";
+            cell.textLabel.text = NSLocalizedString(@"setting.open", @"Open");
             
             BOOL isOn = _isNoDisturbing;
             if (_noDisturbingStart == 0 && _noDisturbingEnd == 24) {
@@ -142,7 +142,7 @@
         }
         else if (indexPath.row == 1)
         {
-            cell.textLabel.text = @"只在夜间开启 (22:00 - 7:00)";
+            cell.textLabel.text = NSLocalizedString(@"setting.nightOpen", @"only open at night (22:00 - 7:00)");
             
             BOOL isOn = _isNoDisturbing;
             if (_noDisturbingStart == 22 && _noDisturbingEnd == 7) {
@@ -155,7 +155,7 @@
         }
         else if (indexPath.row == 2)
         {
-            cell.textLabel.text = @"关闭";
+            cell.textLabel.text = NSLocalizedString(@"setting.close", @"Close");
             cell.accessoryType = _isNoDisturbing == YES ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
         }
     }
@@ -191,8 +191,8 @@
             case 0:
             {
                 needReload = NO;
-                [WCAlertView showAlertWithTitle:@"设置提醒"
-                                        message:@"此设置会导致全天都处于免打扰模式, 不会再收到推送消息. 是否继续?"
+                [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                        message:NSLocalizedString(@"setting.sureNotDisturb", @"this setting will cause all day in the don't disturb mode, will no longer receive push messages. Whether or not to continue?")
                              customizationBlock:^(WCAlertView *alertView) {
                              } completionBlock:^(NSUInteger buttonIndex, WCAlertView *alertView) {
                                  switch (buttonIndex) {
@@ -205,7 +205,7 @@
                                          [tableView reloadData];
                                      } break;
                                  }
-                             } cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+                             } cancelButtonTitle:NSLocalizedString(@"no", @"NO") otherButtonTitles:NSLocalizedString(@"yes", @"YES"), nil];
             } break;
             case 1:
             {

@@ -48,7 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"群组黑名单";
+    self.title = NSLocalizedString(@"title.groupBlackList", @"Group black list");
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
@@ -175,7 +175,7 @@
                 __weak typeof(self) weakSelf = self;
                 [contactView setDeleteContact:^(NSInteger index) {
                     weakSelf.isUpdate = YES;
-                    [weakSelf showHudInView:weakSelf.view hint:@"正在将成员移出黑名单..."];
+                    [weakSelf showHudInView:weakSelf.view hint:NSLocalizedString(@"group.ban.removing", @"members are removing from the blacklist...")];
                     NSArray *occupants = [NSArray arrayWithObject:[weakSelf.group.bans objectAtIndex:index]];
                     [[EaseMob sharedInstance].chatManager asyncUnblockOccupants:occupants forGroup:weakSelf.group.groupId completion:^(EMGroup *group, EMError *error) {
                         [weakSelf hideHud];
@@ -199,14 +199,14 @@
 {
     if ([_group.bans count] == 0) {
         __weak typeof(self) weakSelf = self;
-        [self showHudInView:weakSelf.view hint:@"获取群组黑名单..."];
+        [self showHudInView:weakSelf.view hint:NSLocalizedString(@"group.ban.fetching", @"getting group blacklist...")];
         [[EaseMob sharedInstance].chatManager asyncFetchGroupBansList:_group.groupId completion:^(NSArray *groupBans, EMError *error) {
             [weakSelf hideHud];
             if (!error) {
                 [weakSelf refreshScrollView];
             }
             else{
-                NSString *errorStr = [NSString stringWithFormat:@"获取黑名单失败: %@", error.description];
+                NSString *errorStr = [NSString stringWithFormat:NSLocalizedString(@"group.ban.fetchFail", @"fail to get blacklist: %@"), error.description];
                 [weakSelf showHint:errorStr];
             }
         } onQueue:nil];

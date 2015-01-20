@@ -152,10 +152,10 @@
 // 注册deviceToken失败，此处失败，与环信SDK无关，一般是您的环境配置或者证书配置有误
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
     [[EaseMob sharedInstance] application:application didFailToRegisterForRemoteNotificationsWithError:error];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册推送失败"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.failToRegisterApns", Fail to register apns)
                                                     message:error.description
                                                    delegate:nil
-                                          cancelButtonTitle:@"确定"
+                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                           otherButtonTitles:nil];
     [alert show];
 }
@@ -195,12 +195,15 @@
 
 #pragma mark - IChatManagerDelegate
 // 开始自动登录回调
--(void)willAutoLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error{
-    NSLog(@"自动登录开始...");
+-(void)willAutoLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error
+{
+    NSLog(NSLocalizedString(@"login.beginAutoLogin", @"Start automatic login..."));
 }
+
 // 结束自动登录回调
--(void)didAutoLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error{
-    NSLog(@"自动登录结束...");
+-(void)didAutoLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error
+{
+    NSLog(NSLocalizedString(@"login.endAutoLogin", @"End automatic login..."));
 }
 
 // 好友申请回调
@@ -211,7 +214,7 @@
         return;
     }
     if (!message) {
-        message = [NSString stringWithFormat:@"%@ 添加你为好友", username];
+        message = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), username];
     }
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":username, @"username":username, @"applyMessage":message, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleFriend]}];
     [[ApplyViewController shareController] addNewApply:dic];
@@ -236,7 +239,7 @@
     }
     
     if (reason == eGroupLeaveReason_BeRemoved) {
-        str = [NSString stringWithFormat:@"你被从群组\'%@\'中踢出", tmpStr];
+        str = [NSString stringWithFormat:NSLocalizedString(@"group.beKicked", @"you have been kicked out from the group of \'%@\'"), tmpStr];
     }
     if (str.length > 0) {
         TTAlertNoTitle(str);
@@ -249,9 +252,9 @@
                                       reason:(NSString *)reason
                                        error:(EMError *)error{
     if (!reason || reason.length == 0) {
-        reason = [NSString stringWithFormat:@"被拒绝加入群组\'%@\'", groupname];
+        reason = [NSString stringWithFormat:NSLocalizedString(@"group.beRefusedToJoin", @"be refused to join the group\'%@\'"), groupname];
     }
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"申请提示" message:reason delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:reason delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -267,15 +270,15 @@
     }
     
     if (!reason || reason.length == 0) {
-        reason = [NSString stringWithFormat:@"%@ 申请加入群组\'%@\'", username, groupname];
+        reason = [NSString stringWithFormat:NSLocalizedString(@"group.applyJoin", @"%@ apply to join groups\'%@\'"), username, groupname];
     }
     else{
-        reason = [NSString stringWithFormat:@"%@ 申请加入群组\'%@\'：%@", username, groupname, reason];
+        reason = [NSString stringWithFormat:NSLocalizedString(@"group.applyJoinWithName", @"%@ apply to join groups\'%@\'：%@"), username, groupname, reason];
     }
     
     if (error) {
-        NSString *message = [NSString stringWithFormat:@"发送申请失败:%@\n原因：%@", reason, error.description];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"group.sendApplyFail", @"send application failure:%@\nreason：%@"), reason, error.description];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error") message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
         [alertView show];
     }
     else{
@@ -291,8 +294,9 @@
 - (void)didAcceptInvitationFromGroup:(EMGroup *)group
                                error:(EMError *)error
 {
-    NSString *message = [NSString stringWithFormat:@"你被邀请并加入了群组 \'%@\'", group.groupSubject];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"group.agreedAndJoined", @"agreed and joined the group of \'%@\'")
+                         , group.groupSubject];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -301,7 +305,7 @@
 - (void)didBindDeviceWithError:(EMError *)error
 {
     if (error) {
-        TTAlertNoTitle(@"消息推送与设备绑定失败");
+        TTAlertNoTitle(NSLocalizedString(@"apns.failToBindDeviceToken", @"Fail to bind device token"));
     }
 }
 

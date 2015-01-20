@@ -43,7 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"设置";
+    self.title = NSLocalizedString(@"title.setting", @"Setting");
     self.view.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     
     self.tableView.backgroundColor = [UIColor whiteColor];
@@ -113,24 +113,24 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"自动登录";
+            cell.textLabel.text = NSLocalizedString(@"setting.autoLogin", @"automatic login");
             cell.accessoryType = UITableViewCellAccessoryNone;
             self.autoLoginSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.autoLoginSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.autoLoginSwitch.frame.size.height) / 2, self.autoLoginSwitch.frame.size.width, self.autoLoginSwitch.frame.size.height);
             [cell.contentView addSubview:self.autoLoginSwitch];
         }
         else if (indexPath.row == 1)
         {
-            cell.textLabel.text = @"消息推送设置";
+            cell.textLabel.text = NSLocalizedString(@"title.apnsSetting", @"Apns Settings");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         else if (indexPath.row == 2)
         {
-            cell.textLabel.text = @"黑名单";
+            cell.textLabel.text = NSLocalizedString(@"title.buddyBlock", @"Black List");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         else if (indexPath.row == 3)
         {
-            cell.textLabel.text = @"诊断";
+            cell.textLabel.text = NSLocalizedString(@"title.debug", @"Debug");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
 //        else if (indexPath.row == 3)
@@ -190,7 +190,7 @@
         [logoutButton setBackgroundColor:[UIColor colorWithRed:191 / 255.0 green:48 / 255.0 blue:49 / 255.0 alpha:1.0]];
         NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
         NSString *username = [loginInfo objectForKey:kSDKUsername];
-        NSString *logoutButtonTitle = [[NSString alloc] initWithFormat:@"退出登录(%@)", username];
+        NSString *logoutButtonTitle = [[NSString alloc] initWithFormat:NSLocalizedString(@"setting.loginUser", @"log out(%@)"), username];
         [logoutButton setTitle:logoutButtonTitle forState:UIControlStateNormal];
         [logoutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [logoutButton addTarget:self action:@selector(logoutAction) forControlEvents:UIControlEventTouchUpInside];
@@ -230,7 +230,7 @@
 - (void)logoutAction
 {
     __weak SettingsViewController *weakSelf = self;
-    [self showHudInView:self.view hint:@"正在退出..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"setting.logoutOngoing", @"loging out...")];
     [[EaseMob sharedInstance].chatManager asyncLogoffWithCompletion:^(NSDictionary *info, EMError *error) {
         [weakSelf hideHud];
         if (error && error.errorCode != EMErrorServerNotLogin) {

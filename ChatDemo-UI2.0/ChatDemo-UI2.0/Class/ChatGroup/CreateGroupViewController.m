@@ -53,12 +53,12 @@
     {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
-    self.title = @"创建群组";
+    self.title = NSLocalizedString(@"title.createGroup", @"Create a group");
     self.view.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
     addButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
-    [addButton setTitle:@"添加成员" forState:UIControlStateNormal];
+    [addButton setTitle:NSLocalizedString(@"group.create.addOccupant", @"add members") forState:UIControlStateNormal];
     [addButton setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
     [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [addButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
@@ -97,7 +97,7 @@
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.font = [UIFont systemFontOfSize:15.0];
         _textField.backgroundColor = [UIColor whiteColor];
-        _textField.placeholder = @"请输入群组名称";
+        _textField.placeholder = NSLocalizedString(@"group.create.inputName", @"please enter the group name");
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.delegate = self;
     }
@@ -114,7 +114,7 @@
         _textView.layer.cornerRadius = 3;
         _textView.font = [UIFont systemFontOfSize:14.0];
         _textView.backgroundColor = [UIColor whiteColor];
-        _textView.placeholder = @"请输入群组简介";
+        _textView.placeholder = NSLocalizedString(@"group.create.inputDescribe", @"please enter a group description");
         _textView.returnKeyType = UIReturnKeyDone;
         _textView.delegate = self;
     }
@@ -132,7 +132,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, oY, 100, 35)];
         label.backgroundColor = [UIColor clearColor];
         label.font = [UIFont systemFontOfSize:14.0];
-        label.text = @"群组权限";
+        label.text = NSLocalizedString(@"group.create.groupPermission", @"group permission");
         [_switchView addSubview:label];
         
         UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(100, oY, 50, _switchView.frame.size.height)];
@@ -143,14 +143,14 @@
         _groupTypeLabel.backgroundColor = [UIColor clearColor];
         _groupTypeLabel.font = [UIFont systemFontOfSize:12.0];
         _groupTypeLabel.textColor = [UIColor grayColor];
-        _groupTypeLabel.text = @"私有群";
+        _groupTypeLabel.text = NSLocalizedString(@"group.create.private", @"private group");
         [_switchView addSubview:_groupTypeLabel];
         
         oY += (35 + 20);
         _groupMemberTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, oY, 100, 35)];
         _groupMemberTitleLabel.font = [UIFont systemFontOfSize:14.0];
         _groupMemberTitleLabel.backgroundColor = [UIColor clearColor];
-        _groupMemberTitleLabel.text = @"成员邀请权限";
+        _groupMemberTitleLabel.text = NSLocalizedString(@"group.create.occupantPermissions", @"members invite permissions");
         [_switchView addSubview:_groupMemberTitleLabel];
         
         _groupMemberSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(100, oY, 50, 35)];
@@ -161,7 +161,7 @@
         _groupMemberLabel.backgroundColor = [UIColor clearColor];
         _groupMemberLabel.font = [UIFont systemFontOfSize:12.0];
         _groupMemberLabel.textColor = [UIColor grayColor];
-        _groupMemberLabel.text = @"不允许群成员邀请其他人";
+        _groupMemberLabel.text = NSLocalizedString(@"group.create.unallowedOccupantInvite", @"don't allow group members to invite others");
         [_switchView addSubview:_groupMemberLabel];
     }
     
@@ -194,7 +194,7 @@
 
 - (void)viewController:(EMChooseViewController *)viewController didFinishSelectedSources:(NSArray *)selectedSources
 {
-    [self showHudInView:self.view hint:@"创建群组..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
     
     NSMutableArray *source = [NSMutableArray array];
     for (EMBuddy *buddy in selectedSources) {
@@ -225,29 +225,17 @@
     __weak CreateGroupViewController *weakSelf = self;
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     NSString *username = [loginInfo objectForKey:kSDKUsername];
-    NSString *messageStr = [NSString stringWithFormat:@"%@ 邀请你加入群组\'%@\'", username, self.textField.text];
+    NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.textField.text];
     [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
         [weakSelf hideHud];
         if (group && !error) {
-            [weakSelf showHint:@"创建群组成功"];
+            [weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
             [weakSelf.navigationController popViewControllerAnimated:YES];
         }
         else{
-            [weakSelf showHint:@"创建群组失败，请重新操作"];
+            [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
         }
     } onQueue:nil];
-
-//    setting.groupStyle = eGroupStyle_PublicChatRoom;
-//    [[EaseMob sharedInstance].chatManager asyncCreateChatRoomWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
-//        [weakSelf hideHud];
-//        if (group && !error) {
-//            [weakSelf showHint:@"创建群组成功"];
-//            [weakSelf.navigationController popViewControllerAnimated:YES];
-//        }
-//        else{
-//            [weakSelf showHint:@"创建群组失败，请重新操作"];
-//        }
-//    } onQueue:nil];
 }
 
 #pragma mark - action
@@ -260,33 +248,33 @@
     [self groupMemberChange:_groupMemberSwitch];
     
     if (control.isOn) {
-        _groupTypeLabel.text = @"公有群";
+        _groupTypeLabel.text = NSLocalizedString(@"group.create.public", @"public group");
     }
     else{
-        _groupTypeLabel.text = @"私有群";
+        _groupTypeLabel.text = NSLocalizedString(@"group.create.private", @"private group");
     }
 }
 
 - (void)groupMemberChange:(UISwitch *)control
 {
     if (_isPublic) {
-        _groupMemberTitleLabel.text = @"成员加入权限";
+        _groupMemberTitleLabel.text = NSLocalizedString(@"group.create.occupantJoinPermissions", @"members join permissions");
         if(control.isOn)
         {
-            _groupMemberLabel.text = @"随便加入";
+            _groupMemberLabel.text = NSLocalizedString(@"group.create.open", @"random join");
         }
         else{
-            _groupMemberLabel.text = @"加入群组需要管理员同意";
+            _groupMemberLabel.text = NSLocalizedString(@"group.create.needApply", @"you need administrator agreed to join the group");
         }
     }
     else{
-        _groupMemberTitleLabel.text = @"成员邀请权限";
+        _groupMemberTitleLabel.text = NSLocalizedString(@"group.create.occupantPermissions", @"members invite permissions");
         if(control.isOn)
         {
-            _groupMemberLabel.text = @"允许群成员邀请其他人";
+            _groupMemberLabel.text = NSLocalizedString(@"group.create.allowedOccupantInvite", @"allows group members to invite others");
         }
         else{
-            _groupMemberLabel.text = @"不允许群成员邀请其他人";
+            _groupMemberLabel.text = NSLocalizedString(@"group.create.unallowedOccupantInvite", @"don't allow group members to invite others");
         }
     }
     
@@ -296,7 +284,7 @@
 - (void)addContacts:(id)sender
 {
     if (self.textField.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入群组名称" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"group.create.inputName", @"please enter the group name") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }

@@ -49,15 +49,15 @@
     
     if (!self.defaultEditing) {
         UIButton *chooseButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-        [chooseButton setTitle:@"选择" forState:UIControlStateNormal];
-        [chooseButton setTitle:@"完成" forState:UIControlStateSelected];
+        [chooseButton setTitle:NSLocalizedString(@"choose", @"Choose") forState:UIControlStateNormal];
+        [chooseButton setTitle:NSLocalizedString(@"down", @"Down") forState:UIControlStateSelected];
         [chooseButton setBackgroundColor:[UIColor clearColor]];
         [chooseButton addTarget:self action:@selector(chooseAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:chooseButton]];
     }
     else{
         UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-        [doneButton setTitle:@"完成" forState:UIControlStateNormal];
+        [doneButton setTitle:NSLocalizedString(@"down", @"Down") forState:UIControlStateNormal];
         [doneButton setBackgroundColor:[UIColor clearColor]];
         [doneButton addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:doneButton]];
@@ -307,7 +307,7 @@
 - (void)loadDataSource
 {
     if (_delegate && [_delegate respondsToSelector:@selector(viewControllerLoadDataSource:)]) {
-        [self showHudInView:self.view hint:@"加载数据..."];
+        [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
         
         NSArray *array = [_delegate viewControllerLoadDataSource:self];
         [self.dataSource addObjectsFromArray:[self sortRecords:array]];

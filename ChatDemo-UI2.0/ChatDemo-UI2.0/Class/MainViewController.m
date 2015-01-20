@@ -17,7 +17,7 @@
 #import "ContactsViewController.h"
 #import "SettingsViewController.h"
 #import "ApplyViewController.h"
-#import "CallSessionViewController.h"
+//#import "CallSessionViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -27,7 +27,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     ChatListViewController *_chatListVC;
     ContactsViewController *_contactsVC;
     SettingsViewController *_settingsVC;
-    CallSessionViewController *_callController;
+//    CallSessionViewController *_callController;
     
     UIBarButtonItem *_addFriendItem;
 }
@@ -54,15 +54,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if ([UIDevice currentDevice].systemVersion.floatValue >= 7) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    self.title = @"会话";
+    self.title = NSLocalizedString(@"title.conversation", @"Conversations");
     
     //获取未读消息数，此时并没有把self注册为SDK的delegate，读取出的未读数是上次退出程序时的
-//    [self didUnreadMessagesCountChanged];
+    [self didUnreadMessagesCountChanged];
 #warning 把self注册为SDK的delegate
     [self registerNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callOutWithChatter:) name:@"callOutWithChatter" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callControllerClose:) name:@"callControllerClose" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callOutWithChatter:) name:@"callOutWithChatter" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callControllerClose:) name:@"callControllerClose" object:nil];
     
     [self setupSubviews];
     self.selectedIndex = 0;
@@ -91,13 +91,13 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     if (item.tag == 0) {
-        self.title = @"会话";
+        self.title = NSLocalizedString(@"title.conversation", @"Conversations");
         self.navigationItem.rightBarButtonItem = nil;
     }else if (item.tag == 1){
-        self.title = @"通讯录";
+        self.title = NSLocalizedString(@"title.addressbook", @"AddressBook");
         self.navigationItem.rightBarButtonItem = _addFriendItem;
     }else if (item.tag == 2){
-        self.title = @"设置";
+        self.title = NSLocalizedString(@"title.setting", @"Setting");
         self.navigationItem.rightBarButtonItem = nil;
         [_settingsVC refreshConfig];
     }
@@ -129,13 +129,13 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self unregisterNotifications];
     
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
-    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
+//    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
 }
 
 -(void)unregisterNotifications
 {
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
-    [[EMSDKFull sharedInstance].callManager removeDelegate:self];
+//    [[EMSDKFull sharedInstance].callManager removeDelegate:self];
 }
 
 - (void)setupSubviews
@@ -145,7 +145,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     _chatListVC = [[ChatListViewController alloc] init];
     [_chatListVC networkChanged:_connectionState];
-    _chatListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"会话"
+    _chatListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.conversation", @"Conversations")
                                                            image:nil
                                                              tag:0];
     [_chatListVC.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_chatsHL"]
@@ -154,7 +154,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self selectedTapTabBarItems:_chatListVC.tabBarItem];
     
     _contactsVC = [[ContactsViewController alloc] initWithNibName:nil bundle:nil];
-    _contactsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"通讯录"
+    _contactsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.addressbook", @"AddressBook")
                                                            image:nil
                                                              tag:1];
     [_contactsVC.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_contactsHL"]
@@ -163,7 +163,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self selectedTapTabBarItems:_contactsVC.tabBarItem];
     
     _settingsVC = [[SettingsViewController alloc] init];
-    _settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"设置"
+    _settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.setting", @"Setting")
                                                            image:nil
                                                              tag:2];
     [_settingsVC.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_settingHL"]
@@ -229,29 +229,29 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [_chatListVC networkChanged:connectionState];
 }
 
-- (void)callOutWithChatter:(NSNotification *)notification
-{
-    id object = notification.object;
-    if ([object isKindOfClass:[NSString class]]) {
-        NSString *chatter = (NSString *)object;
-        
-        if (_callController == nil) {
-            [[EMSDKFull sharedInstance].callManager removeDelegate:self];
-            
-            _callController = [[CallSessionViewController alloc] initCallOutWithChatter:chatter];
-            [self presentViewController:_callController animated:YES completion:nil];
-        }
-        else{
-            [self showHint:@"正在通话中"];
-        }
-    }
-}
-
-- (void)callControllerClose:(NSNotification *)notification
-{
-    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
-    _callController = nil;
-}
+//- (void)callOutWithChatter:(NSNotification *)notification
+//{
+//    id object = notification.object;
+//    if ([object isKindOfClass:[NSString class]]) {
+//        NSString *chatter = (NSString *)object;
+//        
+//        if (_callController == nil) {
+//            [[EMSDKFull sharedInstance].callManager removeDelegate:self];
+//            
+//            _callController = [[CallSessionViewController alloc] initCallOutWithChatter:chatter];
+//            [self presentViewController:_callController animated:YES completion:nil];
+//        }
+//        else{
+//            [self showHint:@"正在通话中"];
+//        }
+//    }
+//}
+//
+//- (void)callControllerClose:(NSNotification *)notification
+//{
+//    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
+//    _callController = nil;
+//}
 
 #pragma mark - IChatManagerDelegate 消息变化
 
@@ -272,8 +272,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)didFinishedReceiveOfflineCmdMessages:(NSArray *)offlineCmdMessages
 {
-//    NSString *str = [NSString stringWithFormat:@"接收离线透传消息完毕，一共%d条", [offlineCmdMessages count]];
-//    [self showHint:str];
+    
 }
 
 - (BOOL)needShowNotification:(NSString *)fromChatter
@@ -335,7 +334,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 -(void)didReceiveCmdMessage:(EMMessage *)message
 {
-    [self showHint:@"有透传消息"];
+    [self showHint:NSLocalizedString(@"receiveCmd", @"receive cmd message")];
 }
 
 - (void)playSoundAndVibration{
@@ -374,21 +373,21 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                 break;
             case eMessageBodyType_Image:
             {
-                messageStr = @"[图片]";
+                messageStr = NSLocalizedString(@"message.image", @"Image");
             }
                 break;
             case eMessageBodyType_Location:
             {
-                messageStr = @"[位置]";
+                messageStr = NSLocalizedString(@"message.location", @"Location");
             }
                 break;
             case eMessageBodyType_Voice:
             {
-                messageStr = @"[音频]";
+                messageStr = NSLocalizedString(@"message.voice", @"Voice");
             }
                 break;
             case eMessageBodyType_Video:{
-                messageStr = @"[视频]";
+                messageStr = NSLocalizedString(@"message.vidio", @"Vidio");
             }
                 break;
             default:
@@ -409,13 +408,13 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         notification.alertBody = [NSString stringWithFormat:@"%@:%@", title, messageStr];
     }
     else{
-        notification.alertBody = @"您有一条新消息";
+        notification.alertBody = NSLocalizedString(@"receiveMessage", @"you have a new message");
     }
     
 #warning 去掉注释会显示[本地]开头, 方便在开发中区分是否为本地推送
     //notification.alertBody = [[NSString alloc] initWithFormat:@"[本地]%@", notification.alertBody];
     
-    notification.alertAction = @"打开";
+    notification.alertAction = NSLocalizedString(@"open", @"Open");
     notification.timeZone = [NSTimeZone defaultTimeZone];
     notification.soundName = UILocalNotificationDefaultSoundName;
     //发送通知
@@ -426,39 +425,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 #pragma mark - IChatManagerDelegate 登陆回调（主要用于监听自动登录是否成功）
 
-- (void)didAutoLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error
+- (void)didLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error
 {
     if (error) {
-        /*NSString *hintText = @"";
-        if (error.errorCode != EMErrorServerMaxRetryCountExceeded) {
-            if (![[[EaseMob sharedInstance] chatManager] isAutoLoginEnabled]) {
-                hintText = @"你的账号登录失败，请重新登陆";
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                                    message:hintText
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"确定"
-                                                          otherButtonTitles:nil,
-                                          nil];
-                alertView.tag = 99;
-                [alertView show];
-            }
-        } else {
-            hintText = @"已达到最大登陆重试次数，请重新登陆";
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                                message:hintText
-                                                               delegate:self
-                                                      cancelButtonTitle:@"确定"
-                                                      otherButtonTitles:nil,
-                                      nil];
-            alertView.tag = 99;
-            [alertView show];
-        }*/
-        NSString *hintText = @"你的账号登录失败，正在重试中... \n点击 '登出' 按钮跳转到登录页面 \n点击 '继续等待' 按钮等待重连成功";
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+        NSString *hintText = NSLocalizedString(@"reconnection.retry", @"Fail to log in your account, is try again... \nclick 'logout' button to jump to the login page \nclick 'continue to wait for' button for reconnection successful");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt")
                                                             message:hintText
                                                            delegate:self
-                                                  cancelButtonTitle:@"继续等待"
-                                                  otherButtonTitles:@"登出",
+                                                  cancelButtonTitle:NSLocalizedString(@"reconnection.wait", @"continue to wait")
+                                                  otherButtonTitles:NSLocalizedString(@"logout", @"Logout"),
                                   nil];
         alertView.tag = 99;
         [alertView show];
@@ -479,8 +454,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         //发送本地推送
         UILocalNotification *notification = [[UILocalNotification alloc] init];
         notification.fireDate = [NSDate date]; //触发通知的时间
-        notification.alertBody = [NSString stringWithFormat:@"%@ %@", username, @"添加你为好友"];
-        notification.alertAction = @"打开";
+        notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), username];
+        notification.alertAction = NSLocalizedString(@"open", @"Open");
         notification.timeZone = [NSTimeZone defaultTimeZone];
     }
 #endif
@@ -509,7 +484,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)didRejectedByBuddy:(NSString *)username
 {
-    NSString *message = [NSString stringWithFormat:@"你被'%@'无耻的拒绝了", username];
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"MainViewController.message", @""), username];
     TTAlertNoTitle(message);
 }
 
@@ -551,7 +526,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                           invitee:(NSString *)username
                            reason:(NSString *)reason
 {
-    NSString *message = [NSString stringWithFormat:@"你被'%@'无耻的拒绝了", username];
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"friend.beRefusedToAdd", @"you are shameless refused by '%@'"), username];
     TTAlertNoTitle(message);
 }
 
@@ -559,7 +534,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)didReceiveAcceptApplyToJoinGroup:(NSString *)groupId
                                groupname:(NSString *)groupname
 {
-    NSString *message = [NSString stringWithFormat:@"同意加入群组\'%@\'", groupname];
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"group.agreedToJoin", @"agreed to join the group of \'%@\'"), groupname];
     [self showHint:message];
 }
 
@@ -568,10 +543,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)didLoginFromOtherDevice
 {
     [[EaseMob sharedInstance].chatManager asyncLogoffWithCompletion:^(NSDictionary *info, EMError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                            message:@"你的账号已在其他地方登录"
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                                            message:NSLocalizedString(@"loginAtOtherDevice", @"your login account has been in other places")
                                                            delegate:self
-                                                  cancelButtonTitle:@"确定"
+                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                                   otherButtonTitles:nil,
                                   nil];
         alertView.tag = 100;
@@ -581,10 +556,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)didRemovedFromServer {
     [[EaseMob sharedInstance].chatManager asyncLogoffWithCompletion:^(NSDictionary *info, EMError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                            message:@"你的账号已被从服务器端移除"
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                                            message:NSLocalizedString(@"loginUserRemoveFromServer", @"your account has been removed from the server side")
                                                            delegate:self
-                                                  cancelButtonTitle:@"确定"
+                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                                   otherButtonTitles:nil,
                                   nil];
         alertView.tag = 101;
@@ -597,34 +572,34 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //    [_chatListVC networkChanged:connectionState];
 //}
 
-#pragma mark - 自动重连回调
+#pragma mark - 自动登录回调
 
 - (void)willAutoReconnect{
     [self hideHud];
-    [self showHudInView:self.view hint:@"正在重连中..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"reconnection.ongoing", @"reconnecting...")];
 }
 
 - (void)didAutoReconnectFinishedWithError:(NSError *)error{
     [self hideHud];
     if (error) {
-        [self showHint:@"重连失败，稍候将继续重连"];
+        [self showHint:NSLocalizedString(@"reconnection.fail", @"reconnection failure, later will continue to reconnection")];
     }else{
-        [self showHint:@"重连成功！"];
+        [self showHint:NSLocalizedString(@"reconnection.success", @"reconnection successful！")];
     }
 }
 
 #pragma mark - ICallManagerDelegate
 
-- (void)callSessionStatusChanged:(EMCallSession *)callSession changeReason:(EMCallStatusChangedReason)reason error:(EMError *)error
-{
-    if (callSession.status == eCallSessionStatusConnected)
-    {
-        if (_callController == nil) {
-            _callController = [[CallSessionViewController alloc] initCallInWithSession:callSession];
-            [self presentViewController:_callController animated:YES completion:nil];
-        }
-    }
-}
+//- (void)callSessionStatusChanged:(EMCallSession *)callSession changeReason:(EMCallStatusChangedReason)reason error:(EMError *)error
+//{
+//    if (callSession.status == eCallSessionStatusConnected)
+//    {
+//        if (_callController == nil) {
+//            _callController = [[CallSessionViewController alloc] initCallInWithSession:callSession];
+//            [self presentViewController:_callController animated:YES completion:nil];
+//        }
+//    }
+//}
 
 #pragma mark - public
 

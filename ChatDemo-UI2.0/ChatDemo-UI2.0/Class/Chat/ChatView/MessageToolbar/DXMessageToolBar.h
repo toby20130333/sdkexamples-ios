@@ -23,8 +23,8 @@
 #define kHorizontalPadding 8
 #define kVerticalPadding 5
 
-#define kTouchToRecord @"按住说话"
-#define kTouchToFinish @"松开发送"
+#define kTouchToRecord NSLocalizedString(@"message.toolBar.record.touch", @"hold down to talk")
+#define kTouchToFinish NSLocalizedString(@"message.toolBar.record.send", @"loosen to send")
 
 
 /**
@@ -33,6 +33,7 @@
  *  2、提供默认的录音，表情，更多按钮的附加页面
  *  3、可自定义以上的附加页面
  */
+
 
 @protocol DXMessageToolBarDelegate;
 @interface DXMessageToolBar : UIView

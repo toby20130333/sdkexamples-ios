@@ -50,7 +50,7 @@
     }
     
     // Uncomment the following line to preserve selection between presentations.
-    self.title = @"公有群组";
+    self.title = NSLocalizedString(@"title.publicGroup", @"Public group");
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -99,7 +99,7 @@
     if (_searchBar == nil) {
         _searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 44)];
         _searchBar.delegate = self;
-        _searchBar.placeholder = @"搜索";
+        _searchBar.placeholder = NSLocalizedString(@"search", @"Search");
         _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
     }
     
@@ -272,7 +272,7 @@
 
 - (void)reloadDataSource
 {
-    [self showHudInView:self.view hint:@"加载数据..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
     
     __weak PublicGroupListViewController *weakSelf = self;
     [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroupsWithCompletion:^(NSArray *groups, EMError *error) {

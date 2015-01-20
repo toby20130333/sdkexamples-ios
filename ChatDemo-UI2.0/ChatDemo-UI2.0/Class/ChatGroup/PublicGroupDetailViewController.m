@@ -106,7 +106,7 @@
         [_footerView addSubview:line];
         
         _footerButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 20, _footerView.frame.size.width - 80, 40)];
-        [_footerButton setTitle:@"加入群组" forState:UIControlStateNormal];
+        [_footerButton setTitle:NSLocalizedString(@"group.join", @"join the group") forState:UIControlStateNormal];
         [_footerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_footerButton addTarget:self action:@selector(joinAction) forControlEvents:UIControlEventTouchUpInside];
         [_footerButton setBackgroundColor:[UIColor colorWithRed:87 / 255.0 green:186 / 255.0 blue:205 / 255.0 alpha:1.0]];
@@ -142,11 +142,11 @@
     }
     
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"群主";
+        cell.textLabel.text = NSLocalizedString(@"group.owner", @"Owner");
         cell.detailTextLabel.text = _group.owner;
     }
     else{
-        cell.textLabel.text = @"群组简介";
+        cell.textLabel.text = NSLocalizedString(@"group.describe", @"Describe");
         cell.detailTextLabel.text = _group.groupDescription;
     }
     
@@ -199,7 +199,7 @@
 
 - (void)fetchGroupInfo
 {
-    [self showHudInView:self.view hint:@"加载数据..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
     __weak PublicGroupDetailViewController *weakSelf = self;
     [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:_groupId completion:^(EMGroup *group, EMError *error) {
         weakSelf.group = group;
@@ -215,11 +215,11 @@
         weakSelf.nameLabel.text = (weakSelf.group.groupSubject && weakSelf.group.groupSubject.length) > 0 ? weakSelf.group.groupSubject : weakSelf.group.groupId;
         if ([weakSelf isJoined:weakSelf.group]) {
             weakSelf.footerButton.enabled = NO;
-            [weakSelf.footerButton setTitle:@"已加入" forState:UIControlStateNormal | UIControlStateDisabled];
+            [weakSelf.footerButton setTitle:NSLocalizedString(@"group.joined", @"joined") forState:UIControlStateNormal | UIControlStateDisabled];
         }
         else{
             weakSelf.footerButton.enabled = YES;
-            [weakSelf.footerButton setTitle:@"加入群组" forState:UIControlStateNormal];
+            [weakSelf.footerButton setTitle:NSLocalizedString(@"group.join", @"join the group") forState:UIControlStateNormal];
         }
         [weakSelf.tableView reloadData];
     });
@@ -227,7 +227,7 @@
 
 - (void)showMessageAlertView
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"说点啥子吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"saySomething", @"say somthing") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [alert show];
 }
@@ -245,7 +245,7 @@
 
 - (void)joinGroup:(NSString *)groupId
 {
-    [self showHudInView:self.view hint:@"加入群组..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.join.ongoing", @"join the group...")];
     __weak PublicGroupDetailViewController *weakSelf = self;
     [[EaseMob sharedInstance].chatManager asyncJoinPublicGroup:groupId completion:^(EMGroup *group, EMError *error) {
         [weakSelf hideHud];
@@ -254,19 +254,19 @@
             [weakSelf.navigationController popViewControllerAnimated:YES];
         }
         else{
-            [weakSelf showHint:@"加入群组失败，请重新操作"];
+            [weakSelf showHint:NSLocalizedString(@"group.join.fail", @"again failed to join the group, please")];
         }
     } onQueue:nil];
 }
 
 - (void)applyJoinGroup:(NSString *)groupId withGroupname:(NSString *)groupName message:(NSString *)message
 {
-    [self showHudInView:self.view hint:@"发送加群申请..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.sendingApply", @"send group of application...")];
     __weak typeof(self) weakSelf = self;
     [[EaseMob sharedInstance].chatManager asyncApplyJoinPublicGroup:groupId withGroupname:groupName message:message completion:^(EMGroup *group, EMError *error) {
         [weakSelf hideHud];
         if (!error) {
-            [weakSelf showHint:@"申请已发送"];
+            [weakSelf showHint:NSLocalizedString(@"group.sendApplyRepeat", @"application has been sent")];
         }
         else{
             [weakSelf showHint:error.description];

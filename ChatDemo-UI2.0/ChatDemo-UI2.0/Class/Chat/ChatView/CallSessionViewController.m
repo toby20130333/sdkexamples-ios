@@ -216,7 +216,7 @@
     EMError *error = nil;
     _callSession = [[EMSDKFull sharedInstance].callManager asyncCallAudioWithChatter:chatter timeout:50 error:&error];
     if (error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:error.description delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error") message:error.description delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
         alertView.tag = kAlertViewTag_Close;
         [alertView show];
     }
@@ -290,7 +290,7 @@
             [self _insertMessageWithStr:@"语音通话失败"];
             
             _statusLabel.text = @"连接失败";
-            alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:error.description delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error") message:error.description delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
             alertView.tag = kAlertViewTag_Close;
             [alertView show];
         }

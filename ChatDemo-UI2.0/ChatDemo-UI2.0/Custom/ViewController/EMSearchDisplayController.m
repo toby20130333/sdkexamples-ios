@@ -24,7 +24,7 @@
         
         self.searchResultsDataSource = self;
         self.searchResultsDelegate = self;
-        self.searchResultsTitle = @"搜索结果";
+        self.searchResultsTitle = NSLocalizedString(@"searchResults", @"The search results");
     }
     return self;
 }

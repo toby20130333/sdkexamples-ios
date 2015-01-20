@@ -48,7 +48,7 @@ static ApplyViewController *controller = nil;
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    self.title = @"申请通知";
+    self.title = NSLocalizedString(@"title.apply", @"Application and notification");
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -124,12 +124,12 @@ static ApplyViewController *controller = nil;
             cell.indexPath = indexPath;
             ApplyStyle applyStyle = [entity.style integerValue];
             if (applyStyle == ApplyStyleGroupInvitation) {
-                cell.titleLabel.text = @"群组通知";
+                cell.titleLabel.text = NSLocalizedString(@"title.groupApply", @"Group Notification");
                 cell.headerImageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
             }
             else if (applyStyle == ApplyStyleJoinGroup)
             {
-                cell.titleLabel.text = @"群组通知";
+                cell.titleLabel.text = NSLocalizedString(@"title.groupApply", @"Group Notification");
                 cell.headerImageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
             }
             else if(applyStyle == ApplyStyleFriend){
@@ -168,7 +168,7 @@ static ApplyViewController *controller = nil;
 - (void)applyCellAddFriendAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < [self.dataSource count]) {
-        [self showHudInView:self.view hint:@"正在发送申请..."];
+        [self showHudInView:self.view hint:NSLocalizedString(@"sendingApply", @"sending apply...")];
         
         ApplyEntity *entity = [self.dataSource objectAtIndex:indexPath.row];
         ApplyStyle applyStyle = [entity.style integerValue];
@@ -193,7 +193,7 @@ static ApplyViewController *controller = nil;
             [self save];
         }
         else{
-            [self showHint:@"接受失败"];
+            [self showHint:NSLocalizedString(@"acceptFail", @"accept failure")];
         }
     }
 }
@@ -201,7 +201,7 @@ static ApplyViewController *controller = nil;
 - (void)applyCellRefuseFriendAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < [self.dataSource count]) {
-        [self showHudInView:self.view hint:@"正在发送申请..."];
+        [self showHudInView:self.view hint:NSLocalizedString(@"sendingApply", @"sending apply...")];
         ApplyEntity *entity = [self.dataSource objectAtIndex:indexPath.row];
         ApplyStyle applyStyle = [entity.style integerValue];
         EMError *error;
@@ -211,7 +211,7 @@ static ApplyViewController *controller = nil;
         }
         else if (applyStyle == ApplyStyleJoinGroup)
         {
-            NSString *reason = [NSString stringWithFormat:@"被拒绝加入群组\'%@\'", entity.groupSubject];
+            NSString *reason = [NSString stringWithFormat:NSLocalizedString(@"group.beRefusedToJoin", @"be refused to join the group\'%@\'"), entity.groupSubject];
             [[EaseMob sharedInstance].chatManager rejectApplyJoinGroup:entity.groupId groupname:entity.groupSubject toApplicant:entity.applicantUsername reason:reason];
         }
         else if(applyStyle == ApplyStyleFriend){
@@ -226,7 +226,7 @@ static ApplyViewController *controller = nil;
             [self save];
         }
         else{
-            [self showHint:@"拒绝失败"];
+            [self showHint:NSLocalizedString(@"rejectFail", @"reject failure")];
         }
     }
 }

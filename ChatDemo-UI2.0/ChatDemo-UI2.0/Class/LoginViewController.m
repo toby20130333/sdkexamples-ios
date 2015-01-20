@@ -17,6 +17,9 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+
 
 - (IBAction)doRegister:(id)sender;
 - (IBAction)doLogin:(id)sender;
@@ -26,11 +29,17 @@
 
 @implementation LoginViewController
 
+@synthesize usernameTextField = _usernameTextField;
+@synthesize passwordTextField = _passwordTextField;
+@synthesize registerButton = _registerButton;
+@synthesize loginButton = _loginButton;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -40,7 +49,21 @@
     [super viewDidLoad];
     [self setupForDismissKeyboard];
     _usernameTextField.delegate = self;
+    
+    self.title = NSLocalizedString(@"AppName", @"EaseMobDemo");
+    _usernameTextField.placeholder = NSLocalizedString(@"username", @"Username");
+    _passwordTextField.placeholder = NSLocalizedString(@"password", @"Pawword");
+    _registerButton.titleLabel.text = NSLocalizedString(@"register", @"Register");
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [_registerButton setTitle:NSLocalizedString(@"register", @"Register") forState:UIControlStateNormal];
+    [_loginButton setTitle:NSLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -48,22 +71,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+//注册账号
 - (IBAction)doRegister:(id)sender {
     if (![self isEmpty]) {
+        //隐藏键盘
         [self.view endEditing:YES];
+        //判断是否是中文，但不支持中英文混编
         if ([self.usernameTextField.text isChinese]) {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"用户名不支持中文"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"login.nameNotSupportZh", @"Name does not support Chinese")
                                   message:nil
                                   delegate:nil
-                                  cancelButtonTitle:@"确定"
+                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                   otherButtonTitles:nil];
             
             [alert show];
             
             return;
         }
-        [self showHudInView:self.view hint:@"正在注册..."];
+        [self showHudInView:self.view hint:NSLocalizedString(@"register.ongoing", @"Is to register...")];
+        //异步注册账号
         [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_usernameTextField.text
                                                              password:_passwordTextField.text
                                                        withCompletion:
@@ -71,20 +97,20 @@
              [self hideHud];
              
              if (!error) {
-                 TTAlertNoTitle(@"注册成功,请登录");
+                 TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
              }else{
                  switch (error.errorCode) {
                      case EMErrorServerNotReachable:
-                         TTAlertNoTitle(@"连接服务器失败!");
+                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
                          break;
                      case EMErrorServerDuplicatedAccount:
-                         TTAlertNoTitle(@"您注册的用户已存在!");
+                         TTAlertNoTitle(NSLocalizedString(@"register.repeat", @"You registered user already exists!"));
                          break;
                      case EMErrorServerTimeout:
-                         TTAlertNoTitle(@"连接服务器超时!");
+                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
                          break;
                      default:
-                         TTAlertNoTitle(@"注册失败");
+                         TTAlertNoTitle(NSLocalizedString(@"register.fail", @"Registration failed"));
                          break;
                  }
              }
@@ -92,17 +118,20 @@
     }
 }
 
+//点击登陆后的操作
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password
 {
-    [self showHudInView:self.view hint:@"正在登录..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"login.ongoing", @"Is Login...")];
+    //异步登陆账号
     [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:username
                                                         password:password
                                                       completion:
      ^(NSDictionary *loginInfo, EMError *error) {
          [self hideHud];
          if (loginInfo && !error) {
-             [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:YES];
+             //发送自动登陆状态通知
              [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+             //将旧版的coredata数据导入新的数据库
              EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
              if (!error) {
                  error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
@@ -110,43 +139,48 @@
          }else {
              switch (error.errorCode) {
                  case EMErrorServerNotReachable:
-                     TTAlertNoTitle(@"连接服务器失败!");
+                     TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
                      break;
                  case EMErrorServerAuthenticationFailure:
                      TTAlertNoTitle(error.description);
                      break;
                  case EMErrorServerTimeout:
-                     TTAlertNoTitle(@"连接服务器超时!");
+                     TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
                      break;
                  default:
-                     TTAlertNoTitle(@"登录失败");
+                     TTAlertNoTitle(NSLocalizedString(@"login.fail", @"Logon failure"));
                      break;
              }
          }
      } onQueue:nil];
 }
 
+//弹出提示的代理方法
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if ([alertView cancelButtonIndex] != buttonIndex) {
+        //获取文本输入框
         UITextField *nameTextField = [alertView textFieldAtIndex:0];
         if(nameTextField.text.length > 0)
         {
+            //设置推送设置
             [[EaseMob sharedInstance].chatManager setApnsNickname:nameTextField.text];
         }
     }
-    
+    //登陆
     [self loginWithUsername:_usernameTextField.text password:_passwordTextField.text];
 }
 
+//登陆账号
 - (IBAction)doLogin:(id)sender {
     if (![self isEmpty]) {
         [self.view endEditing:YES];
+        //支持是否为中文
         if ([self.usernameTextField.text isChinese]) {
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"用户名不支持中文"
+                                  initWithTitle:NSLocalizedString(@"login.nameNotSupportZh", @"Name does not support Chinese")
                                   message:nil
                                   delegate:nil
-                                  cancelButtonTitle:@"确定"
+                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                   otherButtonTitles:nil];
             
             [alert show];
@@ -154,7 +188,8 @@
             return;
         }
 #if !TARGET_IPHONE_SIMULATOR
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"填写推送消息时使用的昵称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        //弹出提示
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"login.inputApnsNickname", @"Please enter nickname for apns") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
         UITextField *nameTextField = [alert textFieldAtIndex:0];
         nameTextField.text = self.usernameTextField.text;
@@ -165,18 +200,18 @@
     }
 }
 
-
+//判断账号和密码是否为空
 - (BOOL)isEmpty{
     BOOL ret = NO;
     NSString *username = _usernameTextField.text;
     NSString *password = _passwordTextField.text;
     if (username.length == 0 || password.length == 0) {
         ret = YES;
-        [WCAlertView showAlertWithTitle:@"提示"
-                                message:@"请输入账号和密码"
+        [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                message:NSLocalizedString(@"login.inputNameAndPswd", @"Please enter username and password")
                      customizationBlock:nil
                         completionBlock:nil
-                      cancelButtonTitle:@"确定"
+                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                       otherButtonTitles: nil];
     }
     

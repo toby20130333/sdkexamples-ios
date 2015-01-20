@@ -22,7 +22,7 @@ static LocationViewController *defaultLocation = nil;
 {
     MKMapView *_mapView;
     MKPointAnnotation *_annotation;
-    CLLocationManager *_locationManager;
+    
     CLLocationCoordinate2D _currentLocationCoordinate;
     BOOL _isSendLocation;
 }
@@ -40,11 +40,6 @@ static LocationViewController *defaultLocation = nil;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _isSendLocation = YES;
-        _locationManager = [[CLLocationManager alloc] init];
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-        {
-            [_locationManager requestWhenInUseAuthorization];
-        }
     }
     
     return self;
@@ -65,7 +60,7 @@ static LocationViewController *defaultLocation = nil;
 {
     [super viewDidLoad];
     
-    self.title = @"位置信息";
+    self.title = NSLocalizedString(@"location.messageType", @"location message");
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
@@ -83,7 +78,7 @@ static LocationViewController *defaultLocation = nil;
         _mapView.showsUserLocation = YES;//显示当前位置
         
         UIButton *sendButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-        [sendButton setTitle:@"发送" forState:UIControlStateNormal];
+        [sendButton setTitle:NSLocalizedString(@"send", @"Send") forState:UIControlStateNormal];
         [sendButton setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
         [sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         [sendButton addTarget:self action:@selector(sendLocation) forControlEvents:UIControlEventTouchUpInside];
@@ -143,7 +138,7 @@ static LocationViewController *defaultLocation = nil;
 
 - (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
-    [self showHint:@"定位失败"];
+    [self showHint:NSLocalizedString(@"location.fail", @"locate failure")];
 }
 
 #pragma mark - public
@@ -154,7 +149,7 @@ static LocationViewController *defaultLocation = nil;
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
     
-    [self showHudInView:self.view hint:@"正在定位..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"location.ongoning", @"locating...")];
 }
 
 -(void)createAnnotationWithCoords:(CLLocationCoordinate2D)coords

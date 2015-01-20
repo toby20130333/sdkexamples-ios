@@ -47,7 +47,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"群设置";
+    self.title = NSLocalizedString(@"title.groupSetting", @"Group Setting");
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
@@ -56,7 +56,7 @@
     [self.navigationItem setLeftBarButtonItem:backItem];
     
     if (!_isOwner) {
-        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveAction:)];
+        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveAction:)];
         [self.navigationItem setRightBarButtonItem:saveItem];
     }
     
@@ -115,10 +115,10 @@
         _pushSwitch.frame = CGRectMake(self.tableView.frame.size.width - (_pushSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - _pushSwitch.frame.size.height) / 2, _pushSwitch.frame.size.width, _pushSwitch.frame.size.height);
         
         if (_pushSwitch.isOn) {
-            cell.textLabel.text = @"接收并提示群消息";
+            cell.textLabel.text = NSLocalizedString(@"group.setting.receiveAndPrompt", @"receive and prompt group of messages");
         }
         else{
-            cell.textLabel.text = @"只接收不提示群消息";
+            cell.textLabel.text = NSLocalizedString(@"group.setting.receiveAndUnprompt", @"receive not only hint of messages");
         }
         
         [cell.contentView addSubview:_pushSwitch];
@@ -127,7 +127,7 @@
     else if(!_isOwner && indexPath.row == 0){
         _blockSwitch.frame = CGRectMake(self.tableView.frame.size.width - (_blockSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - _blockSwitch.frame.size.height) / 2, _blockSwitch.frame.size.width, _blockSwitch.frame.size.height);
         
-        cell.textLabel.text = @"屏蔽群消息";
+        cell.textLabel.text = NSLocalizedString(@"group.setting.blockMessage", @"shielding of the message");
         [cell.contentView addSubview:_blockSwitch];
         [cell.contentView bringSubviewToFront:_blockSwitch];
     }
@@ -152,14 +152,14 @@
 - (void)isIgnoreGroup:(BOOL)isIgnore
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:@"设置属性"];
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.setting.save", @"set properties")];
     [[EaseMob sharedInstance].chatManager asyncIgnoreGroupPushNotification:_group.groupId isIgnore:isIgnore completion:^(NSArray *ignoreGroupsList, EMError *error) {
         [weakSelf hideHud];
         if (!error) {
-            [weakSelf showHint:@"设置成功"];
+            [weakSelf showHint:NSLocalizedString(@"group.setting.success", @"set success")];
         }
         else{
-            [weakSelf showHint:@"设置失败"];
+            [weakSelf showHint:NSLocalizedString(@"group.setting.fail", @"set failure")];
         }
     } onQueue:nil];
 }
@@ -189,17 +189,17 @@
 {
     if (_blockSwitch.isOn != _group.isBlocked) {
         __weak typeof(self) weakSelf = self;
-        [self showHudInView:self.view hint:@"设置属性"];
+        [self showHudInView:self.view hint:NSLocalizedString(@"group.setting.save", @"set properties")];
         if (_blockSwitch.isOn) {
             [[EaseMob sharedInstance].chatManager asyncBlockGroup:_group.groupId completion:^(EMGroup *group, EMError *error) {
                 [weakSelf hideHud];
-                [weakSelf showHint:@"设置成功"];
+                [weakSelf showHint:NSLocalizedString(@"group.setting.success", @"set success")];
             } onQueue:nil];
         }
         else{
             [[EaseMob sharedInstance].chatManager asyncUnblockGroup:_group.groupId completion:^(EMGroup *group, EMError *error) {
                 [weakSelf hideHud];
-                [weakSelf showHint:@"设置成功"];
+                [weakSelf showHint:NSLocalizedString(@"group.setting.success", @"set success")];
             } onQueue:nil];
         }
     }

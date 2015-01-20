@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"诊断";
+    self.title = NSLocalizedString(@"title.debug", @"Debug");
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
@@ -46,7 +46,7 @@
     
     UIButton *uploadLogButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 20, footerView.frame.size.width - 80, 40)];
     [uploadLogButton setBackgroundColor:[UIColor colorWithRed:87 / 255.0 green:186 / 255.0 blue:205 / 255.0 alpha:1.0]];
-    [uploadLogButton setTitle:@"上传运行日志" forState:UIControlStateNormal];
+    [uploadLogButton setTitle:NSLocalizedString(@"setting.uploadLog", @"upload run log") forState:UIControlStateNormal];
     [uploadLogButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [uploadLogButton addTarget:self action:@selector(uploadLogAction) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:uploadLogButton];
@@ -83,7 +83,7 @@
     
     if (indexPath.row == 0)
     {
-        cell.textLabel.text = @"SDK 版本";
+        cell.textLabel.text = NSLocalizedString(@"setting.sdkVersion", @"SDK version");
         NSString *ver = [[EaseMob sharedInstance] sdkVersion];
         cell.detailTextLabel.text = ver;
     }
@@ -101,14 +101,14 @@
 - (void)uploadLogAction
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:@"正在上传..."];
+    [self showHudInView:self.view hint:NSLocalizedString(@"setting.uploading", @"uploading...")];
     [[EaseMob sharedInstance] asyncUploadLogToServerWithCompletion:^(EMError *error) {
         [weakSelf hideHud];
         if (error) {
             [weakSelf showHint:error.description];
         }
         else{
-            [weakSelf showHint:@"上传成功"];
+            [weakSelf showHint:NSLocalizedString(@"setting.uploadSuccess", @"uploaded successfully")];
         }
     }];
 }

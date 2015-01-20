@@ -498,12 +498,12 @@
     id <IEMFileMessageBody> body = [model.message.messageBodies firstObject];
     EMAttachmentDownloadStatus downloadStatus = [body attachmentDownloadStatus];
     if (downloadStatus == EMAttachmentDownloading) {
-        [self showHint:@"正在下载语音，稍后点击"];
+        [self showHint:NSLocalizedString(@"message.downloadingAudio", @"downloading voice, click later")];
         return;
     }
     else if (downloadStatus == EMAttachmentDownloadFailure)
     {
-        [self showHint:@"正在下载语音，稍后点击"];
+        [self showHint:NSLocalizedString(@"message.downloadingAudio", @"downloading voice, click later")];
         [[EaseMob sharedInstance].chatManager asyncFetchMessage:model.message progress:nil];
         
         return;
@@ -550,7 +550,7 @@
 - (void)chatVideoCellPressed:(MessageModel *)model{
     __weak ChatViewController *weakSelf = self;
     id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
-    [weakSelf showHudInView:weakSelf.view hint:@"正在获取视频..."];
+    [weakSelf showHudInView:weakSelf.view hint:NSLocalizedString(@"message.downloadingVideo", @"downloading video...")];
     [chatManager asyncFetchMessage:model.message progress:nil completion:^(EMMessage *aMessage, EMError *error) {
         [weakSelf hideHud];
         if (!error) {
@@ -559,7 +559,7 @@
                 [weakSelf playVideoWithVideoPath:localPath];
             }
         }else{
-            [weakSelf showHint:@"视频获取失败!"];
+            [weakSelf showHint:NSLocalizedString(@"message.videoFail", @"video for failure!")];
         }
     } onQueue:nil];
 }
@@ -582,7 +582,7 @@
     if ([model.messageBody messageBodyType] == eMessageBodyType_Image) {
         EMImageMessageBody *imageBody = (EMImageMessageBody *)model.messageBody;
         if (imageBody.thumbnailDownloadStatus == EMAttachmentDownloadSuccessed) {
-            [weakSelf showHudInView:weakSelf.view hint:@"正在获取大图..."];
+            [weakSelf showHudInView:weakSelf.view hint:NSLocalizedString(@"message.downloadingImage", @"downloading a image...")];
             [chatManager asyncFetchMessage:model.message progress:nil completion:^(EMMessage *aMessage, EMError *error) {
                 [weakSelf hideHud];
                 if (!error) {
@@ -594,7 +594,7 @@
                         return ;
                     }
                 }
-                [weakSelf showHint:@"大图获取失败!"];
+                [weakSelf showHint:NSLocalizedString(@"message.imageFail", @"image for failure!")];
             } onQueue:nil];
         }else{
             //获取缩略图
@@ -602,7 +602,7 @@
                 if (!error) {
                     [weakSelf reloadTableViewDataWithMessage:model.message];
                 }else{
-                    [weakSelf showHint:@"缩略图获取失败!"];
+                    [weakSelf showHint:NSLocalizedString(@"message.thumImageFail", @"thumbnail for failure!")];
                 }
                 
             } onQueue:nil];
@@ -615,7 +615,7 @@
                 if (!error) {
                     [weakSelf reloadTableViewDataWithMessage:model.message];
                 }else{
-                    [weakSelf showHint:@"缩略图获取失败!"];
+                    [weakSelf showHint:NSLocalizedString(@"message.thumImageFail", @"thumbnail for failure!")];
                 }
             } onQueue:nil];
         }
@@ -683,8 +683,7 @@
     }
 }
 
-- (void)didFetchingMessageAttachments:(EMMessage *)message progress:(float)progress
-{
+- (void)didFetchingMessageAttachments:(EMMessage *)message progress:(float)progress{
     NSLog(@"didFetchingMessageAttachment: %f", progress);
 }
 
@@ -693,24 +692,14 @@
     if ([_conversation.chatter isEqualToString:message.conversationChatter]) {
         [self addMessage:message];
         [_messages addObject:message];
-        
-//        EMMessage *tmpMessage = [[EMMessage alloc] initMessageWithID:message.messageId sender:message.to receiver:message.from bodies:nil];
-//        [[EaseMob sharedInstance].chatManager sendHasReadResponseForMessage:tmpMessage];
     }
 }
 
 -(void)didReceiveCmdMessage:(EMMessage *)message
 {
     if ([_conversation.chatter isEqualToString:message.conversationChatter]) {
-        [self showHint:@"有透传消息"];
+        [self showHint:NSLocalizedString(@"receiveCmd", @"receive cmd message")];
     }
-}
-
-- (void)didReceiveHasReadResponse:(EMReceipt *)resp
-{
-//    if ([_conversation.chatter isEqualToString:resp.conversationChatter]) {
-//        
-//    }
 }
 
 - (void)group:(EMGroup *)group didLeave:(EMGroupLeaveReason)reason error:(EMError *)error
@@ -749,7 +738,7 @@
     [self keyBoardHidden];
     
 #if TARGET_IPHONE_SIMULATOR
-    [self showHint:@"模拟器不支持拍照"];
+    [self showHint:NSLocalizedString(@"message.simulatorNotSupportCamera", @"simulator does not support taking picture")];
 #elif TARGET_OS_IPHONE
     self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     self.imagePicker.mediaTypes = @[(NSString *)kUTTypeImage];
@@ -771,7 +760,7 @@
     [self keyBoardHidden];
     
 #if TARGET_IPHONE_SIMULATOR
-    [self showHint:@"模拟器不支持录像"];
+    [self showHint:NSLocalizedString(@"message.simulatorNotSupportVideo", @"simulator does not support vidio")];
 #elif TARGET_OS_IPHONE
     self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     self.imagePicker.mediaTypes = @[(NSString *)kUTTypeMovie];
@@ -781,7 +770,7 @@
 
 - (void)moreViewAudioCallAction:(DXChatBarMoreView *)moreView
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:self.chatter];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:self.chatter];
     
 //    __weak typeof(self) weakSelf = self;
 //    if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
@@ -835,22 +824,6 @@
  */
 - (void)didStartRecordingVoiceAction:(UIView *)recordView
 {
-//    if (_isRecording) {
-//        ++_recordingCount;
-//        if (_recordingCount > 10)
-//        {
-//            _recordingCount = 0;
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"亲，已经戳漏了，随时崩溃给你看" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//            [alertView show];
-//        }
-//        else if (_recordingCount > 5) {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"亲，手别抖了，快被戳漏了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//            [alertView show];
-//        }
-//        return;
-//    }
-//    _isRecording = YES;
-    
     if ([self canRecord]) {
         DXRecordView *tmpView = (DXRecordView *)recordView;
         tmpView.center = self.view.center;
@@ -860,7 +833,7 @@
         NSError *error = nil;
         [[EaseMob sharedInstance].chatManager startRecordingAudioWithError:&error];
         if (error) {
-            NSLog(@"开始录音失败");
+            NSLog(NSLocalizedString(@"message.startRecordFail", @"failure to start recording"));
         }
     }
 }
@@ -1115,7 +1088,7 @@
 - (void)removeAllMessages:(id)sender
 {
     if (_dataSource.count == 0) {
-        [self showHint:@"消息已经清空"];
+        [self showHint:NSLocalizedString(@"message.noMessage", @"no messages")];
         return;
     }
     
@@ -1125,13 +1098,13 @@
             [_conversation removeAllMessages];
             [_dataSource removeAllObjects];
             [_tableView reloadData];
-            [self showHint:@"消息已经清空"];
+            [self showHint:NSLocalizedString(@"message.noMessage", @"no messages")];
         }
     }
     else{
         __weak typeof(self) weakSelf = self;
-        [WCAlertView showAlertWithTitle:@"提示"
-                                message:@"请确认删除"
+        [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                message:NSLocalizedString(@"sureToDelete", @"please make sure to delete")
                      customizationBlock:^(WCAlertView *alertView) {
                          
                      } completionBlock:
@@ -1141,7 +1114,7 @@
                  [weakSelf.dataSource removeAllObjects];
                  [weakSelf.tableView reloadData];
              }
-         } cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+         } cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
     }
 }
 
@@ -1151,10 +1124,10 @@
         _menuController = [UIMenuController sharedMenuController];
     }
     if (_copyMenuItem == nil) {
-        _copyMenuItem = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyMenuAction:)];
+        _copyMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"copy", @"Copy") action:@selector(copyMenuAction:)];
     }
     if (_deleteMenuItem == nil) {
-        _deleteMenuItem = [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMenuAction:)];
+        _deleteMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"delete", @"Delete") action:@selector(deleteMenuAction:)];
     }
     
     if (messageType == eMessageBodyType_Text) {
