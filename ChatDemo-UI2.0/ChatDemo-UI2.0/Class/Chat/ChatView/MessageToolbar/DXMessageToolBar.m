@@ -207,7 +207,7 @@
             NSString *subStr = [chatText substringFromIndex:chatText.length-2];
             if ([(DXFaceView *)self.faceView stringIsFace:subStr]) {
                 self.inputTextView.text = [chatText substringToIndex:chatText.length-2];
-                
+                [self textViewDidChange:self.inputTextView];
                 return;
             }
         }
@@ -219,7 +219,6 @@
     
     [self textViewDidChange:self.inputTextView];
 }
-
 - (void)sendFace
 {
     NSString *chatText = self.inputTextView.text;

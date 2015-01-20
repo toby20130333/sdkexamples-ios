@@ -51,17 +51,11 @@
     _usernameTextField.delegate = self;
     
     self.title = NSLocalizedString(@"AppName", @"EaseMobDemo");
-    _usernameTextField.placeholder = NSLocalizedString(@"username", @"Username");
-    _passwordTextField.placeholder = NSLocalizedString(@"password", @"Pawword");
-    _registerButton.titleLabel.text = NSLocalizedString(@"register", @"Register");
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    [_registerButton setTitle:NSLocalizedString(@"register", @"Register") forState:UIControlStateNormal];
-    [_loginButton setTitle:NSLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
 }
 
 
