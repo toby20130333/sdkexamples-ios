@@ -241,10 +241,3 @@
 "NSDateCategory.text12" = "aa hh:mm";
 "NSDateCategory.text13" = "M-d HH:mm";
 "NSDateCategory.text14" = "today %@";
-
-//EMAudioRecorder
-"EMAudioRecorder.error1" = "A recording file is doing the final adjustment, please operation later";
-"EMAudioRecorder.error2" = "The interval is too short, and let people break";
-"EMAudioRecorder.error3" = "The recording time is too short, can't record";
-"EMAudioRecorder.error4" = "The tape has failed";
-"EMAudioRecorder.error5" = "Don't start the recording";

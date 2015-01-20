@@ -239,11 +239,3 @@
 "NSDateCategory.text12" = "晚上hh:mm";
 "NSDateCategory.text13" = "昨天HH:mm";
 "NSDateCategory.text14" = "今天 %@";
-
-
-//EMAudioRecorder
-"EMAudioRecorder.error1" = "上一个录音文件正在做最后调整，请稍后操作";
-"EMAudioRecorder.error2" = "间隔过短，让人家歇会";
-"EMAudioRecorder.error3" = "录音时间过短，没办法记录";
-"EMAudioRecorder.error4" = "录音失败了";
-"EMAudioRecorder.error5" = "录音没有开始";
