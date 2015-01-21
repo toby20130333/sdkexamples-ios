@@ -20,6 +20,14 @@
 @implementation AppDelegate (EaseMob)
 - (void)easemobApplication:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    if (launchOptions) {
+        NSDictionary*userInfo = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+        if(userInfo)
+        {
+            [self didReiveceRemoteNotificatison:userInfo];
+        }
+    }
+    
     _connectionState = eEMConnectionConnected;
     
     [self registerRemoteNotification];
@@ -314,6 +322,22 @@
 {
     _connectionState = connectionState;
     [self.mainController networkChanged:connectionState];
+}
+
+// 打印收到的apns信息
+-(void)didReiveceRemoteNotificatison:(NSDictionary *)userInfo{
+    NSError *parseError = nil;
+    NSData  *jsonData = [NSJSONSerialization dataWithJSONObject:userInfo
+                                                        options:NSJSONWritingPrettyPrinted error:&parseError];
+    NSString *str =  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"推送内容"
+                                                    message:str
+                                                   delegate:nil
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil];
+    [alert show];
+
 }
 
 @end
